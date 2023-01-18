@@ -1,0 +1,377 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+
+#wrap {
+    background-color: #f1f1f1;
+    color: #2a2a2a;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+}
+
+.inner_size {
+
+}
+main {
+    position: relative;
+    height: 100vh;
+}
+.detail_wrap{
+	padding-top: 30px;
+    margin: 0 auto;
+    width: 800px;
+}
+
+.detail_wrap .detail_box1 {
+    position: relative;
+    background-color: #fff;
+	margin: 0 auto;
+    width: 100%; height: 850px;
+    border-radius: 20px;
+}
+.detail_wrap .detail_box1 .detail_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 70px 100px 0 50px;
+}
+
+.detail_wrap .detail_box1 .detail_top .regdate {
+	display: flex;
+	align-items: center;
+    font-size: 17px;
+    line-height: 50px;
+    height:50px;
+}
+.detail_wrap .detail_box1 .detail_top .regdate span {
+	line-height: 50px;
+    height:50px;
+}
+.detail_wrap .detail_box1 .detail_top .regdate input {
+	height:50px;
+}
+.detail_wrap .detail_box1 .id_picture_box {
+    position: relative;
+    margin: 50px 0 0 50px;
+    width: 200px; height: 260px;
+}
+.detail_wrap .detail_box1 .id_picture_box .form_section_content {
+	position: absolute;
+	top:0;
+	width: 100%; height: 100%;
+}
+.detail_wrap .detail_box1 .id_picture_box .form_section_content #uploadResult {
+	position: absolute;
+	top:0;
+	width: 100%; height: 100%;
+}
+.detail_wrap .detail_box1 .id_picture_box .picture_btn {
+    position: absolute;
+    bottom:-35px;
+    right: 0;
+    cursor: pointer;
+    background-color: #2a2a2a;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 5px;
+    font-size: 12px;
+    width: 60px; height: 30px;
+}
+.detail_wrap .detail_box1 .id_picture_box .picture_btn label {
+    display: block;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%; height: 100%;
+
+}
+
+.detail_wrap .detail_box1 .id_picture_box .picture_btn input[type="file"] {
+    position: absolute;
+    
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+    width: 100%; height: 100%;
+}
+
+.detail_wrap .detail_box1 .id_picture_box .id_picture {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #d1d1d1;
+    width: 200px; height: 260px;
+}
+.detail_wrap .detail_box1 .id_picture_box .picture {
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+    width: 100%; height: 100%;
+}
+.detail_wrap .detail_box1 .id_picture_box .imgDeleteBtn {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+ 	z-index:20;
+    width: 30px; height: 30px;
+}
+.detail_wrap .detail_box1 .id_picture_box .imgDeleteBtn span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 10px;
+    display: inline-block;
+}
+.detail_wrap .detail_box1 .id_picture_box .imgDeleteBtn .line1 {
+    transform: rotate(45deg);
+    background-color: rgb(24, 24, 24);
+    width: 90%; height: 2px;
+}
+.detail_wrap .detail_box1 .id_picture_box .imgDeleteBtn .line2 {
+    transform: rotate(-45deg);
+    background-color: rgb(24, 24, 24);
+    width: 90%; height: 2px;
+}
+.detail_wrap .detail_box1 .id_picture_box .id_picture span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%) ;
+    background-color: #8f8f8f;
+    border-radius: 10px;
+    display: block;
+    width: 60px; height: 2px;
+}
+.detail_wrap .detail_box1 .id_picture_box .id_picture span:first-child {
+    transform: translateY(-50%);
+    width: 2px; height: 60px;
+}
+
+.detail_wrap .detail_box1 .content {
+    position: absolute;
+    top: 160px;
+    left: 300px;
+}
+
+.detail_wrap .detail_box1 .content > div {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    display: flex;
+    height: 30px;
+    width: 500px;
+}
+.detail_wrap .detail_box1 .content > div span {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 400;
+    
+
+}
+.detail_wrap .detail_box1 .content > div span input {
+    padding-left:10px;
+    margin-bottom: 5px;
+
+}
+.detail_wrap .detail_box1 .content select {
+    cursor: pointer;
+    /* background-color: #8f8f8f; */
+    margin-left: 10px;
+    margin-bottom: 5px;
+    padding-right: 10px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 30px;
+    width: 100px; height: 30px;
+}
+.detail_wrap .detail_box1 .content .box1 .department {
+    width: 220px;
+}
+.detail_wrap .detail_box1 .content .box1 .position {
+    width: 220px;
+}
+.detail_wrap .detail_box1 .content .box2 .status {
+    width: 220px;
+}
+.detail_wrap .detail_box1 .content .box2 .comreg {
+    width: 220px;
+}
+.detail_wrap .detail_box1 .content .bonus span {}
+
+.detail_wrap .detail_box1 .content .bonus .bonusPer{
+    margin-left: 10px;
+    padding-left: 0;
+    text-align: center;
+    font-size: 15px;
+    border-bottom: 1px solid #d1d1d1;
+    width: 50px;
+}
+.detail_wrap .detail_box1 .content .bonus .s1 {
+    padding: 0 10px 0 20px;
+}
+.detail_wrap .detail_box1 .content .bonus .bonusm {
+    border-bottom: 1px solid #d1d1d1;
+}
+.detail_wrap .detail_box1 .content1 {
+    position: absolute;
+    top: 500px;
+    left: 50px;
+}
+.detail_wrap .detail_box1 .content1 > div {
+    font-size: 15px;
+
+    width: 100%;
+}
+.detail_wrap .detail_box1 .content1 .addr span {
+    font-weight: 600;
+}
+.detail_wrap .detail_box1 .content1 .addr .addr_search {
+    cursor: pointer;
+    color: #2a2a2a;
+    font-weight: 400;
+    font-size: 13px;
+    margin-left: 400px;
+    border-bottom: 1px solid #2a2a2a;
+}
+.detail_wrap .detail_box1 .content1 .addr input {
+    display: inline-block;
+    color: #2d2d2d;
+    padding-left: 20px;
+    line-height: 40px;
+    font-weight: 300;
+    border-bottom: 1px solid #eee;
+    width: 500px; height: 40px;
+}
+.detail_wrap .detail_box1 .content1 .birthday {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 15px 0;
+}
+.detail_wrap .detail_box1 .content1 .birthday span {
+    color: #2d2d2d;
+    font-weight: 300;
+    padding-left:15px;
+}
+.detail_wrap .detail_box1 .content1 .phone {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+.detail_wrap .detail_box1 .content1 .phone span input{
+    color: #2d2d2d;
+    font-weight: 300;
+    padding-left:15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+.detail_wrap .detail_box1 .content1 .email {
+    font-size: 15px;
+    font-weight: 500;
+}
+.detail_wrap .detail_box1 .content1 .email span input{
+    color: #2d2d2d;
+    font-weight: 300;
+    padding-left:15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+.detail_wrap .detail_box1 .btn_box {
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    right: 50px;
+}
+.detail_wrap .detail_box1 .btn_box > div {
+    cursor: pointer;
+    color: #fff;
+    text-align: center;
+    line-height: 70px;
+    font-size: 17px;
+    transition: all 0.3s;
+    width: 100px; height: 70px;
+}
+.detail_wrap .detail_box1 .btn_box > div:hover {
+    transform: translateY(10px);
+}
+.detail_wrap .detail_box1 .btn_box .register {
+	position: relative;
+    background-color: #2a2a2a;
+    margin-right: 10px; 
+}
+.detail_wrap .detail_box1 .btn_box .cencel{
+    background-color: rgb(224, 49, 78);
+}
+.detail_wrap .detail_box1 .btn_box a {
+	display: block;
+	width: 100%; height: 100%;
+}
+.detail_wrap .list_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 42%; height: 800px;
+}
+.detail_wrap .list_box .list1 {
+    overflow: hidden;
+    background-color: #fff;
+    width: 100%; height: 48%;
+    padding: 30px;
+    border-radius: 20px;
+}
+.detail_wrap .list_box .list1 .title {
+    font-size: 17px;
+    font-weight: 500;
+
+    margin-bottom: 20px;
+}
+.detail_wrap .list_box .list1 table {
+    text-align: center;
+    width: 100%;
+}
+.detail_wrap .list_box .list1 table thead tr {
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #eee;
+    border-top: 2px solid #eee;
+    line-height: 30px;
+    height: 30px;
+}
+.detail_wrap .list_box .list1 table tbody tr {
+    border-bottom: 1px solid #eee;
+    line-height: 30px;
+    height: 30px;
+}
+.detail_wrap .list_box .list2 {
+    overflow: hidden;
+    background-color: #fff;
+    width: 100%; height: 48%;
+    padding: 30px;
+    border-radius: 20px;
+}
+.detail_wrap .list_box .list2 .title {
+    font-size: 17px;
+    font-weight: 500;
+
+    margin-bottom: 20px;
+}
+.detail_wrap .list_box .list2 table {
+    text-align: center;
+    width: 100%;
+}
+.detail_wrap .list_box .list2 table thead tr {
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #eee;
+    border-top: 2px solid #eee;
+    line-height: 30px;
+    height: 30px;
+}
+.detail_wrap .list_box .list2 table tbody tr {
+    border-bottom: 1px solid #eee;
+    line-height: 30px;
+    height: 30px;
+}
+

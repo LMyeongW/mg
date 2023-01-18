@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="attact">
+
+	<select id="getAttachList" resultType="com.study.demo.vo.AttachImageVO">
+		select 
+			fileName,
+			uploadPath,
+			uuid
+		from 
+			employee
+		where 
+			emploNo = #{emploNo}
+	</select>
+	
+	<update id="imgDatedelete" parameterType="com.study.demo.vo.AttachImageVO">
+		update employee set
+			fileName = null,
+			uploadPath = null,
+			uuid = null		
+		 where 
+			emploNo = #{emploNo}
+	</update>
+
+</mapper>

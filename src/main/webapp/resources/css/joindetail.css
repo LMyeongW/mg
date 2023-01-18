@@ -1,0 +1,162 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+
+#wrap {
+    background-color: #f1f1f1;
+    color: #2a2a2a;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+}
+
+.inner_size {
+    margin: 0 auto;
+    width: 1260px;
+    height: 100%;
+}
+
+header {
+    background-color: #fff;
+    height: 50px;
+    border-bottom: 1px solid #d4d4d4;
+}
+header .header_m {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+}
+header .header_m h1 {
+    padding: 3px;
+}
+header .header_m .loginAndjoin {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+   
+}
+header .header_m .loginAndjoin a {
+    font-size: 16px;
+    font-weight: 500;
+}
+header .header_m .loginAndjoin .login {
+    margin-right: 10px;
+}
+main {
+    position: relative;
+    height: 100vh;
+}
+.menu {
+    position: relative;
+    z-index: 1000;
+    background-color: #2a2a2a;
+    width: 250px;
+    height: 100%;
+}
+
+.menu .d1 {
+    transform: translateY(200px);
+    z-index: 1000;
+}
+
+.menu .d1 li {
+    text-align: center;
+    line-height: 100px;
+    width: 100%;
+    
+    height: 100px;
+}
+.menu .d1 li.on {
+    
+}
+.menu .d1 li a {
+    color: #fff;
+    font-weight: 400;
+    font-size: 17px;
+
+}
+
+.detail_wrap{
+    position: absolute;
+    top: 50px;
+    left: 310px;
+    margin: 0 auto;
+    width: 1260px;
+}
+
+.detail_wrap .detail_box {
+    position: relative;
+    background-color: #fff;
+    width: 100%; height: 800px;
+    border-radius: 20px;
+}
+.detail_wrap .detail_box .box_top {
+    padding: 70px 150px 0 100px;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+}
+.detail_wrap .detail_box .box_top .regdate {
+    padding-top: 15px;
+    font-size: 17px;
+}
+.detail_wrap .detail_box h2 {
+    
+}
+.detail_wrap .detail_box .detail {
+    padding: 40px 100px 0 100px;
+    width: 100%; height: 100;
+}
+.detail_wrap .detail_box .detail > div {
+    position: relative;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 35px 0 15px 0;
+    border-bottom: 1px solid #f1f1f1;
+}
+.detail_wrap .detail_box .detail > div span {
+ 	font-size: 16px;
+  	position: absolute;
+   	left: 120px;
+    
+}
+
+.detail_wrap .detail_box .btn{
+    position: absolute;
+    bottom: 10px;
+    right: 100px;
+    display: flex;
+}
+.detail_wrap .detail_box .btn > div {
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 10px;
+    line-height: 70px;
+    transition: all 0.3s;
+    width: 100px; height: 70px;
+}
+.detail_wrap .detail_box .btn > div:hover {
+    transform: translateY(10px);
+}
+.detail_wrap .detail_box .btn > div:first-child {
+    margin-right: 20px;
+}
+.detail_wrap .detail_box .btn .appr {
+	position: relative;
+    color: #fff;
+    background-color: rgb(73, 73, 73);
+}
+.detail_wrap .detail_box .btn .appr input{
+	position: absolute;
+	top:0;
+	left:0;
+	border-radius: 10px;
+	background-color: rgb(73, 73, 73);
+	width:100px; height:100%;
+}
+.detail_wrap .detail_box .btn .ref {
+    color: #fff;
+    background-color: rgb(255, 40, 76);
+}

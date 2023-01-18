@@ -1,0 +1,152 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+
+#wrap {
+    background-color: #f1f1f1;
+    color: #2a2a2a;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+}
+
+.inner_size {
+    margin: 0 auto;
+    width: 1260px;
+    height: 100%;
+}
+
+header {
+    background-color: #fff;
+    height: 50px;
+    border-bottom: 1px solid #d4d4d4;
+}
+header .header_m {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+}
+header .header_m h1 {
+    padding: 3px;
+}
+header .header_m .loginAndjoin {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+   
+}
+header .header_m .loginAndjoin a {
+    font-size: 16px;
+    font-weight: 500;
+}
+header .header_m .loginAndjoin .login {
+    margin-right: 10px;
+}
+main {
+    position: relative;
+    height: 100vh;
+}
+.menu {
+    position: relative;
+    z-index: 1000;
+    background-color: #2a2a2a;
+    width: 250px;
+    height: 100%;
+}
+
+.menu .d1 {
+    transform: translateY(200px);
+    z-index: 1000;
+}
+
+.menu .d1 li {
+    text-align: center;
+    line-height: 100px;
+    width: 100%;
+    
+    height: 100px;
+}
+.menu .d1 li.on {
+    
+}
+.menu .d1 li a {
+    color: #fff;
+    font-weight: 400;
+    font-size: 17px;
+
+}
+.login_wrap{
+    position: absolute;
+    top: 50px;
+    left: 310px;
+    margin: 0 auto;
+    width: 1260px;
+}
+.login_wrap .login_box{
+    position: relative;
+    background-color: #fff;
+    width: 100%; height: 800px;
+    border-radius: 20px;
+}
+.login_wrap .login_box .login_top {
+    padding-top: 100px;
+    font-size: 20px;
+    text-align: center;
+}
+.login_wrap .login_box .id_box {
+    margin: 70px auto 0;
+    width: 40%; height: 50px;
+}
+.login_wrap .login_box .id_box .id_input_box{
+    font-size: 27px;
+    width: 100%; height: 100%;
+}
+.login_wrap .login_box .id_box .id_input_box input {
+    background-color: #f1f1f1;
+    padding-left: 20px;
+    font-size: 20px;
+    border-radius: 0 30px 30px 0;
+    width: 100%; height: 100%;
+}
+.login_wrap .login_box .pw_box  {
+    margin: 60px auto 0;
+    width: 40%; height: 50px;
+}
+.login_wrap .login_box .pw_box .pw_input_box {
+    font-size: 27px;
+    width: 100%; height: 100%;
+}
+.login_wrap .login_box .pw_box .pw_input_box input {
+    background-color: #f1f1f1;
+    padding-left: 20px;
+    font-size: 20px;
+    border-radius: 0 30px 30px 0;
+    width: 100%; height: 100%;
+}
+
+.login_wrap .login_box .loginAndCencel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    margin: 70px auto 0;
+    width: 300px; height: 100px;
+}
+.login_wrap .login_box .loginAndCencel .login_btn_box {
+    width: 140px; height: 70px;
+}
+.login_wrap .login_box .loginAndCencel .login_btn_box input {
+    background-color: #2a2a2a;
+    color: #fff;
+    border-radius: 20px;
+    width: 100%; height: 100%;
+}
+.login_wrap .login_box .loginAndCencel .cencel_btn_box {
+    background-color: #2a2a2a;
+    color: #fff;
+    text-align: center;
+    line-height: 70px;
+    border-radius: 20px;
+    width: 140px; height: 70px;
+} 

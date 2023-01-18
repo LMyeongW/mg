@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+	
+	<!-- 회원리스트 -->
+	<select id="listPage"  resultType="com.study.demo.vo.employeeVO">
+		select
+			employeeId,
+			emploNo,
+			employeeName,
+			employeeBirthday1,
+			employeeBirthday2,
+			employeeBirthday3,
+			employeeGender,
+			employeePhone,
+			employeeMail,
+			employeeAddr1,
+			employeeAddr2,
+			employeeAddr3,
+			regdate
+		from 
+			employee
+		where 
+			login_appr = "0"
+		order by regdate desc
+		limit #{sqlPostNum}, #{postNum}
+	</select>
+	
+	<select id="joinTotalCount" resultType="java.lang.Integer">
+		select count(emploNo) from employee where login_appr = "0"
+	</select>
+	
+	<delete id="joindelete" parameterType="com.study.demo.vo.employeeVO">
+		delete from employee
+		where employeeId = #{employeeId}
+	</delete>
+	
+	<delete id="selectDelete">
+		delete from employee
+		where employeeId = #{employeeId}
+	</delete>
+	
+	<!-- 사원리스트 -->
+	<select id="emploList" parameterType="hashMap" resultType="com.study.demo.vo.employeeVO">
+		select
+			emploNo,
+			employeeName,
+			employeeBirthday1,
+			employeeBirthday2,
+			employeeBirthday3,
+			employeeGender,
+			employeePhone,
+			employeeMail,
+			employeeAddr1,
+			employeeAddr2,
+			employeeAddr3,
+			departmentId,
+			positionId,
+			statusId,
+			salary,
+			ifnull(date_format(comregdate,'%Y-%m-%d'), "미등록") as comregdate
+		from 
+			employee
+		where 
+			login_appr = "1"
+		and
+			not statusId in ('해고', '퇴사', '퇴직', '계약완료')
+
+			
+		order by emploNo desc
+		limit #{sqlPostNum}, #{postNum}
+		
+	</select>
+	
+	<!-- 
+		<if test='orderTpye == "" or orderType == "desc"'>
+			order by emploNo desc
+		</if>	
+		<if test='orderType == "asc"'>
+			order by emploNo asc
+		</if>
+	 -->
+	<!-- 회원상세페이지 -->
+	<select id="joinDetail" resultType="com.study.demo.vo.employeeVO" >
+		select
+			employeeId,
+			employeeName,
+			employeeBirthday1,
+			employeeBirthday2,
+			employeeBirthday3,
+			employeeGender,
+			employeePhone,
+			employeeMail,
+			employeeAddr1,
+			employeeAddr2,
+			employeeAddr3,
+			login_appr,
+			regdate
+		from 
+			employee
+		where 
+			employeeId = #{employeeId}
+			
+	</select>
+	
+	<!-- 회원가입 승인 -->
+	<update id="joinAppr" parameterType="com.study.demo.vo.employeeVO">
+		update employee set
+			login_appr = "1"
+		where
+			employeeId = #{employeeId}
+	</update>
+	
+	<select id="refusalList" parameterType="hashMap" resultType="com.study.demo.vo.employeeVO">
+		select
+			employeeId,
+			employeeName,
+			employeePhone,
+			employeeMail,
+			refusalregdate
+		from 
+			employee
+		where 
+			login_appr = "2"
+		order by regdate desc
+		limit #{sqlPostNum}, #{postNum}
+	</select>
+	
+	<select id="refusaltotalCount" resultType="java.lang.Integer">
+		select count(emploNo) from employee where login_appr = "2"
+	</select>
+	
+	<update id="refusalUpdate" parameterType="com.study.demo.vo.employeeVO">
+		update employee set
+			login_appr = "2",
+			refusalregdate = sysdate()
+		where
+			employeeId = #{employeeId}
+	</update>
+	
+	<update id="cencelRefusal" parameterType="com.study.demo.vo.employeeVO">
+		update employee set
+			login_appr = "0"
+		where
+			employeeId = #{employeeId}
+	</update>
+	<select id="employeeSelect"  parameterType="java.lang.Integer" resultType="com.study.demo.vo.employeeVO" >
+		select
+			employeeId,
+			emploNo,
+			employeeName,
+			employeeBirthday1,
+			employeeBirthday2,
+			employeeBirthday3,
+			employeeGender,
+			employeePhone,
+			employeeMail,
+			employeeAddr1,
+			employeeAddr2,
+			employeeAddr3,
+			salary,
+			bonusPercent,
+			departmentId,
+			positionId,
+			statusId,
+			regdate,
+			comregdate
+		from 
+			employee
+		where 
+			emploNo = #{emploNo}
+	</select>
+	
+	<update id="employeeUpdate"  parameterType="com.study.demo.vo.employeeVO">
+		update employee set
+			employeePhone = #{employeePhone},
+			employeeMail = #{employeeMail},
+			employeeAddr1 = #{employeeAddr1},
+			employeeAddr2 = #{employeeAddr2},
+			employeeAddr3 = #{employeeAddr3},
+			salary = #{salary},
+			bonusPercent = #{bonusPercent},
+			departmentId = #{departmentId},
+			positionId = #{positionId},
+			statusId = #{statusId},
+			comregdate = #{comregdate},
+			fileName = #{fileName},
+			uploadPath = #{uploadPath},
+			uuid = #{uuid}	
+		where 
+			emploNo = #{emploNo}
+	</update>
+	
+	<update id="employeeUpdatePOST"  parameterType="com.study.demo.vo.employeeVO">
+		update employee set
+			salary = #{salary},
+			departmentId = #{departmentId},
+			positionId = #{positionId},
+			statusId = #{statusId},
+			comregdate = #{comregdate}
+		where 
+			emploNo = #{emploNo}
+	</update>
+	
+	<sql id="employeetWhere" >
+		where
+			1=1 
+		and
+			login_appr = "1"
+		and
+			not statusId in ('해고', '퇴사', '퇴직', '계약완료')
+
+		<if test="searchKeyword != null and searchKeyword != ''">
+		<![CDATA[ 
+	 		AND 
+			( 
+				emploNo like concat('%',#{searchKeyword},'%') OR
+	    		employeeName like concat('%',#{searchKeyword},'%') OR
+	    		statusId like concat('%',#{searchKeyword},'%') OR
+	    		positionId like concat('%',#{searchKeyword},'%') OR
+	    		departmentId like concat('%',#{searchKeyword},'%')	
+		 	)  
+	 	]]> 
+		</if>
+	</sql>
+	<!-- 사원리스트 정렬 -->
+	<select id="emploListSort" parameterType="hashMap" resultType="com.study.demo.vo.employeeVO">
+		<![CDATA[
+			select
+				emploNo,
+				employeeName,
+				employeeBirthday1,
+				employeeBirthday2,
+				employeeBirthday3,
+				employeeGender,
+				employeePhone,
+				employeeMail,
+				employeeAddr1,
+				employeeAddr2,
+				employeeAddr3,
+				departmentId,
+				positionId,
+				statusId,
+				salary,
+				ifnull(date_format(comregdate,'%Y-%m-%d'), "미등록") as comregdate
+			from 
+				employee
+		]]>
+			
+		<include refid="employeetWhere"/>
+
+		<if test='orderTpye == "" or orderType == "desc"'>
+			order by emploNo desc
+		</if>	
+		<if test='orderType == "asc"'>
+			order by emploNo asc
+		</if>
+		<![CDATA[		
+			limit #{sqlPostNum}, #{postNum}
+		]]>	
+	</select>
+	
+	
+	<select id="emploTotalCount" parameterType="hashMap" resultType="java.lang.Integer">
+		<![CDATA[
+			select 
+				count(emploNo) 
+			from 
+				employee
+		]]>
+		<include refid="employeetWhere"/>
+	</select>
+	
+		
+	<sql id="resignationWhere" >
+		where
+			1=1 
+		and	 
+			login_appr = "1"
+		and
+			statusId in ('해고', '퇴사', '퇴직', '계약완료')
+
+		<if test="searchKeyword != null and searchKeyword != ''">
+			<![CDATA[ 
+	 			AND 
+				( 
+					emploNo like concat('%',#{searchKeyword},'%') OR
+	    			employeeName like concat('%',#{searchKeyword},'%') OR
+	    			statusId like concat('%',#{searchKeyword},'%') OR
+	    			positionId like concat('%',#{searchKeyword},'%') OR
+	    			departmentId like concat('%',#{searchKeyword},'%')	
+		 		)  
+	 		]]> 
+		</if>
+	</sql>
+	<!-- 퇴사자 list -->
+	<select id="resignationList" parameterType="hashMap" resultType="com.study.demo.vo.employeeVO">
+	<![CDATA[ 
+			select
+				emploNo,
+				employeeId,
+				employeeName,
+				employeeBirthday1,
+				employeeBirthday2,
+				employeeBirthday3,
+				employeeGender,
+				employeePhone,
+				employeeMail,
+				employeeAddr1,
+				employeeAddr2,
+				employeeAddr3,
+				departmentId,
+				positionId,
+				statusId,
+				salary,
+				ifnull(date_format(comregdate,'%Y-%m-%d'), "미등록") as comregdate,
+				ifnull(date_format(resignationdate,'%Y-%m-%d'), "미등록") as resignationdate
+			from 
+				employee
+			]]> 
+		<include refid="resignationWhere"/>
+		
+		<if test='orderTpye == "" or orderType == "desc" or orderType == null'>
+			order by emploNo desc
+		</if>	
+		<if test='orderType == "asc"'>
+			order by emploNo asc
+		</if>
+		<![CDATA[	
+			limit #{sqlPostNum}, #{postNum}		
+		]]> 	
+	</select>
+	
+	<select id="resignationTotalCount" parameterType="hashMap" resultType="java.lang.Integer">
+		<![CDATA[
+			select 
+				count(emploNo) 
+			from 
+				employee
+		]]>
+		<include refid="resignationWhere"/>
+	</select>
+
+	
+	<select id="resignationDetail" resultType="com.study.demo.vo.employeeVO">
+		select
+			emploNo,
+			employeeName,
+			employeePhone,
+			employeeMail,
+			employeeAddr1,
+			employeeAddr2,
+			employeeAddr3,
+			departmentId,
+			positionId,
+			statusId,
+			ifnull(date_format(comregdate,'%Y-%m-%d'), "미등록") as comregdate,
+			ifnull(date_format(resignationdate,'%Y-%m-%d'), "미등록") as resignationdate,
+			reason
+		from 
+			employee
+		where
+			emploNo = #{emploNo}
+	</select>
+	
+	<update id="resignationDetailUpdate" parameterType="com.study.demo.vo.employeeVO">
+		update employee set
+			departmentId = #{departmentId},
+			positionId = #{positionId},
+			statusId = #{statusId},
+			employeePhone = #{employeePhone},
+			employeeMail = #{employeeMail},
+			employeeAddr1 = #{employeeAddr1},
+			employeeAddr2 = #{employeeAddr2},
+			employeeAddr3 = #{employeeAddr3},
+			resignationdate = #{resignationdate},
+			reason = #{reason}
+		where 
+			emploNo = #{emploNo}
+	</update>
+	
+	<delete id="resignationDelete" parameterType="com.study.demo.vo.employeeVO">
+		delete from employee
+		where emploNo = #{emploNo}
+	</delete>
+	
+	<delete id="resignationSelectDelete" >
+		delete from employee
+		where emploNo = #{emploNo}
+	</delete>
+	
+
+
+	<!--  <update id="employeeImageUpdate">
+		update employee set
+
+		where
+			emploNo = #{emploNo}
+	</update>-->
+
+	
+</mapper>

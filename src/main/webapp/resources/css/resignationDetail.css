@@ -1,0 +1,153 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+
+#wrap {
+    background-color: #f1f1f1;
+    color: #2a2a2a;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    height: 100vh;
+}
+
+.inner_size {
+    padding-top: 25px;
+    margin: 0 auto;
+    width: 600px; height: 100%;
+}
+.content {
+    position: relative;
+    background: #fff;
+    margin: 0 auto;
+    padding: 50px;
+    width: 100%; height: 820px;
+}
+.content .picture {
+    position: relative;
+    border: 1px solid #d1d1d1;
+    overflow: hidden;
+    width: 200px; height: 260px;
+}
+
+.content .picture span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%) ;
+    background-color: #d1d1d1;
+    border-radius: 10px;
+    display: block;
+    width: 60px; height: 2px;
+}
+.content .picture .line1 {
+    transform: translateY(-50%);
+    width: 2px; height: 60px;
+}
+
+.content .t1 {
+    position: absolute;
+    top: 50px;
+    left: 270px;
+
+}
+.content .t1 > div {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 43px;
+    width: 200px; height: 43px;
+}
+.content .t1 .department {
+    display: flex;
+    width: 250px;
+}
+.content .t1 .department select {
+    padding-left: 10px;
+    padding-bottom: 2px;
+    width: 90px;
+}
+.content .t1 .position {
+    display: flex;
+    width: 200px;
+}
+.content .t1 .position select {
+    padding-left: 10px;
+    padding-bottom: 2px;
+    width: 70px;
+}
+
+.content .t1 .statusId {
+    display: flex;
+    
+    width: 250px;
+}
+.content .t1 .status select {
+    padding-left: 10px;
+    padding-bottom: 6px;
+    width: 90px; height: 100%;
+}
+
+
+.content .t1 > div > span {
+    padding-left: 10px;
+}
+.content .t2 .phoneTitle{
+    font-weight: 500;
+    padding-top: 20px;
+}
+.content .t2 input{
+    border-bottom: 1px solid #d1d1d1;
+    padding: 10px 0 10px 20px;
+    line-height: 30px;
+    width: 50%; height: 30px;
+}
+.content .t3 .emailTitle{
+    font-weight: 500;
+    padding-top: 20px;
+}
+.content .t3 input{
+    border-bottom: 1px solid #d1d1d1;
+    padding: 10px 0 10px 20px;
+    line-height: 30px;
+    width: 50%; height: 30px;
+}
+.content .t4 .addrTitle {
+    font-weight: 500;
+    padding-top: 20px;
+}
+.content .t4 input {
+    border-bottom: 1px solid #d1d1d1;
+    padding: 10px 0 10px 20px;
+    line-height: 40px;
+    width: 100%; height: 40px;
+}
+.content .t5 .reasonTitle {
+    font-weight: 500;
+    padding: 20px 0 10px 0;
+}
+.content .t5 .reasonTitle span {
+    color: #a71b1b;
+    padding-left: 300px;
+
+}
+.content .t5 .reasonTitle span input {
+    padding-bottom: 5px;
+}
+.content .t5 textarea {
+    border: 1px solid #d1d1d1;
+    padding: 5px;
+    width: 70%; height: 120px;
+}
+.content .registration {
+    position: absolute;
+    bottom: 32px;
+    right: 50px;
+    background-color: #2a2a2a;
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+    width: 100px; height: 50px;
+}
+.content .registration a {
+    display: block;
+    width: 100%; height: 100%;
+}

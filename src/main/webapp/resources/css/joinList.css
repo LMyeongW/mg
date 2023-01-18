@@ -1,0 +1,280 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
+
+#wrap {
+    background-color: #f1f1f1;
+    color: #2a2a2a;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    height: 100vh;
+}
+
+.inner_size {
+    margin: 0 auto;
+    width: 1400px;
+    height: 100%;
+}
+
+header {
+    background-color: #fff;
+    height: 50px;
+    border-bottom: 1px solid #d4d4d4;
+}
+header .header_m {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+}
+header .header_m h1 {
+    padding: 3px;
+}
+header .header_m .loginAndjoin {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+   
+}
+header .header_m .loginAndjoin a {
+    font-size: 16px;
+    font-weight: 500;
+}
+header .header_m .loginAndjoin .login {
+    margin-right: 10px;
+}
+main {
+    position: relative;
+    padding: 50px 0;
+}
+
+
+.join_wrap{
+    position: relative;
+    margin: 0 auto ;
+    width: 1400px;
+}
+.join_wrap .title {
+    background-color: #fff;
+    position: absolute;
+    padding: 20px 0 0 20px;
+    font-weight: 500;
+    font-size: 30px;
+    z-index: 10;
+    border-radius: 20px 70px 0 0;
+    width: 850px; height: 80px;
+}
+.join_wrap .menu {
+    position: absolute;
+    background-color: #2a2a2a;
+    border-radius: 30px 20px 0 0;
+    line-height: 80px;
+    width: 1400px; height: 80px;
+}
+.join_wrap .menu ul {
+    position: absolute;
+    right: 100px;
+    display: flex;
+}
+.join_wrap .menu ul li {
+    position: relative;
+    color: #fff;
+    margin: 0 30px;
+}
+.join_wrap .menu ul li a {}
+.join_wrap .menu ul li .line{
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    background-color: #fff;
+    width: 100%; height: 2px;
+}
+.join_wrap .menu ul li .line1 {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    background-color: #fff;
+    transition: all 0.3s;
+    width: 0; height: 2px;
+}
+
+.join_wrap .menu ul li:hover .line1 {
+    width: 100%;
+}
+
+.join_wrap .join_mg{
+    background-color: #fff;
+    padding-top: 75px;
+    width: 100%; height: 800px;
+    border-radius: 0 20px 20px 20px;
+}
+
+.join_wrap .join_mg .join_search {
+    position: absolute;
+    top: 100px;
+    left: 30px;
+    z-index:21;
+    display: flex;
+}
+.join_wrap .join_mg .join_search .search_input{
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding-left: 20px;
+    width: 300px; height: 40px;
+}
+.join_wrap .join_mg .join_search .search_btn{
+    background-color: #eeeeee;
+    display: inline-block;
+    text-align: center;
+    line-height: 38px;
+    border: 1px solid #eee;
+    cursor: pointer;
+    width: 50px; height: 40px;
+}
+.join_wrap .join_mg .refusal {
+    position: absolute;
+    right: 0px;
+    top: 100px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+    transition: all 0.5s;
+    background-color: #ff3f3f;
+    color: #fff;
+    width: 100px; height: 40px;
+}
+.join_wrap .join_mg .refusal input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+}
+.join_wrap .join_mg .refusal button {
+    position: relative;
+    cursor: pointer;
+    background-color: transparent;
+    margin-bottom: 5px;
+    width: 100%; height: 100%;
+}
+
+.join_wrap .join_mg .refusal:hover {
+    right: -20px;
+}
+.join_wrap .join_mg .table_box {
+    position: absolute;
+    top: 120px;
+    width: 100%;
+}
+.join_wrap .join_mg .table_box table {
+    margin: 60px auto;
+    width: 95%;
+}
+.join_wrap .join_mg .table_box table thead {
+    background-color: #fff;
+    line-height: 60px;
+    font-size: 16px;
+    border-top: 2px solid #f1f1f1;
+    border-bottom: 2px solid #ebebeb;
+    height: 60px;
+}
+.join_wrap .join_mg .table_box table thead tr th {
+    text-align: center;
+    padding-left: 10px;
+}
+.join_wrap .join_mg .table_box table tbody {
+    text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+    font-weight: 300;
+    width: 100%; height: 45px;
+}
+.join_wrap .join_mg .table_box table tbody tr {
+    border-bottom: 1px solid #f1f1f1;
+    
+}
+.join_wrap .join_mg .table_box .t6 {
+	overflow: hidden;
+  	white-space: nowrap;
+   	text-overflow: ellipsis;
+	width: 295px; 
+}
+.join_wrap .join_mg .table_box table tbody tr td {
+    padding-left: 10px;
+    text-align: center;
+}
+.paging_box {
+	position: absolute;
+	bottom:50px;
+	left:50%;
+	transform: translateX(-50%);
+	text-align: center;
+}
+
+.paging_box span{
+	display: inline_block;
+	text-align: center;
+	padding: 0 5px;
+}
+.paging_box span a {
+	display: inline_block;
+	padding: 0 3px;
+}
+.confirm {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color:rgba(0, 0, 0, 0.4);
+    width: 100%; height: 100%;
+}
+.confirm.on{
+    display: block;
+   
+    
+}
+.confirm .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 450px; height: 250px;
+}
+.confirm .text .content{
+    font-size: 20px;
+    text-align: center;
+    padding-top: 70px;
+}
+.confirm .text .yes {
+    position: absolute;
+    bottom: 40px;
+    left: 75px;
+    color: #fff;
+    font-size: 16px;
+    background-color: #2a2a2a;
+    text-align: center;
+    line-height: 50px;
+    width: 140px; height: 50px;
+}
+.confirm .text .no {
+    position: absolute;
+    bottom: 40px;
+    right: 75px;
+    color: #fff;
+    font-size: 16px;
+    background-color: #2a2a2a;
+    text-align: center;
+    line-height: 50px;
+    width: 140px; height: 50px;
+}
+
+.confirm .text a {
+    display: block;
+    width: 100%; height: 100%;
+}
