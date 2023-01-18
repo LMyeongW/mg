@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	업데이트페이지!
+	업데이트페이지
 </body>
 </html>
