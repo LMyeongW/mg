@@ -22,9 +22,50 @@ public class ApplicationServiceImpl implements ApplicationService{
 	}
 
 	@Override
-	public List<ApplicationVO> submitlist(String employeeId) {
-		return applicationDao.submitlist(employeeId);
+	public List<ApplicationVO> submitlist(String employeeId, int sqlPostNum, int postNum) {
+		return applicationDao.submitlist(employeeId, sqlPostNum, postNum);
 	}
+
+	@Override
+	public Object submitUpdateGet(int applNo) {
+		
+		return applicationDao.submitUpdateGet(applNo);
+	}
+
+	@Override
+	public void submitUpdatePost(ApplicationVO applicationvo) {
+		applicationDao.submitUpdatePost(applicationvo);
+		
+	}
+
+	@Override
+	public int submitTotalcount(String employeeId) {
+		return applicationDao.submitTotalcount(employeeId);
+	}
+
+	@Override
+	public void submitCencel(ApplicationVO applicationvo) {
+		applicationDao.submitCencel(applicationvo);
+		
+	}
+
+	@Override
+	public List<ApplicationVO> applicationList() {
+		return applicationDao.applicationList();
+	}
+
+	@Override
+	public Object applApprovalPage(int applNo) {
+		return applicationDao.applApprovalPage(applNo);
+	}
+
+	@Override
+	public void applApprovalUpdate(ApplicationVO applicationvo) {
+		applicationDao.applApprovalUpdate(applicationvo);
+		
+	}
+
+
 
 
 }

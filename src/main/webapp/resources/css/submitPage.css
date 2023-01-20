@@ -141,6 +141,16 @@ main .content .input_wrap .employeeName {
     line-height: 70px;
     height: 70px;
 }
+main .content .input_wrap .employeeName .e1{}
+main .content .input_wrap .employeeName .e1 input{
+
+}
+.c1 input {
+ 	background-color: transparent;
+ 	text-align: center;
+ 	padding-bottom: 5px;
+	width: 80px; height:45px;
+}
 main .content .input_wrap .employeeName .e2 {
     margin-left: 20px;
 }

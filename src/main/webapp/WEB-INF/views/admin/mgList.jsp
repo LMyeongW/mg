@@ -87,9 +87,8 @@
                                 
                             </div>
                             <!-- .table_box -->
-                            <div class ="paging_box">
-  
-							</div>
+                            <div class ="paging_box"></div>
+							<div class="noData">등록된 정보가 없습니다.</div>
                         </div>
                     	<!-- .employee_mg -->
                 </div>
@@ -212,6 +211,12 @@
 					page += "다음</a> ]</span>";
 				}
 				$('.paging_box').html(page);
+				
+				if(html == null || html == "") {
+					$('.noData').addClass('on');
+				} else {
+					$('.noData').removeClass('on');
+				}
 				
 				/*$('#status').on("change",function(){
 					var statusType = $("select[name=statusIdSelect] option:selected").val()

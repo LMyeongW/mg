@@ -1,13 +1,17 @@
 package com.study.demo.vo;
 
+import java.util.Date;
+
 public class ApplicationVO {
 	private int applNo;
 	private String employeeId;
 	private String applselect;
 	private String startDate;
 	private String endDate;
+	private Date regDate;
 	private String emergencyTell;
 	private String reason;
+	private String status;
 	
 	//회원정보
 	private String employeeName; //이름
@@ -33,6 +37,25 @@ public class ApplicationVO {
 	}
 	public void setApplselect(String applselect) {
 		this.applselect = applselect;
+		if(applselect.equals("A1")) {
+			this.applselect = "휴가";
+		}
+		if(applselect.equals("A2")) {
+			this.applselect = "연차";
+		}
+		if(applselect.equals("A3")) {
+			this.applselect = "월차";
+		}
+		if(applselect.equals("A4")) {
+			this.applselect = "반차";
+		}
+		if(applselect.equals("A5")) {
+			this.applselect = "휴직";
+		}
+		if(applselect.equals("A6")) {
+			this.applselect = "기타";
+		}
+
 	}
 	public String getStartDate() {
 		return startDate;
@@ -45,6 +68,12 @@ public class ApplicationVO {
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
 	}
 	public String getEmergencyTell() {
 		return emergencyTell;
@@ -82,14 +111,33 @@ public class ApplicationVO {
 	public void setPositionId(String positionId) {
 		this.positionId = positionId;
 	}
-	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+		if(status.equals("1A")) {
+			this.status = "승인";
+		}
+		if(status.equals("2A")) {
+			this.status = "거부";
+		}
+		if(status.equals("3A")) {
+			this.status = "승인대기";
+		}
+		if(status.equals("4A")) {
+			this.status = "취소됨";
+		}
+	}
 	@Override
 	public String toString() {
 		return "ApplicationVO [applNo=" + applNo + ", employeeId=" + employeeId + ", applselect=" + applselect
-				+ ", startDate=" + startDate + ", endDate=" + endDate + ", emergencyTell=" + emergencyTell + ", reason="
-				+ reason + ", employeeName=" + employeeName + ", emploNo=" + emploNo + ", departmentId=" + departmentId
-				+ ", positionId=" + positionId + "]";
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", regDate=" + regDate + ", emergencyTell="
+				+ emergencyTell + ", reason=" + reason + ", status=" + status + ", employeeName=" + employeeName
+				+ ", emploNo=" + emploNo + ", departmentId=" + departmentId + ", positionId=" + positionId + "]";
 	}
+
+
 	
 	
 }

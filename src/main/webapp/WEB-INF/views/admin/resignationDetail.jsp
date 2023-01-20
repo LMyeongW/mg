@@ -189,7 +189,9 @@
 			url : '/admin/resignationDetail.do',
 			data : data,
 			success : function(data){
-				
+				alert("등록에 성공하였습니다.");
+				window.close();
+				opener.location.reload();
 				
 			},
 			error : function(){

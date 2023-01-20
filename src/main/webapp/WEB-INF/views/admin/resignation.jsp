@@ -86,8 +86,8 @@
                             </div>
                             <!-- .table_box -->
                             
-                            <div class ="paging_box">
-							</div>
+                            <div class ="paging_box"></div>
+							<div class="noData">등록된 정보가 없습니다.</div>
                         </div>
                     </form>
                     <!-- .resignation_mg -->
@@ -214,6 +214,12 @@
 				}
 				$('.paging_box').html(page);
 				
+				
+				if(html == null || html == "") {
+					$('.noData').addClass('on');
+				} else {
+					$('.noData').removeClass('on');
+				}
 				
 				//체크박스
 				$('#allCheck').click(function(){

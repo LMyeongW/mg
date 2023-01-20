@@ -14,6 +14,8 @@
 <body>
     <div id="wrap">
     <form id="appl_form" method="post" name="applForm">
+    
+    <input type ="hidden" name ="positionId" value="${member.positionId }"/>
         <header>
             <div class="inner_size">
                 <div class="header_m">
@@ -54,16 +56,17 @@
                     <div class="input_wrap">
                         <div class="positionId">
                             <span class="t1">부서 : </span>
-                            <span class="c1">${member.departmentId}</span>
+                            <span class="c1"><input type ="text" readonly="readonly" name ="departmentId" value="${member.departmentId}"/></span>
                         </div>
                         <div class="employeeName">
                             <div class="e1">
                                 <span class="t1">이름 : </span>
-                                <span class="c1">${member.employeeName}</span>
+                                <span class="c1"><input type="text" class="name_input" readonly="readonly" name="employeeName" value ="${member.employeeName}"/></span>
+                                
                             </div>
                             <div class="e2">
                                 <span class="t1">사원번호 : </span>
-                                <span class="c1">${member.emploNo}</span>
+                                <span class="c1"><input type ="text" readonly="readonly" name ="emploNo" value="${member.emploNo }"/></span>
                             </div>
                         </div>
                         <div class="status">
@@ -85,7 +88,7 @@
                             </div>
                             <div class="a2">
                                 <span class="t1">종료일 : </span>
-                                <input type="date" name = "endDate" class="enDdate_input">
+                                <input type="date" name = "endDate" class="endDate_input">
                             </div>
                         </div>
                         <!-- .applicationDate -->
@@ -120,11 +123,11 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script>
 	$(document).ready(function(){
-		var applselect = false; //선택
+		/*var applselect = false; //선택
 		var startDate = false; //시작날
 		var endDate = false; //종료날
 		var emergencyTell = false; //비상연락망
-		var reason = false; //사유
+		var reason = false; //사유*/
 
 		$('.application_btn').on("click", function(e){
 			
@@ -136,66 +139,59 @@
 			
 			if(applS == ""|| applS == "선택"){
 				alert("종류를 선택해주세요.");
-				applselect = false;
-			} else {
-				applselect = true;
-			}
+				return false;
+			} 
 			if(startD == ""){
 				alert("시작일을 입력해주세요.");
-				startDate = false;
-			} else {
-				startDate = true;
-			}
+				return false;
+			} 
 			if(endD == ""){
 				alert("종료일 입력해주세요.");
-				endDate = false;
-			} else {
-				endDate = true;
+				return false;
 			}
+			
+			if(endD < startD){
+				alert("시작일은 종료일보다 클 수 없습니다.");
+				return false;
+			}
+			
 			if(emergencyT == ""){
 				alert("비상연락처를 입력해주세요.");
-				emergencyTell = false;
-			} else {
-				emergencyTell = true;
-			}
+				return false;
+			} 
 			if(reaSon == ""){
 				alert("사유를 입력해주세요.");
-				reaSon = false;
-			} else {
-				reaSon = true;
-			}
-			if(applselect&&startDate&&endDate&&emergencyTell&&reaSon){
-				var data = $('form[name=applForm]').serialize();
-				console.log(data);
-				$.ajax({
+				return false;
+			} 
+			
+			var data = $('form[name=applForm]').serialize();
+			console.log(data);
+			$.ajax({
 					
-					type : 'post',
-					url : '/application/submit',
-					data : data,
-					success : function(result){
-						applAlert(result);
-					}
-				
-				
-				});
-				
-				function applAlert(result){
-					if(result == '5'){
-						alert("로그인을 하세요.")
-						$(location).attr("href", "/account/login")
-					} else if(result == '1') {
-						alert("신청에 성공하셨습니다.")
-						$('#appl_form').submit();
-						$(location).attr("href", "/")
-					}
+				type : 'post',
+				url : '/application/submit',
+				data : data,
+				success : function(result){
+					applAlert(result);
 				}
-					
-					//$('#appform').attr("action", "/member/submit");
+				
+				
+			});
+				
+			function applAlert(result){
+				if(result == '5'){
+					alert("로그인을 하세요.")
+					$(location).attr("href", "/account/login")
+				} else if(result == '1') {
+					alert("신청에 성공하셨습니다.")
+					$('#appl_form').submit();
+					$(location).attr("href", "/main")
+				}
 			}
-
+					
+				//$('#appform').attr("action", "/member/submit");
+			
 		});
-
-
 
 	});
 

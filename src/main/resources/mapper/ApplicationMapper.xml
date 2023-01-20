@@ -2,17 +2,78 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="app">
 	<insert id="submitPost">
-		insert into memberapp (employeeId, applselect, startDate, endDate, emergencyTell, reason)
-		values(#{employeeId}, #{applselect}, #{startDate}, #{startDate}, #{emergencyTell}, #{reason})
+		insert into memberapp (employeeId, emploNo, employeeName, departmentId, positionId, applselect, startDate, regDate, endDate, emergencyTell, reason, status)
+		values(#{employeeId}, #{emploNo}, #{employeeName}, #{departmentId}, #{positionId}, #{applselect}, #{startDate}, #{startDate}, sysdate(), #{emergencyTell}, #{reason}, "승인대기")
 	</insert>	
 	
-	<select id="submitlist" resultType="com.study.demo.vo.ApplicationVO">
+	<select id="submitlist" parameterType="hashMap" resultType="com.study.demo.vo.ApplicationVO">
+		select
+			*
+		from
+			memberapp
+        where  employeeId =  #{employeeId} 
+        and status = "승인대기" or status = "승인완료"  
+        order by regDate desc
+		limit #{sqlPostNum}, #{postNum}	
+ 
+	</select>
+	
+	<select id="submitTotalcount" parameterType="hashMap" resultType="java.lang.Integer">
+		select count(employeeId) from memberapp where employeeId =  #{employeeId} and status = "승인대기" or status = "승인완료"
+	</select>
+	
+	<select id="submitUpdateGet"  resultType="com.study.demo.vo.ApplicationVO">
 		select
 			*
 		from
 			memberapp
 		<if test="member != null">
-        	<![CDATA[ where  employeeId =  #{employeeId} ]]>        
+        	<![CDATA[ where applNo = #{applNo}
+        	
+        	 ]]>        
         </if>
 	</select>
+	
+	<update id="submitUpdatePost" parameterType="com.study.demo.vo.ApplicationVO">
+		update memberapp set
+			applselect = #{applselect},
+			startDate = #{startDate},
+			endDate = #{endDate},
+			emergencyTell = #{emergencyTell},
+			reason = #{reason}
+		where 
+			applNo = #{applNo}
+			
+	</update >
+	
+	<update id="submitCencel" parameterType="com.study.demo.vo.ApplicationVO">
+		update memberapp set
+			status = "취소됨"
+		where
+			applNo = #{applNo}
+	</update>
+	
+	<select id="applicationList" resultType="com.study.demo.vo.ApplicationVO">
+		select
+			*
+		from
+			memberapp
+	</select>
+	
+	<select id="applApprovalPage" resultType="com.study.demo.vo.ApplicationVO">
+		select 
+			*
+		from
+			memberapp
+		where
+			applNo = #{applNo}
+	</select>
+	
+	<update id="applApprovalUpdate" parameterType="com.study.demo.vo.ApplicationVO">
+		update memberapp set
+			status = #{status}
+		where 
+			applNo = #{applNo}
+	</update>
+	
 </mapper>

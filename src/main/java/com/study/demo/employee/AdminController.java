@@ -37,7 +37,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.study.demo.employee.service.AdminService;
+import com.study.demo.employee.service.ApplicationService;
 import com.study.demo.employee.service.AttachService;
+import com.study.demo.vo.ApplicationVO;
 import com.study.demo.vo.AttachImageVO;
 import com.study.demo.vo.Page;
 import com.study.demo.vo.employeeVO;
@@ -51,6 +53,9 @@ public class AdminController {
 	
 	@Autowired
 	private AttachService attachService;
+	
+	@Autowired
+	private ApplicationService applicationService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
@@ -525,7 +530,7 @@ public class AdminController {
 		employeeService.resignationDelete(employeevo);
 	}
 	
-	//퇴사자 선택사제
+	//퇴사자 선택삭제
 	@RequestMapping(value = "/resignationSelectDelete.do", method =  RequestMethod.POST)
 	@ResponseBody
 	public List<String> resignationSelectDelete(@RequestBody List<String> employNoArray){
@@ -542,10 +547,47 @@ public class AdminController {
 	public ModelAndView applicationGET() {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("/admin/application");
+		mav.setViewName("/admin/applicationList");
+		return mav;
+	}
+	//신청서 목록 출력
+	@RequestMapping(value ="/applicationList.do", method = RequestMethod.GET)
+	public ModelAndView applicationList(@ModelAttribute("applicationvo")ApplicationVO applicationvo) {
+		ModelAndView mav = new ModelAndView();
+		
+		List<ApplicationVO> list = applicationService.applicationList();
+		
+		System.out.println(list);
+		
+		mav.addObject("data", list);
+
+		mav.setViewName("jsonView");
+		
 		return mav;
 	}
 	
+	@RequestMapping(value = "/applApprovalPage", method = RequestMethod.GET)
+	public ModelAndView applApprovalPageGet(@RequestParam("applNo")int applNo) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("data", applicationService.applApprovalPage(applNo));
+		
+		mav.setViewName("/admin/approvalPop");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/applApprovalPage", method = RequestMethod.POST)
+	@ResponseBody
+	public void applApprovalPagePost(@ModelAttribute("applicationvo")ApplicationVO applicationvo) {
+		
+		applicationService.applApprovalUpdate(applicationvo);
+		
+		System.out.println(applicationvo);
+		
+		
+	}
+	
+	//버려?
 	@RequestMapping(value = "/statusSelect.do", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView statusSelect(@ModelAttribute("statusType")String statusType) {
@@ -556,4 +598,9 @@ public class AdminController {
 		mav.addObject("data", list);
 		return mav;
 	}
+	
+
+	
+	
+	
 }

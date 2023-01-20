@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자 페이지</title>
     <link rel="stylesheet" href="/resources/css/reset.css">
-    <link rel="stylesheet" href="/resources/css/application.css">
+    <link rel="stylesheet" href="/resources/css/applicationList.css">
 </head>
 
 <body>
@@ -65,30 +65,27 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                        	<th></th>
-                                            <th class="t1">사원번호<a href="javascript:resignationList('asc');" title="오름차순">▲</a><a  href="javascript:resignationList('desc');" title="내림차순">▼</a>
-                                            </th>
+                                            <th>사원번호</th>
                                             <th>이름</th>
-                                            <th>아이디</th>
                                             <th>부서명</th>
                                             <th>직급</th>
-                                            <th>직원구분</th>
-                                            <th>입사일</th>
-                                            <th>퇴사일</th>
+                                            <th>선택</th>
+                                            <th>신청일</th>
+                                            <th>종료일</th>
+                                            <th>상태</th>
                                             <th>승인</th>
                                             <th>삭제</th>
                                         </tr>
                                     </thead>
                                     <tbody class = "tbodyList">
-                                   
+                						
                                     </tbody>
-
                                 </table>
                             </div>
                             <!-- .table_box -->
                             
-                            <div class ="paging_box">
-							</div>
+                            <div class ="paging_box"></div>
+							<div class="noData">등록된 정보가 없습니다.</div>
                         </div>
                     </form>
                     <!-- .resignation_mg -->
@@ -104,6 +101,63 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script>
+	$(document).ready(function(){
+		applicationList();
+	});
+	
+	function applicationList(){
+		$.ajax({
+			type : 'get',
+			url : '/admin/applicationList.do',
+			dataType : 'json',
+			success : function(result){
+				
+				console.log(result);
+				
+				var data = result.data;
+				
+				console.log(data);
+				var html = "";
+			
+				
+				for(var i= 0; i <data.length; i++){
+					html += '<tr>';
+	                html += '<td width="10%">'+ data[i].emploNo +'</td>';
+	                html += '<td width="10%">'+ data[i].employeeName +'</td>';
+	                html += '<td width="10%">'+ data[i].departmentId +'</td>';
+	                html += '<td width="10%">'+ data[i].positionId +'</td>';
+	                html += '<td width="10%" class ="resig">'+ data[i].applselect +'</td>';
+	                html += '<td width="11%" class ="comreg">'+ data[i].startDate + '</td>';
+	                html += '<td width="11%" class ="resig">'+ data[i].endDate + '</td>';
+	                html += '<td width="11%" class ="resig">'+ data[i].status + '</td>';
+	                html += '<td width="8%"><a href="javascript:void(0)" id ="'+ data[i].applNo +'" class = "approval">승인</a></td>';
+	                html += '<td width="8%"><a href="javascript:void(0)" id ="" class ="delete">삭제</a></td>';
+	                html += '</tr>';
+				}
+				$('.tbodyList').html(html);
+				
+				if(html == null || html == "") {
+					$('.noData').addClass('on');
+				} else {
+					$('.noData').removeClass('on');
+				}
+				
+				$('.approval').on("click", function(e){
+					let popUrl = "/admin/applApprovalPage?applNo="+this.id;
+					let popOption = "width = 610px, height=800px, top=300px, left=0, scrollbars=no";
+				
+					window.open(popUrl,"사원정보 수정",popOption);
+				});
+			
+				
+			},
+			error : function(){
+				alert("연결에 실패하였습니다.");
+			}
+			
+		});
+	}
+
 </script>
 </body>
 </html>

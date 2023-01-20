@@ -20,7 +20,7 @@ public class ApplicationInterceptor extends HandlerInterceptorAdapter{
 		employeeVO employeevo = (employeeVO)session.getAttribute("member");
 		
 		if(employeevo == null) {
-			response.sendRedirect("/index");
+			response.sendRedirect("/main");
 			return false;
 		} else {
 			return true;

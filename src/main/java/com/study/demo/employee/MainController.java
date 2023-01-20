@@ -1,5 +1,6 @@
 package com.study.demo.employee;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.study.demo.employee.service.ApplicationService;
 import com.study.demo.vo.ApplicationVO;
+import com.study.demo.vo.MainPage;
 
 @Controller
 public class MainController {
@@ -27,15 +29,30 @@ public class MainController {
 	
 	@RequestMapping(value = "/main.do", method = RequestMethod.GET)
 	public ModelAndView submitlistPost(@ModelAttribute("applicationvo")ApplicationVO appvo,
-			String employeeId) {
+			@RequestParam(value="num", defaultValue = "1")int num,
+			String employeeId
+			) {
+		
+		System.out.println(num);
+		MainPage mainPage = new MainPage();
+		
+		HashMap<String, Object> rtnMap = new HashMap<String, Object>();
+		
+		mainPage.setNum(num);
+		mainPage.setTotalCount(applicationService.submitTotalcount(employeeId));
 		
 		System.out.println(employeeId);
 		ModelAndView mav = new ModelAndView();
 
-		List<ApplicationVO> list = applicationService.submitlist(employeeId);
+		List<ApplicationVO> list = applicationService.submitlist(employeeId, mainPage.getSqlPostNum(), mainPage.getPostNum());
 		
-		System.out.println(list);
-		mav.addObject("data", list);
+		rtnMap.put("list", list);
+		rtnMap.put("page", mainPage);
+		
+		mav.addObject("data", rtnMap);
+		
+		System.out.println(rtnMap);
+		
 		mav.setViewName("jsonView");
 		return mav;
 	}
