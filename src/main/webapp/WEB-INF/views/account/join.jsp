@@ -190,7 +190,7 @@
                     <!-- .join_button-->
                     <div class="join_cencel">
                         <div class="cencel">
-                            <a href="#">취소</a>
+                            <a href="/main">취소</a>
                         </div>
                     </div>
                 </div>  

@@ -8,7 +8,7 @@ public class ApplicationVO {
 	private String applselect;
 	private String startDate;
 	private String endDate;
-	private Date regDate;
+	private String regDate;
 	private String emergencyTell;
 	private String reason;
 	private String status;
@@ -47,7 +47,10 @@ public class ApplicationVO {
 			this.applselect = "월차";
 		}
 		if(applselect.equals("A4")) {
-			this.applselect = "반차";
+			this.applselect = "반차(오전)";
+		}
+		if(applselect.equals("A4-1")) {
+			this.applselect = "반차(오후)";
 		}
 		if(applselect.equals("A5")) {
 			this.applselect = "휴직";
@@ -69,10 +72,10 @@ public class ApplicationVO {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public Date getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(Date regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
 	public String getEmergencyTell() {

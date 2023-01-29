@@ -12,7 +12,7 @@
 		from
 			memberapp
         where  employeeId =  #{employeeId} 
-        and status = "승인대기" or status = "승인완료"  
+        and status in ('승인대기', '승인', '거부') 
         order by regDate desc
 		limit #{sqlPostNum}, #{postNum}	
  
@@ -53,11 +53,44 @@
 			applNo = #{applNo}
 	</update>
 	
-	<select id="applicationList" resultType="com.study.demo.vo.ApplicationVO">
-		select
-			*
-		from
-			memberapp
+	<sql id="appltWhere" >
+
+		<if test="searchKeyword != null and searchKeyword != ''">
+		<![CDATA[  
+			where
+				(
+				emploNo like concat('%',#{searchKeyword},'%') OR
+	    		employeeName like concat('%',#{searchKeyword},'%') OR
+	    		applselect like concat('%',#{searchKeyword},'%') OR
+	    		status like concat('%',#{searchKeyword},'%') OR
+	    		positionId like concat('%',#{searchKeyword},'%') OR
+	    		departmentId like concat('%',#{searchKeyword},'%')	
+		 		)
+	 	]]> 
+		</if>
+	</sql>
+	
+	
+	<select id="applicationList" parameterType="hashMap"  resultType="com.study.demo.vo.ApplicationVO">
+		<![CDATA[ 
+			select
+				*
+			from
+				memberapp
+		]]> 	
+		<include refid="appltWhere"/>
+		
+		<![CDATA[	
+			order by regDate desc	
+			limit #{sqlPostNum}, #{postNum}
+		]]>	
+	</select>
+	
+	<select id="applTotalCount" parameterType="hashMap" resultType="java.lang.Integer">
+		<![CDATA[ 
+			select count(*) from memberapp
+		]]> 
+		<include refid="appltWhere"/>
 	</select>
 	
 	<select id="applApprovalPage" resultType="com.study.demo.vo.ApplicationVO">
@@ -75,5 +108,12 @@
 		where 
 			applNo = #{applNo}
 	</update>
+	
+	<delete id="applApprovalDelete" parameterType="com.study.demo.vo.ApplicationVO">
+		delete from memberapp
+		where applNo = #{applNo}
+	</delete>
+	
+
 	
 </mapper>

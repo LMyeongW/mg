@@ -1,5 +1,9 @@
 package com.study.demo.employee.service;
 
+import java.io.File;
+import java.util.List;
+
+import com.study.demo.vo.MyprofileVO;
 import com.study.demo.vo.employeeVO;
 
 public interface MemberService {
@@ -11,6 +15,12 @@ public interface MemberService {
 	
 	//로그인실행
 	employeeVO employeeLogin(employeeVO employeevo);
+
+	void profileImgData(employeeVO employeevo);
+
+	List<MyprofileVO> profileImage(String employeeId);
+
+	void imgDatadelete(employeeVO employeevo);
 
 
 }

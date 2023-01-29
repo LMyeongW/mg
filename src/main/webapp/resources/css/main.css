@@ -31,7 +31,18 @@ header .header_m {
 header .header_m h1 {
     padding: 3px;
 }
+header .header_m .link {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+   
+}
 
+header .header_m .link a{
+	font-size: 16px;
+    font-weight: 500;
+}
 
 main {}
 
@@ -79,6 +90,23 @@ main .m_top .loginArea .join {
     left: 250px;
     bottom: 80px;
 }
+
+.save_btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    z-index: 99;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 50%;
+    line-height: 100px;
+    width: 100%; height: 100%;
+	
+	
+}
 main .m_top .loginArea .myprofil {
     position: absolute;
     top: 50%;
@@ -87,6 +115,54 @@ main .m_top .loginArea .myprofil {
     background-color: #2a2a2a;
     border-radius: 50%;
     width: 100px; height: 100px;
+}
+main .m_top .loginArea .myprofil .img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    overflow: hidden;
+    border-radius: 50%;
+    width: 100%; height: 100%;
+} 
+main .m_top .loginArea .myprofil .img img {
+    width: 100%; height: auto;
+}
+main .m_top .loginArea .myprofil .lineBox {
+    cursor: pointer;
+    width: 30px; height: 30px;
+}
+main .m_top .loginArea .myprofil .line1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 30px; height: 2px;
+}
+main .m_top .loginArea .myprofil .line2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 2px; height: 30px;
+}
+main .m_top .loginArea .myprofil .inputFile {
+    display: none;
+}
+main .m_top .loginArea .resultImg .imgDelete {
+    cursor: pointer;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1f1f1f;
+    color: #fff;
+    border-radius: 10px;
+    line-height: 20px;
+    z-index: 102;
+    width: 40px; height: 20px;
 }
 main .m_top .loginArea .name {
     position: absolute;
@@ -141,6 +217,7 @@ main .m_middle .left .applicationList .title{
     width: 100%; height: 40px;
 }
 main .m_middle .left .applicationList .table {
+	position: relative;
     padding: 20px;
     width: 100%; height: 100%;
 }
@@ -165,7 +242,7 @@ main .m_bottom{
 }
 .paging_box {
 	position: absolute;
-	bottom:10px;
+	bottom:38px;
 	left:50%;
 	margin:0;
 	padding:0;
@@ -173,21 +250,23 @@ main .m_bottom{
 	text-align: center;
 }
 .paging_box span{
-	display: inline_block;
 	text-align: center;
 	padding: 0 5px;
 }
 .paging_box span a {
-	display: inline_block;
-	padding: 0 3px;
 }
-.paging_box .numPadding {
-	padding:0 7px;
-}
+.paging_box .numPadding {}
+.point {
+	font-weight: bold;
 
+}
+.noPoint{
+	color:#bdbdbd;
+	font-weight: 300;
+}
 .login_btn1 {
 	position: absolute;
-	top:60%;
+	top:50%;
 	left:50%;
 	transform: translateX(-50%);
 	display:block;
@@ -198,6 +277,22 @@ main .m_bottom{
 	line-height:50px;
 	width:150px;
 	height:50px
+}
+
+.noData {
+	display: none;
+	position: absolute;
+	bottom:50%;
+	left:50%;
+	transform: translateX(-50%);
+}
+.on {
+	display: block;
+}
+
+.s1 {
+	font-weight:bold;
+	color: #750a0a;
 }
 
 footer {

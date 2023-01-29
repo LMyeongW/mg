@@ -147,6 +147,8 @@ main {
     width: 300px; height: 40px;
 }
 .resignation_wrap .resignation_mg .resignation_search .searchbtn{
+	position: relative;
+	z-index:10;
     background-color: #eeeeee;
     display: inline-block;
     text-align: center;
@@ -229,7 +231,14 @@ main {
 .paging_box .numPadding {
 	padding:0 7px;
 }
+.point {
+	font-weight: bold;
 
+}
+.noPoint{
+	color:#bdbdbd;
+	font-weight: 300;
+}
 .noData {
 	display: none;
 	position: absolute;

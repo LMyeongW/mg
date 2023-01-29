@@ -75,4 +75,33 @@
 		where
 			employeeId = #{employeeId}
 	</select>
+	
+	<update id="profileImgData" parameterType="com.study.demo.vo.employeeVO">
+		update employee set
+			profileName = #{profileName} ,
+			profileLoadPath = #{profileLoadPath},
+			profileUuid = #{profileUuid}
+		where 
+			employeeId = #{employeeId}
+	</update>
+	
+	<select id="profileImage" resultType="com.study.demo.vo.employeeVO">
+		select
+			profileName,
+			profileLoadPath,
+			profileUuid
+		from 
+			employee
+		where
+			employeeId = #{employeeId}
+	</select>
+	
+	<update id="imgDatadelete" parameterType="com.study.demo.vo.employeeVO">
+			update employee set
+			profileName = null ,
+			profileLoadPath = null,
+			profileUuid = null
+		where 
+			employeeId = #{employeeId}
+	</update>
 </mapper>

@@ -17,8 +17,8 @@ public class AdminServiceImpl implements AdminService{
 	
 	//회원가입 승인
 	@Override
-	public List<employeeVO> listPage(int sqlPostNum, int postNum) {
-		return employeeDao.listPage(sqlPostNum, postNum);
+	public List<employeeVO> listPage(int sqlPostNum, int postNum, String searchKeyword) {
+		return employeeDao.listPage(sqlPostNum, postNum, searchKeyword);
 	}
 	
 	//회원가입 상세페이지
@@ -27,12 +27,6 @@ public class AdminServiceImpl implements AdminService{
 		return employeeDao.joinDetail(employeeId);
 	}
 
-	//사원관리
-	@Override
-	public List<employeeVO> emploList(int sqlPostNum, int postNum) {
-		return employeeDao.emploList(sqlPostNum, postNum);
-	}
-	
 	//회원가입 승인
 	@Override
 	public void joinAppr(employeeVO employeevo) {
@@ -72,14 +66,14 @@ public class AdminServiceImpl implements AdminService{
 	
 	//사원관리 전체페이징 갯수
 	@Override
-	public int emploTotalCount(String searchKeyword) {
-		return employeeDao.emploTotalCount(searchKeyword);
+	public int emploTotalCount(String searchKeyword, String statusIdSelect) {
+		return employeeDao.emploTotalCount(searchKeyword, statusIdSelect);
 	}
 	
 	//회원가입 승인 전체페이징 갯수
 	@Override
-	public int jointotalCount() {
-		return employeeDao.jointotalCount();
+	public int jointotalCount(String searchKeyword) {
+		return employeeDao.jointotalCount(searchKeyword);
 	}
 	
 	//회원가입 승인 삭제
@@ -125,8 +119,8 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword) {
-		return employeeDao.emploListSort(orderType, sqlPostNum, postNum, searchKeyword);
+	public List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword, String statusIdSelect) {
+		return employeeDao.emploListSort(orderType, sqlPostNum, postNum, searchKeyword, statusIdSelect);
 	}
 
 	//퇴사자 list

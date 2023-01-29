@@ -29,7 +29,7 @@
                     
                     <c:if test="${member != null}">
                     	<div class="loginAndjoin">
-                        	<a href="account/logout.do" class="login">로그아웃</a>
+                        	<a href="/account/logout.do" class="login">로그아웃</a>
                      
                     	</div>
                     </c:if>
@@ -47,7 +47,9 @@
                         <div class="title">신청서 작성</div>
                     </div>
                     <div class="my">
-                        <div class="myprofile"></div>
+                        <div class="myprofile">
+                        	<div class="resultImg"></div>
+                        </div>
                         <div class="myname"><input type="text" readonly="readonly" name="employeeId" value ="${member.employeeId}"/></div>
                     </div>
                     <div class="right_border"></div>
@@ -76,7 +78,8 @@
                                 <option value="A1">휴가</option>
                                 <option value="A2">연차</option>
                                 <option value="A3">월차</option>
-                                <option value="A4">반차</option>
+                                <option value="A4">반차(오전)</option>
+                                <option value="A4-1">반차(오후)</option>
                                 <option value="A5">휴직</option>
                                 <option value="A6">기타</option>
                             </select>
@@ -105,7 +108,7 @@
 
                         <div class="btn_box">
                             <div class="application_btn">등록</div>
-                            <div class="applicationCen_btn">취소</div>
+                            <div class="applicationCen_btn"><a href="/main">취소</a></div>
                         </div>
                     </div>
                     <!-- .input_wrap -->
@@ -128,6 +131,49 @@
 		var endDate = false; //종료날
 		var emergencyTell = false; //비상연락망
 		var reason = false; //사유*/
+		var employeeId =  $("input[name=employeeId]").val();
+		var uploadResult = $(".resultImg");
+		
+		$.getJSON("/account/profileImage", {employeeId : employeeId}, function(arr){
+			console.log("이미지 반환" + arr);
+			
+			var str ="";
+			var obj = arr[0];
+	    	var fileCallPath = encodeURIComponent(obj.profileLoadPath + "/s_" + obj.profileUuid + "_" + obj.profileName);
+	    	
+	    	str += "<div class='picture' data-path= '" + obj.profileLoadPath + "' data-uuid='" + obj.profileUuid + "' data-filename='" + obj.profileName + "'>";
+	 
+	    	str += "<div class='img'>";
+	    	str += "<img src='/account/display?profileName="+ fileCallPath +"'>";
+	    	str += "</div>";
+			str += "<input type='hidden' name='profileName' value='"+ obj.profileName +"'>";
+			str += "<input type='hidden' name='profileUuid' value='"+ obj.profileUuid +"'>";
+			str += "<input type='hidden' name='profileLoadPath' value='"+ obj.profileLoadPath +"'>";
+	    	str += "</div>";
+	     	
+	    	uploadResult.append(str);
+		});
+		
+		//날짜포맷 yyyy-mm-dd
+		var date = new Date();
+		console.log(date);
+
+		var year = date.getFullYear();
+
+		var month = date.getMonth();
+		month += 1;
+		if (month <= 9){
+		    month = "0" + month;
+		}
+
+		var day = date.getDate();
+		if (day <= 9){
+		    day = "0" + month;
+		}
+
+		var today = year + '-' + month + '-' + day;
+		console.log(today);
+
 
 		$('.application_btn').on("click", function(e){
 			
@@ -147,6 +193,16 @@
 			} 
 			if(endD == ""){
 				alert("종료일 입력해주세요.");
+				return false;
+			}
+
+			if(today > startD){
+				alert("현재날짜를 지났습니다.");
+				return false;
+			}
+			
+			if(today > endD){
+				alert("현재날짜를 지났습니다.");
 				return false;
 			}
 			

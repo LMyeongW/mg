@@ -14,14 +14,25 @@
 
 <body>
     <div id="wrap">
+    	
         <header>
             <div class="inner_size">
                 <div class="header_m">
                     <h1>사원관리</h1>
                     <!-- .loginAndjoin -->
+                    
+					
+					<c:if test="${member != null}">
+                    	<c:if test="${member.adminCk == 1 }">
+                    		<div class="link">
+                    			<a href="/admin/joinlist">관리자페이지</a>
+                    		</div>
+                    	</c:if>
+                    </c:if>
+					
                 </div>
                 <!-- .header_m -->
-
+				
             </div>
             <!-- .inner_size -->
         </header>
@@ -42,12 +53,36 @@
                     </c:if>
 					<c:if test="${member != null}">
                     	<div class="loginArea">
-                        	<div class="myprofil"></div>
+                    		<form name="profileForm" id="profile_From">
+                        	<div class="myprofil">
+                        		<div class="lineBox">
+                                	<span class="line1"></span>
+                                	<span class="line2"></span>
+                            	</div>
+                            	
+                            	<button class="inputFile">
+                                	<input type="file" name ="uploadFile"/>
+                                	<input type="hidden" name="employeeId" value ="${member.employeeId}"/>
+                            	</button>
+                            	
+                                <div class="resultImg">
+                               
+                                	<!-- <div class="img">
+                                    	
+                                	</div>
+                                	<div class="imgDelete">
+                                   	 삭제
+                                	</div> -->
+                            	</div>
+							
+                        	</div>
+                 			</form>
                         	<input type="hidden" name="employeeId" value ="${member.employeeId}"/>
                         	<div class="name">${member.employeeName}님</div>
                         	<div class="email">${member.employeeMail}</div>
                         	<a href="/application/submit" class="applsubmit">신청서 작성</a>
                         	<div class="logOut"><a href="/account/logout.do">로그아웃</a></div>
+                        	
                     	</div>
                     </c:if>
                 </div>
@@ -72,6 +107,7 @@
                                     		<tbody id="tbodyList"></tbody>
                                			</table>                            	
                             			<div class ="paging_box"></div>
+                            			<div class="noData">등록된 정보가 없습니다.</div>
                             		</div> 
                         		</div>
                     		</div>
@@ -105,7 +141,7 @@
                 <!-- .m_bottom -->
             </div>
             <!-- .inner_size -->
-
+	
         </main>
         <!-- main -->
 
@@ -114,6 +150,7 @@
             Footer
         </footer>
         <!-- footer -->
+    
     </div>
     <!-- #wrap -->
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
@@ -151,9 +188,9 @@
 
 					html += "<tr>";
 					html += "<td width ='9%'>" + data.list[i].employeeName + "</td>";
-	           		html += "<td width ='10%'>" + data.list[i].startDate + "</td>";
+	           		html += "<td width ='10%'>" + data.list[i].regDate + "</td>";
 	           		html += "<td width ='10%'>" + data.list[i].applselect + "</td>";
-	           		html += "<td width ='10%'>" + data.list[i].status + "</td>";
+	           		html += "<td width ='10%' class='s1'>" + data.list[i].status + "</td>";
 	           		html += "<td width ='9%'><a href ='application/submitUpdate?applNo="+ data.list[i].applNo +"' title='' class='update'>수정 </a></td>";
 	           		html += "<td width ='9%'><a href ='application/submitCencel?applNo="+ data.list[i].applNo +"' title='' class='detail'>신청취소</a></td>";
 	       		    html += "</tr>";
@@ -161,6 +198,13 @@
 				
 				$('#tbodyList').html(html);
 				
+				if(html == null || html == "") {
+					$('.noData').addClass('on');
+				} else {
+					$('.noData').removeClass('on');
+				}
+				
+				console.log(data.page); 
 				var page = "";
 				if(data.page.prev){
 					var startPageNum = data.page.startPageNum - 1;
@@ -171,9 +215,17 @@
 				}
 				
 				for(var num = data.page.startPageNum; num <= data.page.endPageNum; num++ ){
-					page += '<span class="numPadding">';
-					page += '<a href="javascript:submitList(\''+ employeeId +'\',' + num + ')">' + num + '</a>';
-					page +=	'</span>';
+					if(data.select == num){
+						page += '<span class="numPadding">';
+						page += '<span class="point"><a href="javascript:submitList(\''+ employeeId +'\',' + num + ')">' + num + '</a></span>';
+						page +=	'</span>';
+					}
+					
+					if(data.select != num){
+						page += '<span class="numPadding">';
+						page += '<span class="noPoint"><a href="javascript:submitList(\''+ employeeId +'\',' + num + ')">' + num + '</a></span>';
+						page +=	'</span>';
+					}
 				}
 				console.log(num);
 				
@@ -193,6 +245,213 @@
 			
 		});
 	}
+	
+    $('.lineBox').click(function(){
+    	var inputFile = $("input[type=file]");
+    	inputFile.click();
+    	
+    	inputFile.on("change", function(e){
+    		if($(".imgDelete").length > 0){
+    			deleteFile();
+    		}
+    		var formData = new FormData();
+    		var fileInput = $("input[name=uploadFile]");
+    		var fileList = fileInput[0].files;
+    		var fileObj = fileList[0];
+    		
+    		console.log("fileList" + fileList);
+    		console.log("fileObj" + fileObj.name);
+    		console.log("fileObj" + fileObj.size);
+    		console.log("fileObj" + fileObj.type);
+    		
+    		if(!fileCheck(fileObj.name, fileObj.size)){
+    			return false;
+    		}
+    		
+    		formData.append("uploadFile", fileObj);
+    		
+    		$.ajax({
+    			url : '/account/uploadProfileImg',
+    			type : 'post',
+    			processData : false, //서버로 전송할 데이터를 queryStirng 형태로 변환할지 여부
+    			contentType: false, //서버로 전송되는 데이터의 content-type
+    			data : formData,
+    			dataType : 'json',
+    			success : function(result){
+    				console.log(result);
+    				showUploadImage(result);
+    			},
+    			error : function(result){
+    				alert("이미지 파일이 아닙니다.");
+    			}
+
+    		});
+    		
+    	});
+    });
+    
+    //파일체크
+    var regex = new RegExp("(.*?)\.(jpg|png)$");
+    var maxSize = 1048576;
+    
+    function fileCheck(fileName, fileSize){
+    	if(fileSize >= maxSize){
+    		alert("파일 사이즈 초과");
+    		return false;
+    	}
+    	
+    	if(!regex.test(fileName)){
+    		alert("해당 종류의 파일은 업로드할 수 없습니다.");
+    		return false;
+    	}
+    	return true;
+    }
+    
+    //이미지 출력
+   	function showUploadImage(uploadResultArr){
+    	
+    	//전달받을 데이터 검증
+    	if(!uploadResultArr || uploadResultArr.length == 0){return}
+    	
+    	//<div> 태그 요소
+    	var uploadResult = $(".resultImg");
+    	
+    	var obj = uploadResultArr[0];
+    	
+    	var str = "";
+    	
+    	//이미지 출력을 요청하는 url 매핑 메서드("/display")에 전달해줄 파일의 경로와 이름을 포함하는 값
+    	var fileCallPath = encodeURIComponent(obj.profileLoadPath + "/s_" + obj.profileUuid + "_" + obj.profileName);
+    	
+    	str += "<div class='picture' data-path= '" + obj.profileLoadPath + "' data-uuid='" + obj.profileUuid + "' data-filename='" + obj.profileName + "'>";
+ 
+    	str += "<div class='img'>";
+    	str += "<img src='/account/display?profileName="+ fileCallPath +"'>";
+    	str += "</div>";
+    	str += "<div class='save_btn'>저장</div>"
+    	str += "<div class='imgDelete' data-file='"+ fileCallPath + "'>삭제</div>";
+		str += "<input type='hidden' name='profileName' value='"+ obj.profileName +"'>";
+		str += "<input type='hidden' name='profileUuid' value='"+ obj.profileUuid +"'>";
+		str += "<input type='hidden' name='profileLoadPath' value='"+ obj.profileLoadPath +"'>";
+    	str += "</div>";
+     	
+    	uploadResult.append(str);
+    }
+    
+	$(document).ready(function(){
+		var employeeId =  $("input[name=employeeId]").val();
+		var uploadResult = $(".resultImg");
+		
+		$.getJSON("/account/profileImage", {employeeId : employeeId}, function(arr){
+			console.log("이미지 반환" + arr);
+			
+			var str ="";
+			var obj = arr[0];
+	    	var fileCallPath = encodeURIComponent(obj.profileLoadPath + "/s_" + obj.profileUuid + "_" + obj.profileName);
+	    	
+	    	str += "<div class='picture' data-path= '" + obj.profileLoadPath + "' data-uuid='" + obj.profileUuid + "' data-filename='" + obj.profileName + "'>";
+	 
+	    	str += "<div class='img'>";
+	    	str += "<img src='/account/display?profileName="+ fileCallPath +"'>";
+	    	str += "</div>";
+	    	str += "<div class='imgDelete' data-file='"+ fileCallPath + "'>삭제</div>";
+			str += "<input type='hidden' name='profileName' value='"+ obj.profileName +"'>";
+			str += "<input type='hidden' name='profileUuid' value='"+ obj.profileUuid +"'>";
+			str += "<input type='hidden' name='profileLoadPath' value='"+ obj.profileLoadPath +"'>";
+	    	str += "</div>";
+	     	
+	    	uploadResult.append(str);
+		});
+	});
+    
+    //이미지 삭제버튼
+    $('.resultImg').on("click",".imgDelete", function(){
+    	var con = confirm("프로필 사진을 삭제하시겠습니까?")
+    	if(con == true){
+    		deleteFile();
+    		alert("사진이 삭제되었습니다.");
+    	}else {
+    		alert("취소되었습니다.");
+    	}
+    	
+    	console.log(deleteFile);
+    });
+    
+    //이미지삭제
+    function deleteFile(){
+    	var targetFile = $('.imgDelete').data("file");
+    	var targetDiv = $('.picture');
+    	var savebtn = $('.save_btn');
+    	$.ajax({
+    		url : '/account/deleteFile',
+    		data : {
+    			profileName : targetFile
+    		},
+    		dataType : 'text',
+    		type : 'post',
+    		success : function(result){
+    			console.log(result);
+    			location.reload();
+    			targetDiv.remove();
+  
+    			$("input[type=file]").val("");
+    			
+    			var data = $("form[name=profileForm]").serialize();
+				$.ajax({
+					type : 'GET',
+					url : '/account/imgDatadelete',
+					data : data,
+					success : function(data){
+	
+							console.log("이미지 삭제 : "+ data);
+					
+	 				},
+	 				error : function(){
+	 					alert("연결에 실패하였습니다.");
+	 				}
+				});
+    		},
+    		error : function(result){
+    			console.log(result);
+    			
+    			alert("파일을 삭제하지 못하였습니다.")
+    		}
+    		
+    	});
+    	console.log(targetFile);
+    	
+    }
+
+	
+    $('.resultImg').on("click", ".save_btn", function(){
+    	var data = $("form[name=profileForm]").serialize();
+    	var saveBox = $('.save_btn');
+    	console.log(data);
+    	
+    	var con = confirm("저장하시겠습니까?")
+    	if(con == true){
+        	$.ajax({
+        		
+        		type : 'post',
+        		url : '/account/profilePost',
+        		
+        		data : data,
+        		success : function(result){
+        			saveBox.remove();
+        			alert("저장되었습니다.");
+        		},
+        		error : function(){
+        			alert("연결에 실패하였습니다.");
+        		}
+        	});
+    	}else {
+    		alert("취소되었습니다.");
+    	}
+
+    	
+    });
+    
+
 
 </script>
 </body>

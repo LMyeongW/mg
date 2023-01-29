@@ -47,14 +47,14 @@
                             <ul>
                                	<li><a href="/admin/employeelist">직원관리</a><span class="line1"></span></li>
                                 <li><a href="/admin/resignation">퇴사자관리</a><span class="line"></span></li>
-                                <li><a href="/admin/application">휴직자</a><span class="line1"></span></li>
+                                <li><a href="/admin/application">신청서관리</a><span class="line1"></span></li>
                                 <li><a href="/admin/joinlist">회원승인</a><span class="line1"></span></li>
                             </ul>
                         </nav>
                         <div class="resignation_mg">
                             <div class="resignation_search">
                                 <input type="text" class="search_input" name="searchKeyword" placeholder="검색어를 입력해주세요.">
-                                <a href="#" onclick="employeeList();" class="searchbtn">검색</a>
+                                <a href="#" class="searchbtn">검색</a>
                             </div>
 							<div class="check_box">
                 				<div class="c1"><input type="checkbox" id="allCheck"><labal>전체선택</labal></div>
@@ -111,6 +111,44 @@
 			$("input[name=searchKeyword]").val(searchKeyword);
 			resignationList();
 		});
+		
+		
+		$('.selectDelete').on('click', function(){
+			
+			var employNoArray =[];
+			
+			$("input:checkbox[name=chck]:checked").each(function(){
+				
+				employNoArray.push($(this).val());
+				
+			});
+			console.log(employNoArray);
+			
+			if(employNoArray == "" || employNoArray == null){
+				alert("삭제할 항목을 선택해주세요.");
+			}
+			
+			var confirmAlert = confirm("정말로 삭제하시겠습니까?");
+			
+			if(confirmAlert == true){
+				
+				$.ajax({
+					
+					type : 'POST',
+					url : '/admin/resignationSelectDelete.do',
+					dataType : 'json',
+					data : JSON.stringify(employNoArray),
+					contentType : 'application/json',
+					success : function(result){
+						location.reload();
+						alert("선택하신 항목이 정상적으로 삭제되었습니다.");
+					},
+					error : function(){
+						
+					}
+				});//선택삭제 ajax
+			}
+		});//선택삭제 버튼
 	});
 	
 	function resignationList(order, num, searchKeyword){
@@ -199,9 +237,17 @@
 				}
 				
 				for(var num = data.page.startPageNum; num <= data.page.endPageNum; num++ ){
-					page += '<span class="numPadding">';
-					page += '<a href="javascript:resignationList(\''+ data.orderType +'\',' + num + ')">' + num + '</a>';
-					page +=	'</span>';
+					if(data.select == num){
+						page += '<span class="numPadding">';
+						page += '<span class="point"><a href="javascript:resignationList(\''+ data.orderType +'\',' + num + ')">' + num + '</a></span>';
+						page +=	'</span>';
+					}
+					
+					if(data.select != num){
+						page += '<span class="numPadding">';
+						page += '<span class="noPoint"><a href="javascript:resignationList(\''+ data.orderType +'\',' + num + ')">' + num + '</a></span>';
+						page +=	'</span>';
+					}
 				}
 				
 				
@@ -235,7 +281,7 @@
 					$('#allCheck').prop("checked", false);
 				})
 				
-				$('.selectDelete').on('click', function(){
+				/* $('.selectDelete').on('click', function(){
 					
 					var employNoArray =[];
 					
@@ -252,7 +298,7 @@
 					
 					var confirmAlert = confirm("정말로 삭제하시겠습니까?");
 					
-					if(confirmAlert){
+					if(confirmAlert == true){
 						
 						$.ajax({
 							
@@ -270,7 +316,7 @@
 							}
 						});//선택삭제 ajax
 					}
-				});//선택삭제 버튼
+				});//선택삭제 버튼 */
 	
 				
 			},

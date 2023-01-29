@@ -48,6 +48,7 @@ public class MainController {
 		
 		rtnMap.put("list", list);
 		rtnMap.put("page", mainPage);
+		rtnMap.put("select", num);
 		
 		mav.addObject("data", rtnMap);
 		

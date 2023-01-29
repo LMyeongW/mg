@@ -87,7 +87,7 @@
                     			<input type="submit" value="승인"/>
                     		</div>
                         	<!-- 승인 -->
-                        	<div class=" ref"><a href="/admin/joinlist?${employeevo.qustr}">취소</a></div>
+                        	<div class=" ref"><a href="/admin/joinlist?${employeevo.qustr}${page.searchKeyword}">취소</a></div>
                         <!-- 거절 -->
                     	</div>
                 	</div>

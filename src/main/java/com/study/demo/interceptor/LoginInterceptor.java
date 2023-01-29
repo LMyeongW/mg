@@ -13,11 +13,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-	      System.out.println("LoginInterceptor preHandle 작동");
+	    System.out.println("LoginInterceptor preHandle 작동");
 	        
-	      HttpSession session = request.getSession();
+	    HttpSession session = request.getSession();
 	        
-	      session.invalidate();
+	    session.invalidate();
 	 
 		
 		return true;

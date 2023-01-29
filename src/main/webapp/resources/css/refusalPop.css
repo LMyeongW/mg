@@ -38,6 +38,22 @@
     border-radius: 20px 100px 0 0;
     width: 500px; height: 70px;
 }
+.refusal_wrap .check_box {
+	display:flex;
+	z-index:10;
+	margin-bottom:10px;
+	width:100%;
+
+}.refusal_wrap .check_box .c1 {
+	line-height:30px;
+	margin-left:20px;
+}
+.refusal_wrap .check_box .selectDelete {
+	font-size:13px;
+	cursor: pointer;
+	margin-left:10px;
+	width:60px; height:30px;
+}
 
 .content table {}
 .content table thead{
@@ -171,4 +187,13 @@
 .confirm1 .text1 a {
     display: block;
     width: 100%; height: 100%;
+}
+
+.point {
+	font-weight: bold;
+
+}
+.noPoint{
+	color:#bdbdbd;
+	font-weight: 300;
 }

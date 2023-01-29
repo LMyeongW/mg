@@ -70,7 +70,7 @@
                             </div>
                             
                             <div class="cencel_btn_box">
-                                <a href="#">Cencel</a>
+                                <a href="/main">Cencel</a>
                             </div>
                         </div>
                         <!-- .loginAndCencel -->
@@ -93,8 +93,33 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script>
 
+
+
 	$(".login_btn").click(function(){
 		
+		
+	/*	var employeeId = $('#id_input').val();
+		console.log(employeeId);
+		var data = {employeeId : employeeId}
+		console.log(data);
+	
+		console.log("테스트")
+		$.ajax({
+			type : "get",
+			url : "/account/employeeIdCk",
+			data : data,
+			success : function(result){
+				
+				if(result != 'fail'){
+					alert("아이디나 비밀번호를 확인해주세요.");
+				}
+				
+
+				
+
+				
+			}
+		});	*/
 		//alert("로그인버튼클릭");
 		$("#login_form").attr("action","/account/login.do");
 		$("#login_form").submit();

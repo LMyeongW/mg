@@ -121,26 +121,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script>
 /*이미지 출력*/
-	function showUploadImage(uploadResultArr){
-	
-		/*전달받은 데이터 검증*/
-		if(!uploadResultArr || uploadResultArr.lenght == 0){return}
-		var targetFile = $(".imgDeleteBtn").data("file");
-		var uploadResult = $(".picture_box");
-		var obj = uploadResultArr[0];
-		var str ="";
-		var fileCallPath = encodeURIComponent(obj.uploadPath.replace(/\\/g, '/') + "/s_" + obj.uuid + "_" + obj.fileName);
-		str += "<div class='picture'>";
-		str += "<img  class='img' src='/admin/display?fileName=" + fileCallPath +"'>";
-		str += " <div class='imgDeleteBtn' data-file='" + fileCallPath + "'> </div>"
-		str += "<input type='hidden' name='fileName' value='"+ obj.fileName +"'>";
-		str += "<input type='hidden' name='uuid' value='"+ obj.uuid +"'>";
-		str += "<input type='hidden' name='uploadPath' value='"+ obj.uploadPath +"'>";
-		str += "</div>";
-	
-		uploadResult.append(str);
-	
-	}
+
 	$(document).ready(function(){
 		 var emploNo ='<c:out value="${data.emploNo}"/>';
 		 var uploadReslut = $(".picture_box");

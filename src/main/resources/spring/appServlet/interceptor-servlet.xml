@@ -20,9 +20,15 @@
        
        	<interceptor>
 			<mapping path="/application/**"/>
-			<exclude-mapping path="//application/submit"/>
+			
 			<beans:bean id="ApplicationInterceptor" class="com.study.demo.interceptor.ApplicationInterceptor"></beans:bean>
 		</interceptor>
+		
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<beans:bean id="AdminInterceptor" class="com.study.demo.interceptor.AdminInterceptor"></beans:bean>
+		</interceptor>
+		
 
     </interceptors>
          

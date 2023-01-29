@@ -18,7 +18,8 @@ public class Page {
 	private boolean next;
 	
 	private String queryString;
-
+	private String searchKeyword;
+	
 	public int getNum() {
 		return num;
 	}
@@ -98,14 +99,31 @@ public class Page {
 		
 		this.queryString = qs;
 	}
+	
+
+	public String getSearchKeyword() {
+		return searchKeyword;
+	}
+
+	public void setSearchKeyword(String searchKeyword) {
+		this.searchKeyword = searchKeyword;
+		
+		if(searchKeyword.equals("")) {
+			this.searchKeyword = "";
+		}else {
+			this.searchKeyword = "&searchKeyword=" + searchKeyword;
+		}
+	}
 
 	@Override
 	public String toString() {
 		return "Page [num=" + num + ", totalCount=" + totalCount + ", postNum=" + postNum + ", pageNum=" + pageNum
 				+ ", sqlPostNum=" + sqlPostNum + ", pageNum_cnt=" + pageNum_cnt + ", endPageNum=" + endPageNum
 				+ ", startPageNum=" + startPageNum + ", prev=" + prev + ", next=" + next + ", queryString="
-				+ queryString + "]";
+				+ queryString + ", searchKeyword=" + searchKeyword + "]";
 	}
+
+
 	
 	
 	

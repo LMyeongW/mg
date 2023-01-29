@@ -61,17 +61,23 @@ public class AdminController {
 	
 	//회원가입리스트
 	@RequestMapping(value = "/joinlist", method = RequestMethod.GET)
-	public ModelAndView joinList(@RequestParam(value="num", defaultValue = "1")int num, @ModelAttribute("employeevo")employeeVO employeevo, HttpServletRequest request) throws UnsupportedEncodingException {
+	public ModelAndView joinList(@RequestParam(value="num", defaultValue = "1")int num,
+			@ModelAttribute("employeevo")employeeVO employeevo, HttpServletRequest request,
+			@ModelAttribute("searchKeyword")String searchKeyword
+			) throws UnsupportedEncodingException {
 		ModelAndView mav = new ModelAndView();
 		
+		System.out.println(searchKeyword);
 		Page page = new Page();
 		
 		page.setNum(num);
-		page.setTotalCount(employeeService.jointotalCount());
-		List<employeeVO> list = employeeService.listPage(page.getSqlPostNum(), page.getPostNum());
+		page.setTotalCount(employeeService.jointotalCount(searchKeyword));
+		page.setSearchKeyword(searchKeyword);
+		List<employeeVO> list = employeeService.listPage(page.getSqlPostNum(), page.getPostNum(), searchKeyword);
 		
 		mav.addObject("data", list);
 		mav.addObject("page", page);
+		mav.addObject("select", num);
 		
 		employeevo.setQustr();
 		mav.setViewName("admin/joinList");
@@ -152,6 +158,7 @@ public class AdminController {
 		List<employeeVO> refusalList = employeeService.refusalList(page.getSqlPostNum(), page.getPostNum());
 		mav.addObject("data", refusalList);
 		mav.addObject("page", page);
+		mav.addObject("select", num);
 	
 		mav.setViewName("/admin/refusalPop");
 		System.out.println(mav);
@@ -186,6 +193,7 @@ public class AdminController {
 	@RequestMapping(value = "/employeelist.do", method = RequestMethod.GET)
 	public ModelAndView employeelistSort(@ModelAttribute("orderType")String orderType,
 			@ModelAttribute("searchKeyword")String searchKeyword,
+			@ModelAttribute("statusIdSelect")String statusIdSelect,
 			@ModelAttribute("employeevo")employeeVO employeevo,
 			@RequestParam(value="num", defaultValue = "1")int num) throws UnsupportedEncodingException {
 		
@@ -196,11 +204,12 @@ public class AdminController {
 		HashMap<String, Object> rtnMap = new HashMap<String, Object>();
 		
 		System.out.println(searchKeyword);
+		System.out.println(statusIdSelect);
 		
 		page.setNum(num);
-		page.setTotalCount(employeeService.emploTotalCount(searchKeyword));
+		page.setTotalCount(employeeService.emploTotalCount(searchKeyword, statusIdSelect));
 		
-		List<employeeVO> list = employeeService.emploListSort(orderType, page.getSqlPostNum(), page.getPostNum(), searchKeyword);
+		List<employeeVO> list = employeeService.emploListSort(orderType, page.getSqlPostNum(), page.getPostNum(), searchKeyword, statusIdSelect);
 		
 		DecimalFormat decFormat = new DecimalFormat("###,###,###,###,###,###");
 		
@@ -211,7 +220,7 @@ public class AdminController {
 		rtnMap.put("list", list);
 		rtnMap.put("page", page);
 		rtnMap.put("orderType", orderType);
-		
+		rtnMap.put("select", num);
 		mav.addObject("data", rtnMap);
 		
 		employeevo.setQustr();
@@ -344,7 +353,7 @@ public class AdminController {
 				BufferedImage bo_image = ImageIO.read(saveFile);
 				
 					/*비율*/
-					double ratio = 3;
+					double ratio = 1;
 					/*넓이 높이*/
 					int width = (int) (bo_image.getWidth()/ratio);
 					int height = (int)(bo_image.getHeight()/ratio);
@@ -449,6 +458,7 @@ public class AdminController {
 		return new ResponseEntity<String>("success", HttpStatus.OK); //try문에서 예외 없이 성공적으로 처리 햇다는 문자열을 뷰로 전달
 	}
 	
+	//이미지삭제
 	@RequestMapping(value = "/imgDatadelete.do", method = RequestMethod.GET)
 	@ResponseBody
 	public void imgDatedelete(@ModelAttribute("employeevo")AttachImageVO attachImagevo) {
@@ -491,6 +501,8 @@ public class AdminController {
 		rtnMap.put("list", list);
 		rtnMap.put("page", page);
 		rtnMap.put("orderType", orderType);
+		rtnMap.put("select", num);
+		
 		mav.addObject("data", rtnMap);
 		
 		System.out.println("list = "+ rtnMap);
@@ -552,15 +564,30 @@ public class AdminController {
 	}
 	//신청서 목록 출력
 	@RequestMapping(value ="/applicationList.do", method = RequestMethod.GET)
-	public ModelAndView applicationList(@ModelAttribute("applicationvo")ApplicationVO applicationvo) {
+	public ModelAndView applicationList(@ModelAttribute("applicationvo")ApplicationVO applicationvo,
+			@ModelAttribute("searchKeyword")String searchKeyword,
+			@RequestParam(value="num", defaultValue = "1")int num) {
+		
+		System.out.println(searchKeyword);
 		ModelAndView mav = new ModelAndView();
 		
-		List<ApplicationVO> list = applicationService.applicationList();
+		Page page = new Page();
+		
+		HashMap<String, Object> rtnMap = new HashMap<String, Object>();
+		
+		page.setNum(num);
+		page.setTotalCount(applicationService.applTotalCount(searchKeyword));
+		
+		List<ApplicationVO> list = applicationService.applicationList(page.getSqlPostNum(), page.getPostNum(), searchKeyword);
 		
 		System.out.println(list);
 		
-		mav.addObject("data", list);
-
+		rtnMap.put("page", page);
+		rtnMap.put("list", list);
+		rtnMap.put("select", num);
+		mav.addObject("data", rtnMap);
+		
+		System.out.println(rtnMap);
 		mav.setViewName("jsonView");
 		
 		return mav;
@@ -583,9 +610,19 @@ public class AdminController {
 		applicationService.applApprovalUpdate(applicationvo);
 		
 		System.out.println(applicationvo);
-		
-		
 	}
+	
+	@RequestMapping(value = "/applApprovalDelete", method = RequestMethod.GET)
+	public ModelAndView applApprovalDelete(@ModelAttribute("applicationvo")ApplicationVO applicationvo) {
+		ModelAndView mav = new ModelAndView();
+		
+		applicationService.applApprovalDelete(applicationvo);
+		
+		mav.setViewName("redirect:/admin/application");
+		return mav;
+	}
+	
+	//
 	
 	//버려?
 	@RequestMapping(value = "/statusSelect.do", method = RequestMethod.GET)

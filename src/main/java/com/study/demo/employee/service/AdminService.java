@@ -8,11 +8,8 @@ public interface AdminService {
 
 
 	/*회원승인리스트*/
-	List<employeeVO> listPage(int sqlPostNum, int postNum);
+	List<employeeVO> listPage(int sqlPostNum, int postNum, String searchKeyword);
 
-	/*사원관리*/
-	List<employeeVO> emploList(int sqlPostNum, int postNum);
-	
 	/*회원가입 상세페이지*/
 	Object joinDetail(String employeeId);
 
@@ -29,10 +26,10 @@ public interface AdminService {
 	void employeeDetailPOST(employeeVO employeevo);
 	
 	/* 사원관리 페이징 전체갯수 */
-	int emploTotalCount(String searchKeyword);
+	int emploTotalCount(String searchKeyword, String statusIdSelect);
 	
 	/*회원가입승인 페이징 전체갯수*/
-	int jointotalCount();
+	int jointotalCount(String searchKeyword);
 	
 	/*회원가입승인 삭제*/
 	void joindelete(String employeeId);
@@ -53,7 +50,7 @@ public interface AdminService {
 	void selectDelete(List<String> employeeIdArray);
 	
 	//list 정렬
-	List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword);
+	List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword, String statusIdSelect);
 	
 	//퇴사자 list
 	List<employeeVO> resignationList(int sqlPostNum, int postNum, String orderType, String searchKeyword);

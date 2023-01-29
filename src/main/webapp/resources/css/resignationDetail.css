@@ -26,9 +26,11 @@
     position: relative;
     border: 1px solid #d1d1d1;
     overflow: hidden;
-    width: 200px; height: 260px;
+    width: 200px; height: 250px;
 }
-
+.content .picture img{
+ 	width: 100%; height: 100%;
+}
 .content .picture span {
     position: absolute;
     top: 50%;

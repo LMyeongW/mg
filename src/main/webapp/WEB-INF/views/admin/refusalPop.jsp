@@ -83,7 +83,13 @@
   		
      					<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
   							<span>
-  								<a href="/admin/refusalPop?num=${num}">${num}</a>
+  								<c:if test="${select != num }">
+  									<span class="noPoint"><a href="/admin/joinlist?num=${num}${page.searchKeyword}">${num}</a></span>
+  								</c:if>
+  										
+  								<c:if test="${select == num }">
+  									<span class="point">${num}</span>
+  								</c:if>
   							</span>
 						</c:forEach>
 		

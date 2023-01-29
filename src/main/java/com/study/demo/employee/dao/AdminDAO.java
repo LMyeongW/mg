@@ -8,10 +8,7 @@ import com.study.demo.vo.employeeVO;
 public interface AdminDAO {
 	
 	//회원가입 리스트
-	List<employeeVO> listPage(int sqlPostNum, int postNum);
-
-	//사원관리
-	List<employeeVO> emploList(int sqlPostNum, int postNum);
+	List<employeeVO> listPage(int sqlPostNum, int postNum, String searchKeyword);
 
 	//회원상세페이지
 	Object joinDetail(String employeeId);
@@ -32,10 +29,10 @@ public interface AdminDAO {
 	void employeeImageUpdate(AttachImageVO vo);
 	
 	//사원관리 전체페이지갯수
-	int emploTotalCount(String searchKeyword);
+	int emploTotalCount(String searchKeyword, String statusIdSelect);
 	
 	//회원가입 승인 전체 페이지갯수
-	int jointotalCount();
+	int jointotalCount(String searchKeyword);
 	
 	//회원가입 삭제
 	void joindelete(String employeeId);
@@ -56,7 +53,7 @@ public interface AdminDAO {
 	void selectDelete(String employeeIdArray);
 	
 	//list 정렬
-	List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword);
+	List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword, String statusIdSelect);
 	
 	//퇴사자 list
 	List<employeeVO> resignationList(int sqlPostNum, int postNum, String orderType, String searchKeyword);

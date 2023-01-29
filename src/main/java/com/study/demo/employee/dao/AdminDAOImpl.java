@@ -22,10 +22,11 @@ public class AdminDAOImpl implements AdminDAO{
 
 	//회원가입 리스트
 	@Override
-	public List<employeeVO> listPage(int sqlPostNum, int postNum) {
+	public List<employeeVO> listPage(int sqlPostNum, int postNum, String searchKeyword) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("sqlPostNum", sqlPostNum);
 		data.put("postNum", postNum);
+		data.put("searchKeyword", searchKeyword);
 		List<employeeVO> selectJoinList = sql.selectList(namespace+".listPage", data);
 		return selectJoinList;
 	}
@@ -42,16 +43,6 @@ public class AdminDAOImpl implements AdminDAO{
 		 sql.update(namespace+".joinAppr", employeevo);
 	}
 	
-	//사원관리
-	@Override
-	public List<employeeVO> emploList(int sqlPostNum, int postNum) {
-		HashMap<String, Object> data = new HashMap<String, Object>();
-		data.put("sqlPostNum", sqlPostNum);
-		data.put("postNum", postNum);
-		
-		List<employeeVO> selecEmplotList = sql.selectList(namespace+".emploList", data);
-		return selecEmplotList;
-	}
 	
 	//사원정보 조회
 	@Override
@@ -79,14 +70,17 @@ public class AdminDAOImpl implements AdminDAO{
 	
 	//페이지전체갯수
 	@Override
-	public int emploTotalCount(String searchKeyword) {
-		return sql.selectOne(namespace+".emploTotalCount", searchKeyword);
+	public int emploTotalCount(String searchKeyword, String statusIdSelect) {
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("searchKeyword", searchKeyword);
+		data.put("statusIdSelect", statusIdSelect);
+		return sql.selectOne(namespace+".emploTotalCount", data);
 	}
 	
 	//회원가입 전체페이징갯수
 	@Override
-	public int jointotalCount() {
-		return sql.selectOne(namespace+".joinTotalCount");
+	public int jointotalCount(String searchKeyword) {
+		return sql.selectOne(namespace+".joinTotalCount", searchKeyword);
 	}
 	
 	//회원가입삭제
@@ -133,19 +127,20 @@ public class AdminDAOImpl implements AdminDAO{
 	}
 
 	@Override
-	public List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword) {
+	public List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword, String statusIdSelect) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("orderType", orderType);
 		data.put("sqlPostNum", sqlPostNum);
 		data.put("postNum", postNum);
 		data.put("searchKeyword", searchKeyword);
+		data.put("statusIdSelect", statusIdSelect);
 		
 		return sql.selectList(namespace+".emploListSort", data);
 	}
 	
 	//퇴사자 list
 	@Override
-	public List<employeeVO> resignationList(int sqlPostNum, int postNum, String orderType,  String searchKeyword) {
+	public List<employeeVO> resignationList(int sqlPostNum, int postNum, String orderType, String searchKeyword) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("orderType", orderType);
 		data.put("sqlPostNum", sqlPostNum);

@@ -125,6 +125,8 @@ main {
     width: 300px; height: 40px;
 }
 .admin_wrap .employee_mg .employ_search .searchbtn{
+	position: relative;
+	z-index:10;
     background-color: #eeeeee;
     display: inline-block;
     text-align: center;
@@ -205,6 +207,14 @@ main {
 .status {
 	color: #750a0a;
 	font-weight: 500;
+}
+.point {
+	font-weight: bold;
+
+}
+.noPoint{
+	color:#bdbdbd;
+	font-weight: 300;
 }
 .noData {
 	display: none;

@@ -3,7 +3,25 @@
 <mapper namespace="admin">
 	
 	<!-- 회원리스트 -->
-	<select id="listPage"  resultType="com.study.demo.vo.employeeVO">
+	
+	<sql id="joinListtWhere" >
+		where
+			1=1 
+		and
+			login_appr = "0"
+
+		<if test="searchKeyword != null and searchKeyword != ''">
+		<![CDATA[ 
+	 		AND 
+			( 
+				emploNo like concat('%',#{searchKeyword},'%') OR
+	    		employeeName like concat('%',#{searchKeyword},'%') 
+		 	)  
+	 	]]> 
+		</if>
+	</sql>
+	<select id="listPage" parameterType="hashMap" resultType="com.study.demo.vo.employeeVO">
+		<![CDATA[
 		select
 			employeeId,
 			emploNo,
@@ -20,14 +38,23 @@
 			regdate
 		from 
 			employee
-		where 
-			login_appr = "0"
-		order by regdate desc
-		limit #{sqlPostNum}, #{postNum}
+		]]>	
+		
+		<include refid="joinListtWhere"/>
+		
+		<![CDATA[		
+			limit #{sqlPostNum}, #{postNum}
+		]]>	
 	</select>
 	
 	<select id="joinTotalCount" resultType="java.lang.Integer">
-		select count(emploNo) from employee where login_appr = "0"
+		<![CDATA[ 
+			select
+				count(emploNo) 
+			from
+				employee 
+		]]>	
+		<include refid="joinListtWhere"/>
 	</select>
 	
 	<delete id="joindelete" parameterType="com.study.demo.vo.employeeVO">
@@ -40,38 +67,7 @@
 		where employeeId = #{employeeId}
 	</delete>
 	
-	<!-- 사원리스트 -->
-	<select id="emploList" parameterType="hashMap" resultType="com.study.demo.vo.employeeVO">
-		select
-			emploNo,
-			employeeName,
-			employeeBirthday1,
-			employeeBirthday2,
-			employeeBirthday3,
-			employeeGender,
-			employeePhone,
-			employeeMail,
-			employeeAddr1,
-			employeeAddr2,
-			employeeAddr3,
-			departmentId,
-			positionId,
-			statusId,
-			salary,
-			ifnull(date_format(comregdate,'%Y-%m-%d'), "미등록") as comregdate
-		from 
-			employee
-		where 
-			login_appr = "1"
-		and
-			not statusId in ('해고', '퇴사', '퇴직', '계약완료')
 
-			
-		order by emploNo desc
-		limit #{sqlPostNum}, #{postNum}
-		
-	</select>
-	
 	<!-- 
 		<if test='orderTpye == "" or orderType == "desc"'>
 			order by emploNo desc
@@ -219,6 +215,15 @@
 	    		statusId like concat('%',#{searchKeyword},'%') OR
 	    		positionId like concat('%',#{searchKeyword},'%') OR
 	    		departmentId like concat('%',#{searchKeyword},'%')	
+		 	)  
+	 	]]> 
+		</if>
+		
+		<if test="statusIdSelect != null and statusIdSelect != ''">
+		<![CDATA[ 
+	 		AND 
+			( 
+	    		statusId like concat('%',#{statusIdSelect},'%')
 		 	)  
 	 	]]> 
 		</if>

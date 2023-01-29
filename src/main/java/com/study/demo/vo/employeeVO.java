@@ -36,6 +36,9 @@ public class employeeVO extends Page{
 	private String resignationdate;
 	private String reason;
 	private String salary2;
+	private String profileLoadPath;
+	private String profileUuid;
+	private String profileName;
 	
 	private String searchKeyword;
 
@@ -321,6 +324,24 @@ public class employeeVO extends Page{
 	public void setSalary2(String salary2) {
 		this.salary2 = salary2;
 	}
+	public String getProfileLoadPath() {
+		return profileLoadPath;
+	}
+	public void setProfileLoadPath(String profileLoadPath) {
+		this.profileLoadPath = profileLoadPath;
+	}
+	public String getProfileUuid() {
+		return profileUuid;
+	}
+	public void setProfileUuid(String profileUuid) {
+		this.profileUuid = profileUuid;
+	}
+	public String getProfileName() {
+		return profileName;
+	}
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
 	@Override
 	public String toString() {
 		return "employeeVO [employeeId=" + employeeId + ", employeePw=" + employeePw + ", employeeName=" + employeeName
@@ -333,8 +354,10 @@ public class employeeVO extends Page{
 				+ ", login_appr=" + login_appr + ", regdate=" + regdate + ", refusalregdate=" + refusalregdate
 				+ ", comregdate=" + comregdate + ", statusId=" + statusId + ", uploadPath=" + uploadPath + ", uuid="
 				+ uuid + ", fileName=" + fileName + ", resignationdate=" + resignationdate + ", reason=" + reason
-				+ ", salary2=" + salary2 + ", qustr=" + qustr + "]";
+				+ ", salary2=" + salary2 + ", profileLoadPath=" + profileLoadPath + ", profileUuid=" + profileUuid
+				+ ", profileName=" + profileName + ", searchKeyword=" + searchKeyword + ", qustr=" + qustr + "]";
 	}
+	
 
 	
 }
