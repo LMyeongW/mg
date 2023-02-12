@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 페이지</title>
+    <title>퇴사자 등록</title>
     <link rel="stylesheet" href="/resources/css/reset.css">
     <link rel="stylesheet" href="/resources/css/resignationDetail.css">
 </head>
@@ -162,21 +162,29 @@
 
 	$('.registration_btn').click(function(){
 		
+		var resignationdate = $('input[name=resignationdate]').val();
+		
+	
+		console.log(resignationdate);
 		var data = $('form[name=detailForm]').serialize();
-		console.log(data);
+
+		console.log(data.resignationdate);
 		$.ajax({
 			
 			type : 'post',
 			url : '/admin/resignationDetail.do',
+			dataType: 'json',
 			data : data,
+			
 			success : function(data){
 				alert("등록에 성공하였습니다.");
 				window.close();
 				opener.location.reload();
 				
 			},
-			error : function(){
+			error : function(data){
 				alert("연결에 실패하였습니다.");
+				console.log(data)
 			}
 			
 		});//resignationInfo ajax

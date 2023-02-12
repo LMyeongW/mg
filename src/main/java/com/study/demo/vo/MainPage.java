@@ -9,7 +9,7 @@ public class MainPage {
 	private int pageNum;
 	private int sqlPostNum;
 	
-	private int pageNum_cnt =5 ;
+	private int pageNum_cnt = 5 ;
 	
 	private int endPageNum; 
 	private int startPageNum;

@@ -76,6 +76,8 @@
 <script>
 	
 	$(document).ready(function(){
+		
+		
 		$("#submit_btn").click(function() {
 			var con = confirm("등록하시겠습니까?");
 			if(con == true){

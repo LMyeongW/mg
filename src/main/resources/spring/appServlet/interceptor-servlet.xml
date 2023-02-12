@@ -25,6 +25,11 @@
 		</interceptor>
 		
 		<interceptor>
+			<mapping path="/board/**"/>
+			<beans:bean id="BoardInterceptor" class="com.study.demo.interceptor.BoardInterceptor"></beans:bean>
+		</interceptor>
+		
+		<interceptor>
 			<mapping path="/admin/**"/>
 			<beans:bean id="AdminInterceptor" class="com.study.demo.interceptor.AdminInterceptor"></beans:bean>
 		</interceptor>

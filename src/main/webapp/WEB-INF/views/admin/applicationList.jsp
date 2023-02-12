@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 페이지</title>
+    <title>신청서목록</title>
     <link rel="stylesheet" href="/resources/css/reset.css">
     <link rel="stylesheet" href="/resources/css/applicationList.css">
 </head>
@@ -17,7 +17,14 @@
         <header>
             <div class="inner_size">
                 <div class="header_m">
-                    <h1>사원관리</h1>
+                   <h1>
+                    	<a href="/main" class="link">
+                        	<div class="img">
+                                <img src="/resources/img/logo_black.png" alt="로고"/>
+                            </div>
+                       	</a>
+                        	관리자페이지
+                    </h1>
                     <c:if test="${member == null}">
                     	<div class="loginAndjoin">
                         	<a href="/account/login" class="login">로그인</a>
@@ -57,14 +64,15 @@
                                 <input type="text" class="search_input" name="searchKeyword" placeholder="검색어를 입력해주세요.">
                                 <a href="#" class="searchbtn">검색</a>
                             </div>
-							<div class="check_box">
-                				<div class="c1"><input type="checkbox" id="allCheck"><labal>전체선택</labal></div>
-                				<button type="button" class="selectDelete">선택삭제</button>
-                			</div>
+
                             <div class="table_box">
+                            	<div class="check_box">
+                					<button type="button" class="selectDelete">선택삭제</button>
+                				</div>
                                 <table>
                                     <thead>
                                         <tr>
+                                     		<th><div class="c1"><input type="checkbox" id="allCheck"></div></th>
                                             <th>사원번호</th>
                                             <th>이름</th>
                                             <th>부서명</th>
@@ -112,6 +120,47 @@
 			
 			
 		});
+		
+		
+		$('.selectDelete').on('click', function(){
+			
+			var applNoArray =[];
+			
+			$("input:checkbox[name=chck]:checked").each(function(){
+				
+				applNoArray.push($(this).val());
+				
+			});
+			console.log(applNoArray);
+			
+			if(applNoArray == "" || applNoArray == null){
+				alert("삭제할 항목을 선택해주세요.");
+				return false;
+			} else {
+				var confirmAlert = confirm("정말로 삭제하시겠습니까?");
+				
+				if(confirmAlert == true){
+					
+					$.ajax({
+						
+						type : 'POST',
+						url : '/admin/applicationSelectDelete.do',
+						dataType : 'json',
+						data : JSON.stringify(applNoArray),
+						contentType : 'application/json',
+						success : function(result){
+							location.reload();
+							alert("선택하신 항목이 정상적으로 삭제되었습니다.");
+						},
+						error : function(){
+							alert("연결에 실패하였습니다.");
+						}
+					});//선택삭제 ajax
+				}
+			}
+			
+
+		});//선택삭제 버튼
 	});
 	
 	function applicationList(num, searchKeyword){
@@ -137,6 +186,7 @@
 				
 				for(var i= 0; i <data.list.length; i++){
 					html += '<tr>';
+					html += '<td width="1%"><input type="checkbox" class="checkBox" name="chck" value="'+ data.list[i].applNo +'"></td>';
 	                html += '<td width="10%">'+ data.list[i].emploNo +'</td>';
 	                html += '<td width="10%">'+ data.list[i].employeeName +'</td>';
 	                html += '<td width="10%">'+ data.list[i].departmentId +'</td>';
@@ -208,6 +258,21 @@
 					}
 					
 				});
+				
+				//체크박스
+				$('#allCheck').click(function(){
+					var chk = $('#allCheck').prop("checked");
+					if(chk){
+						$('.checkBox').prop("checked", true);
+					} else {
+						$('.checkBox').prop("checked", false);
+					}
+				});
+				
+				$('.checkBox').click(function(){
+					$('#allCheck').prop("checked", false);
+				})
+				
 			
 				
 			},

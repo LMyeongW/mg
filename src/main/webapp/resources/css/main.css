@@ -1,26 +1,25 @@
 @charset "utf-8";
-
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');
 
 #wrap {
     background-color: #f1f1f1;
-    color: #2a2a2a;
+    color: #555;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 14px;
-    width: 1920px; height: 100%;
+
 
 }
 
 .inner_size {
     margin: 0 auto;
-    width: 1400px; height:100%;
+    width: 1200px; height:100%;
 
 }
 
 header {
     background-color: #fff;
     height: 50px;
-    border-bottom: 1px solid #d4d4d4;
+    border-bottom: 1px solid #ddd;
 }
 header .header_m {
     position: relative;
@@ -29,7 +28,19 @@ header .header_m {
 
 }
 header .header_m h1 {
-    padding: 3px;
+    align-items: center;
+    display: flex;
+}
+header .header_m h1 .mainlink {
+    padding-top: 13px;
+    margin-right: 10px;
+    height: 50px;
+}
+header .header_m h1 .mainlink .img {
+    width: 30px; height: 30px;
+}
+header .header_m h1 .mainlink .img img {
+    width: 100%; height: 100%;
 }
 header .header_m .link {
     position: absolute;
@@ -48,27 +59,36 @@ main {}
 
 main .m_top{
     display: flex;
-    background-color: #fc7a7a;
-    width: 100%; height: 300px;
+    justify-content: space-between;
+    margin-top:20px;
+    width: 100%; height: 370px;
 }
 main .m_top .mainV{
-    
     background-color: #1f1f1f;
-    width: 70%; height: 100%;
+    background-image: url(/resources/img/mainV.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 72%; height: 100%;
 }
-main .m_top .loginArea{
+main .m_top .mainRight {
+	width: 26%;
+}
+main .m_top .mainRight .loginArea {
     position: relative;
     text-align: center;
-    background-color: #fff;
-    width: 30%; height: 100%;
+    border: 1px solid #ddd;
+    background-color: #feffff;
+    border-radius: 20px;
+    margin-bottom:30px;
+    width: 100%; height: 240px;
 }
-main .m_top .loginArea .applsubmit{
+main .m_top .mainRight .loginArea .applsubmit{
 	position: absolute;
     bottom: 10px;
     left: 10px;
 }
-main .m_top .loginArea > div {}
-main .m_top .loginArea .login {
+
+main .m_top .mainRight .loginArea .login {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -81,16 +101,53 @@ main .m_top .loginArea .login {
     transform: translate(-50%, -50%);
     width: 200px; height: 70px;
 }
-main .m_top .loginArea .login .loginA{
+main .m_top .mainRight .loginArea .login .loginA{
     display: block;
     width: 100%; height: 100%;
 }
-main .m_top .loginArea .join {
-    position: absolute;
-    left: 250px;
-    bottom: 80px;
+main .m_top .mainRight .loginArea .loginA{
+    display: block;
+    width: 100%; height: 100%;
 }
-
+main .m_top .mainRight .loginArea .join {
+    position: absolute;
+    left: 200px;
+    bottom: 60px;
+}
+main .m_top .mainRight .loginBottom{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width:100%; height: 100px;
+}
+main .m_top .mainRight .loginBottom .icon_Area {
+	opacity: 0.7;
+	margin: 0 10px;
+	transition: all 0.2s;
+	width: 70px; height:100%; 
+}
+main .m_top .mainRight .loginBottom .icon_Area:hover {
+	opacity: 1;
+	margin: 0 10px;
+	width: 70px; height:100%; 
+}
+main .m_top .mainRight .loginBottom .icon_btn {
+	position: relative;
+	background-color:#fff;
+	border-radius: 50%;
+	width: 70px; height:70px; 
+}
+main .m_top .mainRight .loginBottom .icon_btn img{
+	position: absolute;
+	top:50%;
+	left:52%;
+    transform: translate(-50%, -50%);
+}
+main .m_top .mainRight .loginBottom .icon_title{
+	text-align:center;
+	font-size:13px;
+	margin-top:5px;
+}
 .save_btn {
     position: absolute;
     top: 0;
@@ -110,7 +167,7 @@ main .m_top .loginArea .join {
 main .m_top .loginArea .myprofil {
     position: absolute;
     top: 50%;
-    left: 50px;
+    left: 20px;
     transform: translateY(-50%);
     background-color: #2a2a2a;
     border-radius: 50%;
@@ -120,7 +177,6 @@ main .m_top .loginArea .myprofil .img {
     position: absolute;
     top: 0;
     left: 0;
-    
     overflow: hidden;
     border-radius: 50%;
     width: 100%; height: 100%;
@@ -129,25 +185,17 @@ main .m_top .loginArea .myprofil .img img {
     width: 100%; height: auto;
 }
 main .m_top .loginArea .myprofil .lineBox {
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
     cursor: pointer;
     width: 30px; height: 30px;
 }
-main .m_top .loginArea .myprofil .line1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    width: 30px; height: 2px;
+main .m_top .loginArea .myprofil .lineBox img{
+	width: 100%; height: 100%;
 }
-main .m_top .loginArea .myprofil .line2 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    width: 2px; height: 30px;
-}
+
 main .m_top .loginArea .myprofil .inputFile {
     display: none;
 }
@@ -167,15 +215,15 @@ main .m_top .loginArea .resultImg .imgDelete {
 main .m_top .loginArea .name {
     position: absolute;
     top: 45%;
-    left: 175px;
+    left: 130px;
     font-size: 17px;
     font-weight: 500;
     transform: translateY(-50%);
 } 
 main .m_top .loginArea .email {
     position: absolute;
-    top: 52%;
-    left: 175px;
+    top: 54%;
+    left: 130px;
     font-size: 16px;
     font-weight: 300;
     transform: translateY(-50%);
@@ -196,58 +244,342 @@ main .m_top .loginArea .logOut a {
     width: 100%; height: 100%;
 }
 main .m_middle{
-    background-color: #7ae8fc;
-    width: 100%; height: 400px;
+	display:flex;
+	justify-content: space-between;
+    margin-top:30px;
+    margin-bottom:30px;
+    width: 100%; height: 470px;
 }
 main .m_middle .left{
-    background-color: #ffffff;
-    width: 50%; height: 100%;
-}
-main .m_middle .left .applicationList {
 	position: relative;
-    width: 100%; height: 360px;
+	display:flex;
+	background-color:#fff;
+	justify-content: space-between;
+	padding:20px;
+	width: 53%; height: 100%;
 }
-main .m_middle .left .applicationList .title{
+main .m_middle .left .left_title {
+	position: absolute;
+	top:20px;
+	left:20px;
+}
+main .m_middle .left .left_title .teg{
+	background-color:#ff8b0d;
+	color:#fff;
+	font-size: 14px;
+	font-weight: 500;
+	line-height:30px;
+	text-align: center;
+	border-radius:10px;
+	width:80px; height:30px;
+}
+main .m_middle .left .area1 {
+	position: relative;
+	background-image: url(../img/introduction.png);
+	background-position: center;
+    background-size: auto;
+    text-shadow: 1px 4px 6px rgba(0, 0, 0, 0.9);
+	color:#fff;
+	margin-top:40px;
+	text-align: center;
+	line-height:215px;
+	font-weight: 500;
+	font-size:20px;
+	width:31%; height:50%;
+}
+main .m_middle .left .area2 {
+	position: relative;
+	background-image: url(../img/philosophy.png);
+	background-position: center;
+    background-size: auto;
+    text-shadow: 1px 4px 6px rgba(0, 0, 0, 0.9);
+	color:#fff;
+	margin-top:40px;
+	text-align: center;
+	line-height:215px;
+	font-weight: 500;
+	font-size:20px;
+	width:31%; height:50%;
+}
+main .m_middle .left .area3 {
+	position: relative;
+	background-image: url(../img/service.png);
+	background-position: center;
+    background-size: auto;
+    text-shadow: 1px 4px 6px rgba(0, 0, 0, 0.9);
+	color:#fff;
+	margin-top:40px;
+	text-align: center;
+	line-height:215px;
+	font-weight: 500;
+	font-size:20px;
+	width:31%; height:50%;
+}
+main .m_middle .left .area4 {
+	position: absolute;
+	bottom:0;
+	left:0;
+	display:flex;
+	
+	width:100%; height:36%;
+}
+main .m_middle .left .area4 .text {
+	position: absolute;
+	top:60%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	color:#555;
+	font-size:21px;
+	font-weight: 600;
+	text-align: center;
+}
+main .m_middle .left .area4 .location_icon {
+	position: absolute;
+	top:25%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	width:60px; height:60px;
+}
+
+main .m_middle .left .ar {
+	position: absolute;
+	top:0;
+	left:0;
+	background-color: rgba(0, 0, 0, 0.6);
+	transition: all 0.2s;
+	width:100%; height:100%;
+}
+main .m_middle .left .ar:hover {
+	position: absolute;
+	background-color: transparent;
+	top:0;
+	left:0;
+	width:100%; height:100%;
+}
+main .m_middle .left .area4 img {
+	width:100%; height:100%;
+}
+main .m_middle .right_box{
+	position: relative;
+	width: 45%; height: 100%;
+}
+main .m_middle .right_box .selectMenu{
+	display:flex;
+	position: absolute;
+	left:20px;
+	top:20px;
+	z-index:100;
+}
+main .m_middle .right_box .selectMenu .select1{
+	background-color:#fff;
+	text-align:center;
+	line-height: 40px;
+	cursor: pointer;
+	width:70px; height:40px;
+}
+main .m_middle .right_box .selectMenu .select1.on{
+	background-color:#2a2a2a;
+	color:#fff;
+	text-align:center;
+	line-height: 40px;
+	width:70px; height:40px;
+}
+main .m_middle .right_box .selectMenu .select2{
+	background-color:#fff;
+	text-align:center;
+	line-height: 40px;
+	margin-left:15px;
+	cursor: pointer;
+	width:70px; height:40px;
+}
+main .m_middle .right_box .selectMenu .select2.on{
+	background-color:#2a2a2a;
+	color:#fff;
+	text-align:center;
+	line-height: 40px;
+	margin-left:15px;
+	width:70px; height:40px;
+}
+main .m_middle .right_box .right{
+	display:none;
+	position: absolute;
+	bottom:0;
+	left:0;
+    background-color: #ffffff;
+    border-radius: 20px;
+    width: 100%; height: 100%;
+}
+main .m_middle .right_box .right.on{
+	display:block;
+	position: absolute;
+	bottom:0;
+	left:0;
+    background-color: #ffffff;
+    border-radius: 20px;
+    width: 100%; height: 100%;
+}
+main .m_middle .right_box .right1{
+	display:none;
+	position: absolute;
+	bottom:0;
+	left:0;
+    background-color: #ffffff;
+    border-radius: 20px;
+    width: 100%; height: 100%;
+}
+main .m_middle .right_box .right2{
+	position: absolute;
+	bottom:0;
+	left:0;
+    background-color: #ffffff;
+    border-radius: 20px;
+    width: 100%; height: 100%;
+}
+main .m_middle .right_box .right1.on{
+	display:block;
+	position: absolute;
+	bottom:0;
+	left:0;
+	border: 1px solid #ddd;
+    background-color: #ffffff;
+    border-radius: 20px;
+    width: 100%; height: 100%;
+}
+
+main .m_middle .applicationList {
+	position: absolute;
+	top:50px;
+    width: 100%; height: 380px;
+}
+main .m_middle .boardList {
+	position: absolute;
+	top:50px;
+    width: 100%; height: 380px;
+}
+
+main .m_middle .title{
     font-weight: 500;
-    font-size: 20px;
+    font-size: 17px;
     line-height: 40px;
     padding-left: 20px;
-    padding-top: 10px;
+    padding-top: 30px;
     letter-spacing: -2px;
     width: 100%; height: 40px;
 }
-main .m_middle .left .applicationList .table {
+
+main .m_middle .table {
 	position: relative;
     padding: 20px;
     width: 100%; height: 100%;
 }
-main .m_middle .left .applicationList .table thead {
+
+main .m_middle .table thead {
     border-bottom: 1px solid #ddd;
     line-height: 40px;
+    font-size:14px;
     height: 40px;
 }
-main .m_middle .left .applicationList .table tbody {
+main .m_middle .table tbody {
 
 }
-main .m_middle .left .applicationList .table tbody tr td {
+main .m_middle .table tbody tr {
 	border-bottom: 1px solid #ddd;
     text-align: center;
-    line-height: 40px;
-    height: 40px;
+    font-weight: 200;
+    font-size:13px;
+    line-height: 60px;
+    height: 60px;
 }
-main .m_middle .right{}
+main .m_middle .table tbody tr:hover {
+	background-color: #e5ebff;
+}
 main .m_bottom{
-    background-color: #7afc80;
-    width: 100%; height: 200px;
+	background-color: #2a2a2a;
+	padding-top:30px;
+	padding-bottom:70px;
+	margin-bottom:30px;
+	width:100%; height:100%;
+}
+main .m_bottom .inner_size {
+	position: relative;
+}
+main .m_bottom .inner_size .listLink {
+	position: absolute;
+	top:25px;
+	right:0;
+	display:block;
+	width:25px; height:30px;
+}
+main .m_bottom .inner_size .listLink .line1{
+	background-color: #fff;
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	width:2px; height:25px;
+}
+main .m_bottom .inner_size .listLink .line2{
+	background-color: #fff;
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	width:25px; height:2px;
+}
+main .m_bottom .notify_title {
+	color:#fff;
+	text-align:center;
+	font-weight: 500;
+	font-size:21px;
+	padding-top:20px;
+	padding-bottom:20px;
 }
 .paging_box {
 	position: absolute;
-	bottom:38px;
+	bottom:-20px;
 	left:50%;
 	margin:0;
 	padding:0;
 	transform: translateX(-50%);
 	text-align: center;
+}
+#tbodyList2 {
+	color:#fff;
+	
+}
+#tbodyList2 tr{
+	text-align: center;
+	line-height:70px;
+	overflow: hidden;
+	height:70px;
+	border-bottom:1px solid #fff;
+}
+#tbodyList2 tr:last-child{
+	border-bottom: 1px solid transparent;
+}
+#tbodyList2 tr td {
+	paddind: 0 20px;
+}
+#tbodyList2 tr td br{
+	display: inline-block;
+    content: " ";
+    padding: 0 2px;
+}
+#tbodyList2 tr td .acontent{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align:center;
+    margin: 0 auto;
+	width:500px;
+}
+#tbodyList2 tr td .acontent1{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align:center;
+    margin: 0 auto;
+	width:250px;
 }
 .paging_box span{
 	text-align: center;
@@ -256,6 +588,24 @@ main .m_bottom{
 .paging_box span a {
 }
 .paging_box .numPadding {}
+
+.paging_box1 {
+	position: absolute;
+	bottom:-20px;
+	left:50%;
+	margin:0;
+	padding:0;
+	transform: translateX(-50%);
+	text-align: center;
+}
+.paging_box1 span{
+	text-align: center;
+	padding: 0 5px;
+}
+.paging_box1 span a {
+}
+.paging_box1 .numPadding {}
+
 .point {
 	font-weight: bold;
 
@@ -266,20 +616,28 @@ main .m_bottom{
 }
 .login_btn1 {
 	position: absolute;
-	top:50%;
+	top:42%;
 	left:50%;
 	transform: translateX(-50%);
 	display:block;
-	background-color: #fff;
-	border: 1px solid #2d2d2d;
+	border: 1px solid #fff;
 	border-radius: 10px;
 	text-align:center;
-	line-height:50px;
-	width:150px;
-	height:50px
+	line-height:70px;
+	width:200px;
+	height:70px
 }
-
+.announce {
+	margin-right:20px;
+}
 .noData {
+	display: none;
+	position: absolute;
+	bottom:50%;
+	left:50%;
+	transform: translateX(-50%);
+}
+.noData1 {
 	display: none;
 	position: absolute;
 	bottom:50%;
@@ -291,15 +649,116 @@ main .m_bottom{
 }
 
 .s1 {
-	font-weight:bold;
+	font-weight:500;
 	color: #750a0a;
+}
+.s2 {
+	font-weight:500;
+	color: #fd1f62;
+}
+.rightColor{
+	background-color: #2a2a2a;
+	color: #fff;
+	border-radius: 20px;
+	width:100%; height:100%;
+}
+.click{
+	cursor: pointer;
+}
+.click:hover{
+	background-color: #fff;
+	color:#555;
 }
 
 footer {
-    background-color: #1f1f1f;
-    color: #fff;
-    font-size: 30px;
-    text-align: center;
-    line-height: 200px;
-    width: 100%; height: 200px;
+    background-color: #fff;
+    height: 270px;
+}
+footer .inner_size {
+
+}
+footer .f_menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #2d2d2d;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    width: 100%;
+    height: 50px;
+}
+
+footer .f_menu li {}
+
+footer .f_menu li:last-child {}
+
+footer .f_menu li a {
+    font-size: 13px;
+    letter-spacing: -1px;
+}
+
+footer .f_menu li::after {
+    float: left;
+    content: "";
+    display: block;
+    background-color: #ddd;
+    margin: 7px 20px 0 20px;
+    width: 2px;
+    height: 13px;
+}
+
+footer .f_menu li:first-child::after {
+    display: none;
+}
+footer .inner_size{
+	position: relative;
+}
+footer .box {}
+
+footer .f_mid {
+	position: absolute;
+	left:0;
+    font-size: 14px;
+    margin: 0 auto 40px;
+    width: 60%;
+}
+
+footer .f_mid h4 {
+    margin: 10px 0 10px 30px;
+    font-size: 16px;
+}
+
+footer .f_mid .box {
+    align-items: center;
+    display: flex;
+}
+
+footer .f_mid .info {
+    text-align: left;
+    padding-right: 50px;
+    padding-left: 30px;
+    border-right: 1px solid #ebebeb;
+}
+
+footer .f_mid .info li {
+    line-height: 30px;
+    width: 140px;
+}
+
+footer .f_mid .info1 {
+    text-align: left;
+    font-size: 12px;
+    margin-left: 50px;
+    padding-right: 50px;
+    width: 36%;
+}
+
+footer .f_mid .info1 li {
+    line-height: 30px;
+    width: 350px;
+    height: 30px;
+}
+
+footer .f_mid .info1 li:nth-child(5) {
+    line-height: 15px;
 }

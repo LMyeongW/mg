@@ -49,6 +49,8 @@ public interface AdminService {
 	//체크박스 삭제
 	void selectDelete(List<String> employeeIdArray);
 	
+	void refusalSelectCancel(List<String> employeeIdArray);
+	
 	//list 정렬
 	List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword, String statusIdSelect);
 	
@@ -71,6 +73,10 @@ public interface AdminService {
 	void resignationSelectDelete(List<String> employeeIdArray);
 
 	List<employeeVO> statusSelect(String statusType);
+
+	void applicationSelectDelete(List<String> applNoArray);
+
+
 
 	
 	//오름차순

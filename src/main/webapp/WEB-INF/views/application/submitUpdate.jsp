@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>신청서</title>
+    <title>신청서 수정페이지</title>
     <link rel="stylesheet" href="/resources/css/reset.css">
     <link rel="stylesheet" href="/resources/css/submitPage.css">
 </head>
@@ -17,7 +17,15 @@
         <header>
             <div class="inner_size">
                 <div class="header_m">
-                    <h1>사원관리</h1>
+                   <h1>
+                    	<a href="/main" class="link">
+                        	<div class="img">
+                                <img src="/resources/img/logo_black.png" alt="로고"/>
+                            </div>
+                       	</a>
+                       	LmwCompany
+                        	
+                    </h1>
                     <c:if test="${member == null}">
                     	<div class="loginAndjoin">
                         	<a href="/account/login" class="login">로그인</a>
@@ -97,7 +105,7 @@
 
                         <div class="emergency">
                             <div class="t1">비상연락망 : </div>
-                            <input type="text" placeholder="전화번호를 입력해주세요." name ="emergencyTell" class="emergencyTell_input" value ="${data.emergencyTell}">
+                            <input type="text" placeholder="전화번호를 입력해주세요." name ="emergencyTell" class="emergencyTell_input" oninput="phoneForm(this)" value ="${data.emergencyTell}">
                         </div>
 
                         <div class="reason">
@@ -132,7 +140,13 @@
     
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script>
-
+	/*전화번호 형식*/
+	const phoneForm = (target) => {
+		target.value = target.value
+ 			.replace(/[^0-9]/g, '')
+ 			.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+	}
+	
 	/*$(document).ready(function(){
 		
 		$('.application_btn').click(function(){
@@ -289,6 +303,17 @@
 				return false;
 			}
 
+		});
+		
+		var cencal = $('.applicationCen_btn');
+		cencal.click(function(){
+			
+			if(confirm("현재페이지에서 나가시겠습니까?")){
+				location.href="/main"
+				
+			} else {
+				return false;
+			}
 		});
 	});
 

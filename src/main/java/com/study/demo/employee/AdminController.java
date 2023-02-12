@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -37,8 +38,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.study.demo.employee.service.AdminService;
+import com.study.demo.employee.service.AnnouncementService;
 import com.study.demo.employee.service.ApplicationService;
 import com.study.demo.employee.service.AttachService;
+import com.study.demo.vo.AnnouncementVO;
 import com.study.demo.vo.ApplicationVO;
 import com.study.demo.vo.AttachImageVO;
 import com.study.demo.vo.Page;
@@ -56,6 +59,9 @@ public class AdminController {
 	
 	@Autowired
 	private ApplicationService applicationService;
+	
+	@Autowired
+	private AnnouncementService announcementService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
@@ -130,6 +136,16 @@ public class AdminController {
 		
 		logger.info("employeeIdArray={}", employeeIdArray);
 		employeeService.selectDelete(employeeIdArray);
+		
+		return employeeIdArray;
+	}
+	
+	@RequestMapping(value="/refusalSelectCancel", method = RequestMethod.POST)
+	@ResponseBody
+	public  List<String> refusalSelectCancel(@RequestBody List<String> employeeIdArray) {
+		
+		logger.info("employeeIdArray={}", employeeIdArray);
+		employeeService.refusalSelectCancel(employeeIdArray);
 		
 		return employeeIdArray;
 	}
@@ -527,11 +543,15 @@ public class AdminController {
 	//퇴사자 상세수정
 	@RequestMapping(value="/resignationDetail.do", method = RequestMethod.POST)
 	@ResponseBody
-	public void resignationDetailUpdate(@ModelAttribute("employeevo")employeeVO employeevo){
-		
+	public ModelAndView resignationDetailUpdate(@ModelAttribute("employeevo")employeeVO employeevo){
+		ModelAndView mav = new ModelAndView();
 		employeeService.resignationDetailUpdate(employeevo);
 		
 		System.out.println(employeevo);
+		
+		mav.setViewName("jsonView");
+		
+		return mav;
 	}
 	
 	//퇴사자삭제
@@ -593,6 +613,7 @@ public class AdminController {
 		return mav;
 	}
 	
+	//신청서 수정페이지
 	@RequestMapping(value = "/applApprovalPage", method = RequestMethod.GET)
 	public ModelAndView applApprovalPageGet(@RequestParam("applNo")int applNo) {
 		ModelAndView mav = new ModelAndView();
@@ -603,6 +624,7 @@ public class AdminController {
 		return mav;
 	}
 	
+	//신청서 수정
 	@RequestMapping(value = "/applApprovalPage", method = RequestMethod.POST)
 	@ResponseBody
 	public void applApprovalPagePost(@ModelAttribute("applicationvo")ApplicationVO applicationvo) {
@@ -612,6 +634,7 @@ public class AdminController {
 		System.out.println(applicationvo);
 	}
 	
+	//신청서 삭제
 	@RequestMapping(value = "/applApprovalDelete", method = RequestMethod.GET)
 	public ModelAndView applApprovalDelete(@ModelAttribute("applicationvo")ApplicationVO applicationvo) {
 		ModelAndView mav = new ModelAndView();
@@ -622,21 +645,74 @@ public class AdminController {
 		return mav;
 	}
 	
-	//
-	
-	//버려?
-	@RequestMapping(value = "/statusSelect.do", method = RequestMethod.GET)
+
+	//신청서 선택삭제
+	@RequestMapping(value = "/applicationSelectDelete.do", method =  RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView statusSelect(@ModelAttribute("statusType")String statusType) {
-		ModelAndView mav = new ModelAndView();
-		System.out.println(statusType);
+	public List<String> applicationSelectDelete(@RequestBody List<String> applNoArray){
 		
-		List<employeeVO> list = employeeService.statusSelect(statusType);
-		mav.addObject("data", list);
+		logger.info("employeeIdArray={}", applNoArray);
+		
+		employeeService.applicationSelectDelete(applNoArray);
+		
+		return applNoArray;
+	}
+	
+	//공지사항 작성페이지
+	@RequestMapping(value="/announcementWrite", method = RequestMethod.GET)
+	public ModelAndView announcementWriteGET() {
+		
+		return new ModelAndView("/announcement/announcementWrite");
+	}
+	
+	//공지사항 작성
+	@RequestMapping(value ="/announcementWrite", method = RequestMethod.POST)
+	public ModelAndView announcementWritePOST(@ModelAttribute("announcementvo")AnnouncementVO announcementvo, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		
+		System.out.println(announcementvo);
+		
+		announcementvo.setAnnouncementContent(announcementvo.getAnnouncementContent().replace("\r\n", "<br>"));
+		announcementService.announcementWrite(announcementvo);
+
+		mav.setViewName("jsonView");
 		return mav;
 	}
 	
-
+	//공지사항 수정페이지
+	@RequestMapping(value ="announcementUpdate", method = RequestMethod.GET)
+	public ModelAndView announcementUpdateGET(@RequestParam("announcementNo")int announcementNo) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("data", announcementService.announcementUpdateGET(announcementNo));
+		
+		mav.setViewName("/announcement/announcementUpdate");
+		return mav;
+	}
+	
+	//공지사항 수정
+	@RequestMapping(value ="announcementUpdate", method = RequestMethod.POST)
+	public ModelAndView announcementUpdatePOST(@ModelAttribute("announcementvo")AnnouncementVO announcementvo ) {
+		ModelAndView mav = new ModelAndView();
+		
+		System.out.println(announcementvo);
+		announcementvo.setAnnouncementContent(announcementvo.getAnnouncementContent().replace("\r\n", "<br>"));
+		announcementService.announcementUpdatePOST(announcementvo);
+		
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	//공지사항 삭제
+	@RequestMapping(value ="announcementDelete", method = RequestMethod.GET)
+	public ModelAndView announcementDelete(@ModelAttribute("announcementvo")AnnouncementVO announcementvo, @RequestParam("announcementNo")int announcementNo ) {
+		ModelAndView mav = new ModelAndView();
+		
+		System.out.println(announcementNo);
+		announcementService.announcementDelete(announcementNo);
+		mav.setViewName("jsonView");
+		return mav;
+	}
 	
 	
 	

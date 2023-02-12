@@ -125,7 +125,13 @@ public class AdminDAOImpl implements AdminDAO{
 	public void selectDelete(String employeeIdArray) {
 		sql.delete(namespace+".selectDelete", employeeIdArray);
 	}
-
+	
+	@Override
+	public void refusalSelectCancel(String employeeIdArray) {
+		sql.update(namespace+".refusalSelectCancel", employeeIdArray);
+		
+	}
+	
 	@Override
 	public List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword, String statusIdSelect) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
@@ -184,6 +190,13 @@ public class AdminDAOImpl implements AdminDAO{
 	public List<employeeVO> statusSelect(String statusType) {
 		return sql.selectList(namespace+".statusSelect", statusType);
 	}
+
+	@Override
+	public void applicationSelectDelete(String applNoArray) {
+		sql.delete(namespace+".applicationSelectDelete", applNoArray);
+	}
+
+
 	
 
 	

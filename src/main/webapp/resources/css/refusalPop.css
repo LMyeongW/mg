@@ -38,11 +38,15 @@
     border-radius: 20px 100px 0 0;
     width: 500px; height: 70px;
 }
-.refusal_wrap .check_box {
-	display:flex;
+.refusal_wrap .refusal_table {
+	margin-top:50px;
+}
+
+.refusal_wrap .content .check_box {
+	position: absolute;
+	right: 31px;
 	z-index:10;
 	margin-bottom:10px;
-	width:100%;
 
 }.refusal_wrap .check_box .c1 {
 	line-height:30px;
@@ -50,17 +54,30 @@
 }
 .refusal_wrap .check_box .selectDelete {
 	font-size:13px;
+	background-color:#ff3f3f;
+	color:#fff;
 	cursor: pointer;
-	margin-left:10px;
 	width:60px; height:30px;
 }
-
-.content table {}
+.refusal_wrap .check_box .selectCancel{
+	font-size:13px;
+	background-color:#050f31;
+	color:#fff;
+	cursor: pointer;
+	margin-right:5px;
+	width:60px; height:30px;
+}
+.content table {
+	width:1020px
+}
 .content table thead{
     background-color: #2a2a2a;
     color: #fff;
     line-height: 70px;
+    width:100%;
     height: 70px;
+}
+.content table thead tr {
 }
 .content table tbody {
     font-size: 16px;
@@ -76,11 +93,20 @@
 
 .paging_box {
 	position: absolute;
-	bottom:70px;
+	bottom:40px;
 	left:50%;
 	transform: translateX(-50%);
 	text-align: center;
 }
+.paging_box span{
+	display: inline_block;
+	text-align: center;
+	padding: 0 5px;
+}
+.paging_box span a {
+	display: inline_block;
+}
+
 .confirm {
     display: none;
     position: fixed;
@@ -196,4 +222,12 @@
 .noPoint{
 	color:#bdbdbd;
 	font-weight: 300;
+}
+
+.noData {
+	display: block;
+	position: absolute;
+	bottom:50%;
+	left:50%;
+	transform: translateX(-50%);
 }

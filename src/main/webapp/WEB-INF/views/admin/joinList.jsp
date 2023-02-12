@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 페이지</title>
+    <title>회원가입 신청목록</title>
     <link rel="stylesheet" href="/resources/css/reset.css">
     <link rel="stylesheet" href="/resources/css/joinList.css">
 </head>
@@ -17,7 +17,14 @@
         <header>
             <div class="inner_size">
                 <div class="header_m">
-                    <h1>사원관리</h1>
+                   <h1>
+                    	<a href="/main" class="link">
+                        	<div class="img">
+                                <img src="/resources/img/logo_black.png" alt="로고"/>
+                            </div>
+                       	</a>
+                        	관리자페이지
+                    </h1>
                     <c:if test="${member == null}">
                     	<div class="loginAndjoin">
                         	<a href="/account/login" class="login">로그인</a>
@@ -79,6 +86,7 @@
                                     </thead>
                                      <c:forEach var="data" items="${data}">
                                     	<tbody>
+                                    		<c:if test="${data != null}">
                                         	<tr>
                                         	   	<td width ="7%">
                                             		<c:out value="${data.employeeId}" />
@@ -115,9 +123,16 @@
                                             		<a class="btn2" href="javascript:void(0);" title="${data.employeeId}">거부</a>
                                             	</td>
                                         	</tr>
+                                        	</c:if>
+  
+
                                     	</tbody>
+       									
+ 
 									</c:forEach>
+
                                 </table>
+
                             </div>
                          	<div class="confirm">
             					<div class="text">
@@ -150,6 +165,11 @@
   								</c:if>
 							</div>
                             <!-- .table_box -->
+                            <c:if test="${empty data}">
+								<div class="noData">
+                             		등록된 정보가 없습니다.
+                                 </div>
+                            </c:if>
                         </div>
                     <!-- .employee_mg -->
                     

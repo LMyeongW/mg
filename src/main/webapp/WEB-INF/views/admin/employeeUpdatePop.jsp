@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>사원정보 수정</title>
 <link rel="stylesheet" href="/resources/css/reset.css">
 <link rel="stylesheet" href="/resources/css/employeeUpdatePop.css">
 </head>
@@ -24,6 +24,7 @@
                 <div class="employeeNo">
                     <span class="no">사원번호 : </span><span class="conNo">${data.emploNo}</span>
                     <input type="hidden" name="emploNo" value="${data.emploNo}"/>
+                    <input type="hidden" name="login_appr" value="${data.login_appr}"/>
                 </div>
 
                 <div class="department">

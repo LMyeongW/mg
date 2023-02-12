@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	<insert id="boardWrite">
+		insert into board (
+			employeeId,
+			boardTitle,
+			boardCategory,
+			boardRegdate,
+			boardContent
+		)values (
+			#{employeeId},
+			#{boardTitle},
+			#{boardCategory},
+			sysdate(),
+			#{boardContent}
+		)
+	</insert>
+	
+	<select id="boardlist" parameterType="hashMap" resultType="com.study.demo.vo.BoardVO">
+		select
+			*
+		from
+			board
+        order by boardNo desc
+		limit #{sqlPostNum}, #{postNum}	
+	</select>
+	
+	<select id="boardTotalcount" resultType="java.lang.Integer" >
+		select count(*)from board
+	</select>
+	
+	<select id="boardDetail" resultType="com.study.demo.vo.BoardVO">
+		select 
+			*
+		from
+			board
+		where
+			boardNo = #{boardNo}
+	
+	</select>
+	
+	<update id="boardUpdate" parameterType="com.study.demo.vo.BoardVO">
+		update board set
+			boardTitle = #{boardTitle},
+			boardCategory = #{boardCategory},
+			boardContent = #{boardContent}
+		where
+			boardNo = #{boardNo}
+	</update>
+	
+	<delete id="boardDelete" parameterType="com.study.demo.vo.BoardVO">
+		delete from board
+		where boardNo = #{boardNo}
+	</delete>
+	
+</mapper>

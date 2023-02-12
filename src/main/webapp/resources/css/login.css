@@ -27,7 +27,20 @@ header .header_m {
 
 }
 header .header_m h1 {
-    padding: 3px;
+    align-items: center;
+    display: flex;
+}
+header .header_m h1 .link {
+    padding-top: 13px;
+    margin-right: 10px;
+    height: 50px;
+}
+header .header_m h1 .link .img {
+  
+    width: 30px; height: 30px;
+}
+header .header_m h1 .link .img img {
+    width: 100%; height: 100%;
 }
 header .header_m .loginAndjoin {
     position: absolute;
@@ -79,7 +92,6 @@ main {
 .login_wrap{
     position: absolute;
     top: 50px;
-    left: 310px;
     margin: 0 auto;
     width: 1260px;
 }

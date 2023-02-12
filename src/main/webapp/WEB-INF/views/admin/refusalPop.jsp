@@ -15,27 +15,29 @@
             
             <div class="content">
                 <div class="title">거절 목록</div>
-
-                <div class="refusal_table">
-                	<div class="check_box">
-                		<div class="c1"><input type="checkbox" id="allCheck"><labal>전체선택</labal></div>
+				<div class="check_box">
+						<button type="button" class="selectCancel">선택취소</button>
                 		<button type="button" class="selectDelete">선택삭제</button>
-                	</div>
+                		
+                </div>
+                <div class="refusal_table">
+
                     <table>
                         <thead>
                             <tr>
-                            	<th width="3%"></th>
-                                <th width="12%">아이디</th>
-                                <th width="8%">이름</th>
-                                <th width="12%">전화번호</th>
-                                <th width="12%">이메일</th>  
-                                <th width="12%">거부일</th>
+                            	<th width="5%"><div class="c1"><input type="checkbox" id="allCheck"></div></th>
+                                <th width="10%">아이디</th>
+                                <th width="10%">이름</th>
+                                <th width="15%">전화번호</th>
+                                <th width="15%">이메일</th>  
+                                <th width="15%">거부일</th>
                                 <th width="8%" class = "t8">등록</th>
                                 <th width="8%" class = "t8">삭제</th>
                             </tr>
                         </thead>
                         <c:forEach var="data" items="${data}">
                         	<tbody>
+                        		<c:if test="${data != null }">
                             	<tr>
                             		<td>
                             			<input type="checkbox" class="checkBox" name="chck" value="${data.employeeId}">
@@ -60,7 +62,7 @@
                                    		<a class="btn1" href="javascript:void(0);" title="${data.employeeId}">취소</a>
 
                                     </td>
-                                    <td >
+                                    <td>
                                     	<a class="btn2" href="#">삭제</a>
                                     	<div class="confirm">
             								<div class="text">
@@ -73,6 +75,7 @@
         								</div>
                                      </td>
                                 </tr>
+                                </c:if>
                         	</tbody>
 						</c:forEach>
                     </table>
@@ -84,7 +87,7 @@
      					<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
   							<span>
   								<c:if test="${select != num }">
-  									<span class="noPoint"><a href="/admin/joinlist?num=${num}${page.searchKeyword}">${num}</a></span>
+  									<span class="noPoint"><a href="/admin/refusalPop?num=${num}${page.searchKeyword}">${num}</a></span>
   								</c:if>
   										
   								<c:if test="${select == num }">
@@ -103,10 +106,15 @@
                 			<div class="content1">
                    				정말로 취소하시겠습니까?
                 			</div>
-                			<div class=""><a href="" class="confirmYes">확인</a></div>
+                			<div class="yes"><a href="" class="confirmYes">확인</a></div>
                 			<div class="no"><a href="javascript:void(0);" class="cencel1">취소</a></div>
         				</div>
                 	</div>
+                <c:if test="${empty data}">
+					<div class="noData">
+                      	등록된 정보가 없습니다.
+                    </div>
+                </c:if>
             </div>
         </div>
         <!-- .inner_size -->
@@ -120,11 +128,17 @@
 	$(document).ready(function(){
 		
 		$('.btn1').click(function(){
-    		$('.confirm1').addClass('on');
-    		
-    		$('.confirmYes').prop('href',"/admin/cencelRefusal?employeeId="+this.title);
-    		
+			var conYes = $('.confirmYes').prop('href',"/admin/cencelRefusal?employeeId="+this.title);
+    		$('.confirm1').addClass('on');  		
+    		conYes.click(function(){
+    			setTimeout(function(){
+    			},1000); // 
+    			
+    		});
+
 		});
+		
+		
 		$('.cencel1').click(function(){
    			$('.confirm1').removeClass('on');
 		});
@@ -167,7 +181,7 @@
     		console.log(employeeIdArray);
     		
     		if(employeeIdArray == ""){
-    			alert("삭제할 항목을 선택해주세요.");
+    			alert("삭제하실 항목을 선택해주세요.");
     			return false;
     		}
     		
@@ -182,21 +196,61 @@
     				dataType : 'json',
     				data : JSON.stringify(employeeIdArray),
     				contentType : 'application/json',
-    				
     				success : function(result) {
     					location.reload();
+    					opener.location.reload();
     					alert("선택하신 항목이 정상적으로 삭제되었습니다.");
-
+						
     				},
     				error : function(request, status, error){
     					
     				}
     				
-    			})
+    			});
     			
     		}
- 
+    		
     	});
+    	$('.selectCancel').on('click', function(){
+    		var employeeIdArray =[];
+    		
+    		$("input:checkbox[name=chck]:checked").each(function(){
+    			
+    			employeeIdArray.push($(this).val());
+    			
+    		});	
+    		console.log(employeeIdArray);
+    		
+    		if(employeeIdArray == ""){
+    			alert("취소할 항목을 선택해주세요.");
+    			return false;
+    		}
+    		
+    		var confirmCancel = confirm("승인대기목록으로 되돌리시겠습니까?");
+    		
+    		if(confirmCancel){
+    			$.ajax({
+    				
+    				type : 'post',
+    				url : '/admin/refusalSelectCancel',
+    				dataType : 'json',
+    				data : JSON.stringify(employeeIdArray),
+    				contentType : 'application/json',
+    				success : function(result){
+    					location.reload();
+    					opener.location.reload();
+    					alert("선택하신 항목이 정상적으로 승인대기목록으로 이동하였습니다.");
+    				},
+    				error : function(){
+    					alert("연결에 실패하였습니다.");
+    				}
+    				
+    			});
+    		}
+    		
+    	});
+    	
+
 	});
 	
 

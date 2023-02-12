@@ -52,6 +52,8 @@ public interface AdminDAO {
 	//체크박스삭제
 	void selectDelete(String employeeIdArray);
 	
+	void refusalSelectCancel(String employeeIdArray);
+	
 	//list 정렬
 	List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword, String statusIdSelect);
 	
@@ -71,9 +73,13 @@ public interface AdminDAO {
 	void resignationDelete(employeeVO employeevo);
 	
 	//퇴사자 선택삭제
-	void resignationSelectDelete(String string);
+	void resignationSelectDelete(String employNoArray);
 
 	List<employeeVO> statusSelect(String statusType);
+
+	void applicationSelectDelete(String applNoArray);
+
+
 
 	
 

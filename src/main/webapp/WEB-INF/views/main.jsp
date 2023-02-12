@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입 리스트</title>
+    <title>LmwCompany</title>
     <link rel="stylesheet" href="/resources/css/reset.css">
     <link rel="stylesheet" href="/resources/css/main.css">
 </head>
@@ -18,14 +18,23 @@
         <header>
             <div class="inner_size">
                 <div class="header_m">
-                    <h1>사원관리</h1>
+                   <h1>
+                    	<a href="/main" class="mainlink">
+                        	<div class="img">
+                                <img src="/resources/img/logo_black.png" alt="로고"/>
+                            </div>
+                       	</a>
+                       	LmwCompany
+                        	
+                    </h1>
                     <!-- .loginAndjoin -->
                     
 					
 					<c:if test="${member != null}">
                     	<c:if test="${member.adminCk == 1 }">
                     		<div class="link">
-                    			<a href="/admin/joinlist">관리자페이지</a>
+                    			<a href="/admin/announcementWrite" class="announce">공지 작성</a>
+                    			<a href="/admin/employeelist">관리자페이지</a>
                     		</div>
                     	</c:if>
                     </c:if>
@@ -41,6 +50,7 @@
             <div class="inner_size">
                 <div class="m_top">
                     <div class="mainV"></div>
+                    <div class="mainRight">
                     <c:if test="${member == null}">
                     	<div class="loginArea">
                         	<div class="login">
@@ -56,8 +66,7 @@
                     		<form name="profileForm" id="profile_From">
                         	<div class="myprofil">
                         		<div class="lineBox">
-                                	<span class="line1"></span>
-                                	<span class="line2"></span>
+                                	<img src="/resources/img/picture1.png" alt="사진">
                             	</div>
                             	
                             	<button class="inputFile">
@@ -79,75 +88,197 @@
                  			</form>
                         	<input type="hidden" name="employeeId" value ="${member.employeeId}"/>
                         	<div class="name">${member.employeeName}님</div>
-                        	<div class="email">${member.employeeMail}</div>
-                        	<a href="/application/submit" class="applsubmit">신청서 작성</a>
+                        	<div class="email">${member.employeeMail}</div>  
                         	<div class="logOut"><a href="/account/logout.do">로그아웃</a></div>
                         	
                     	</div>
                     </c:if>
+                    
+                    	<div class="loginBottom">
+                    		<div class ="icon_Area">
+                    			<a href="/application/submit" class="appl_submit">
+                    				<div class="icon_btn">
+                    					<img src="/resources/img/submit.png" alt="작성">
+                    				</div>
+                    				<div class ="icon_title">
+                    						신청서 작성
+                    				</div>
+                    			</a>
+                    		</div>
+                    		<div class ="icon_Area">
+                    		   <a href="/board/write" class="board_submit">
+                    				<div class="icon_btn">
+                    					<img src="/resources/img/board.png" alt="게시판">
+                    				</div>
+                    				<div class ="icon_title">
+                    					게시물 작성
+                    				</div>
+                    			</a>
+                    		</div>
+                    		<div class ="icon_Area">
+                    		   <a href="#">
+                    				<div class="icon_btn">
+                    					<img src="/resources/img/setup.png" alt="게시판">
+                    				</div>
+                    				<div class ="icon_title">
+                    					설정
+                    				</div>
+                    			</a>
+                    		</div>
+                    	</div>
+                    </div>
                 </div>
                 <!-- .m_top -->
                 <div class="m_middle">
-               		<c:if test="${member != null}">
-                    	<div class="left">
-                        	<div class="applicationList">
-                            		<div class="title">신청 이력</div>
-                            		<div class="table">
-                                		<table >
-                                    		<thead>
+                	<div class="left">
+                		<div class="left_title">
+                			<div class ="teg">문의사항</div>
+                			<span class="teg_content"></span>
+                		</div>
+                		<div class="area1">
+                			<div class="ar">회사소개</div>
+                		</div>
+                		<div class="area2">
+                			<div class="ar">기업이념</div>
+                		
+                		</div>
+                		<div class="area3">
+                			<div class="ar">고객센터</div>
+                		</div>
+                		<div class="area4">
+                			<div class="text">찾아오시는 길</div>
+                			<div class=location_icon><img src="/resources/img/location.png" alt="위치아이콘"/></div>
+                		</div>
+                	</div>
+     				<div class="right_box">
+
+
+               			<c:if test="${member != null}">
+               				<div class="selectMenu">
+     							<div class="select1 on">휴가신청</div>
+     							<div class="select2">자유게시판</div>
+     						</div>
+     						<div class="right1" id="board">
+                				<div class="boardList">
+                					<div class ="table">
+                						<table>
+                							<thead>
                                         		<tr>
-                                            		<th width ="100px">이름</th>
-                                            		<th width ="150px">신청일</th>
-                                            		<th width ="130px">신청종류</th>
-                                            		<th width ="130px">상태</th>
-                                            		<th width ="100px">수정</th>
-                                            		<th width ="100px">취소</th>
-                                        		</tr>
-                                    		</thead>
-                                    		<tbody id="tbodyList"></tbody>
-                               			</table>                            	
-                            			<div class ="paging_box"></div>
-                            			<div class="noData">등록된 정보가 없습니다.</div>
-                            		</div> 
+                                            		<th width ="100px">No</th>
+                                            		<th width ="150px">제목</th>
+                                            		<th width ="130px">카테고리</th>
+                                            		<th width ="130px">작성자</th>
+                                            		<th width ="100px">작성일</th>
+                                            		<th width ="100px">상세보기</th>
+                                        			</tr>
+                                    			</thead>
+                							<tbody id="tbodyList1"></tbody>
+                						</table>
+                						<div class ="paging_box1"></div>
+                            			<div class="noData1">등록된 정보가 없습니다.</div>
+                					
+                					</div>
+                				</div>
+                			</div>
+                    		<div class="right on" id="applList">
+                        		<div class="applicationList">
+                            			<div class="table">
+                                			<table >
+                                    			<thead>
+                                        			<tr>
+                                            			<th width ="100px">이름</th>
+                                            			<th width ="150px">신청일</th>
+                                            			<th width ="130px">신청종류</th>
+                                            			<th width ="130px">상태</th>
+                                            			<th width ="100px">수정</th>
+                                            			<th width ="100px">취소</th>
+                                        			</tr>
+                                    			</thead>
+                                    			<tbody id="tbodyList"></tbody>
+                               				</table>                            	
+                            				<div class ="paging_box"></div>
+                            				<div class="noData">등록된 정보가 없습니다.</div>
+                            			</div> 
+                        			</div>
+                    			</div>
+						</c:if>
+                   		<c:if test="${member == null}">
+                    		<div class="right2">
+								<div class="rightColor">
+                        			<div class="table">
+          								<a href="/account/login" class="login_btn1">로그인 후 확인하기</a>
+          							</div>
                         		</div>
                     		</div>
-					</c:if>
-                    <c:if test="${member == null}">
-                    	<div class="left">
-                        	<div class="applicationList">
-                        		<div class="title">신청 이력</div>
-                        		<div class="table">
-                        			<table>
-                        				<thead>
-                                    		<tr>
-                                        		<th width ="100px">이름</th>
-                                            	<th width ="150px">신청일</th>
-                                            	<th width ="130px">신청종류</th>
-                                           		<th width ="130px">상태</th>
-                                            	<th width ="100px">수정</th>
-                                            	<th width ="100px">취소</th>
-                                        	</tr>
-                                    	</thead>
-                        			</table>
-          							<a href="/account/login" class="login_btn1">로그인 후 확인하기</a>
-          						</div>
-                        	</div>
-                    	</div>
-                    </c:if>
-                    <div class="right"></div>
+                    	</c:if>
+     				
+     				</div>
+     				<!-- right_box -->
                 </div>
                 <!-- .m_middle -->
-                <div class="m_bottom"></div>
+                
+
                 <!-- .m_bottom -->
             </div>
             <!-- .inner_size -->
-	
+			<div class="m_bottom">
+            	<div class="inner_size">
+            		<div class="notify_title">
+            			공지사항
+            		</div>
+            		
+            		<a href="/announcement/listPage" class="listLink">
+            			<span class="line1"></span>
+            			<span class="line2"></span>
+            		</a>
+            		
+            		
+            		<div class="table">
+            		<input type="hidden" name="announcementNo" value="${data.announcementNo}"/>
+            			<table>
+                			<tbody id="tbodyList2"></tbody>
+                		</table>
+            		</div>
+            	</div>
+            </div>
         </main>
         <!-- main -->
 
 
         <footer>
-            Footer
+        	<div class="inner_size">
+            <ul class="f_menu">
+                <li><a href="#">서비스이용약관</a></li>
+                <li><a href="#">UGC 이용약관</a></li>
+                <li><a href="#"><b>개인정도처리방침</b></a></li>
+                <li><a href="#">쿠키정책</a></li>
+                
+            </ul>
+
+            <div class="f_mid">
+                <h4>COMPANY INFO</h4>
+                <div class="box">
+                    <ul class="info">
+                        <li>COMPANY</li>
+                        <li>ADDRESS</li>
+                        <li>LICENSE</li>
+                        <li>CUSTOMER SERVICE</li>
+                    </ul>
+                    <ul class="info1">
+                        <li>LmwCompany</li>
+                        <li>울산광역시 남구 신정4동 </li>
+                        <li>000-00-00000</li>
+                        <li>
+                            010-0000-0000
+                            <br>
+                            평일 : 09:00~18:00 / 점심시간: 12:30~13:30 /토~일, 공휴일 휴무
+                        </li>
+                    </ul>
+                </div>
+                <!-- .box -->
+            </div>
+            <!-- .f_left -->
+			</div>
         </footer>
         <!-- footer -->
     
@@ -158,10 +289,114 @@
 	$(document).ready(function(){
 		
 		submitList();
+		boardList();
+		announcementList();
+		
+		var employeeId =  $("input[name=employeeId]").val();
+		console.log(employeeId);
+		
+		$('.appl_submit').click(function(){
+			if(employeeId == null){
+				alert("로그인후 이용가능합니다.");
+				return false
+			}
+			
+		});
+		
+		$('.board_submit').click(function(){
+			if(employeeId == null){
+				alert("로그인후 이용가능합니다.");
+				return false
+			}
+			
+		});
 		
 	});
 	
 	
+	
+	$('.select2').click(function(){
+		$('.select2').addClass('on');
+		$('.select1').removeClass('on');
+		$('.right1').addClass('on');
+		$('.right').removeClass('on');
+	});
+	$('.select1').click(function(){
+		$('.select1').addClass('on');
+		$('.select2').removeClass('on');
+		$('.right').addClass('on');
+		$('.right1').removeClass('on');
+	});
+	function boardList(num){
+		$.ajax({
+			type : 'get',
+			url : '/main.board',
+			dataType : 'json',
+			data : {
+				"num" : num
+			},
+			success : function(result){
+				var data = result.data;
+				console.log(data);
+				
+				var html = "";
+				
+				for(var i = 0; i < data.list.length; i++){
+					html += "<tr>"
+					html += "<td>" + data.list[i].boardNo +" </td>"
+					html += "<td>" + data.list[i].boardTitle +" </td>"
+					html += "<td>" + data.list[i].boardCategory +" </td>"
+					html += "<td>" + data.list[i].employeeId + " </td>"
+					html += "<td>" + data.list[i].boardRegdate +" </td>"
+					html += "<td><a href='/board/detail?boardNo=" + data.list[i].boardNo +  "'>보기</a></td>"
+					html += "</tr>"
+				}
+				$('#tbodyList1').html(html);
+				if(html == null || html == "") {
+					$('.noData1').addClass('on');
+				} else {
+					$('.noData1').removeClass('on');
+				}
+				
+				/*페이징*/
+				var page = "";
+				if(data.page.prev){
+					var startPageNum = data.page.startPageNum - 1;
+					page += '<span class="prev">[ ';
+					page += '<a href="javascript:boardList(' + startPageNum + ')">이전</a>';
+					page += ']</span>';
+
+				}
+				
+				for(var num = data.page.startPageNum; num <= data.page.endPageNum; num++ ){
+					if(data.select == num){
+						page += '<span class="numPadding">';
+						page += '<span class="point"><a href="javascript:boardList(' + num + ')">' + num + '</a></span>';
+						page +=	'</span>';
+					}
+					
+					if(data.select != num){
+						page += '<span class="numPadding">';
+						page += '<span class="noPoint"><a href="javascript:boardList(' + num + ')">' + num + '</a></span>';
+						page +=	'</span>';
+					}
+				}
+				console.log(num);
+				
+				if(data.page.next){
+					var endPageNum = data.page.endPageNum + 1;
+					page += '<span class="next">[';
+					page +=	'<a href="javascript:boardList(' + endPageNum +')">다음</a>';
+					page += ']</span>';
+					
+				}
+				$('.paging_box1').html(page);
+			},
+			error : function(){
+				alert("연결에 실패하였습니다.");
+			}
+		});
+	}
 	
 	function submitList(employeeId, num){
 		var employeeId =  $("input[name=employeeId]").val();
@@ -192,7 +427,7 @@
 	           		html += "<td width ='10%'>" + data.list[i].applselect + "</td>";
 	           		html += "<td width ='10%' class='s1'>" + data.list[i].status + "</td>";
 	           		html += "<td width ='9%'><a href ='application/submitUpdate?applNo="+ data.list[i].applNo +"' title='' class='update'>수정 </a></td>";
-	           		html += "<td width ='9%'><a href ='application/submitCencel?applNo="+ data.list[i].applNo +"' title='' class='detail'>신청취소</a></td>";
+	           		html += "<td width ='9%'><a href ='application/submitCencel?applNo="+ data.list[i].applNo +"' title='' class='cancel'>신청취소</a></td>";
 	       		    html += "</tr>";
 				}
 				
@@ -204,7 +439,17 @@
 					$('.noData').removeClass('on');
 				}
 				
-				console.log(data.page); 
+				$('.cancel').on("click", function(){
+					var con = confirm("취소신청을 하시겠습니까?");
+					if(con == true){
+						alert("신청이 완료되었습니다.");
+					}else {
+						alert("작업을 중지하였습니다.");
+						return false;
+					}
+				});
+				
+				/*페이징*/
 				var page = "";
 				if(data.page.prev){
 					var startPageNum = data.page.startPageNum - 1;
@@ -243,6 +488,38 @@
 				alert("연결에 실패하였습니다.")
 			}
 			
+		});
+	}
+	
+	function announcementList(){
+		$.ajax({
+			type : 'get',
+			url : '/main.announcement',
+			dataType : 'json',
+			success : function (result){
+				
+				var data = result.data;
+				console.log(data);
+				
+				var html ="";
+				for(var i= 0; i <data.list.length; i++){
+					html += "<tr class='click' id='" + data.list[i].announcementNo + "'>";
+	           		html += "<td width ='15%'><div class='acontent1'>["  + data.list[i].announcementCategory + "] " + data.list[i].announcementTitle + "</div></td>";
+	           		html += "<td width ='35%'><div class='acontent'>"+ data.list[i].announcementContent + "</div></td>";
+	           		html += "<td width ='15%' class='s2'>" + data.list[i].announcementRegdate + "</td>";
+	       		    html += "</tr>";
+
+				}
+				$('#tbodyList2').html(html);
+				
+				$('.click').on("click", function(){
+					var click = $('.click');
+					location.href="/announcement/detail?announcementNo=" + this.id;
+					console.log(this.id);
+				});
+				
+				
+			}
 		});
 	}
 	

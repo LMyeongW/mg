@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="announcement">
+
+	<insert id="announcementWrite" >
+		insert into announcement (
+			announcementTitle,
+			announcementCategory,
+			announcementRegdate,
+			announcementContent
+		) values(
+			#{announcementTitle},
+			#{announcementCategory},
+			sysdate(),
+			#{announcementContent}
+		)
+	
+	</insert>
+	
+	<select id="announcementList" parameterType="hashMap" resultType="com.study.demo.vo.AnnouncementVO">
+		select
+			*
+		from
+			announcement
+        order by announcementNo desc
+		limit #{sqlPostNum}, #{postNum}	
+	</select>
+	
+	<select id="announcementTotalcount" resultType="java.lang.Integer" >
+		select count(*)from announcement
+	</select>
+	
+	<select id="announcementDetail" resultType="com.study.demo.vo.AnnouncementVO">
+		select
+			*
+		from
+			announcement
+		where
+			announcementNo = #{announcementNo}
+	</select>
+	
+	<select id="announcementUpdateGET" resultType="com.study.demo.vo.AnnouncementVO">
+		select
+			*
+		from
+			announcement
+		where
+			announcementNo = #{announcementNo}
+	
+	</select>
+	
+	<update id="announcementUpdatePOST" parameterType="com.study.demo.vo.AnnouncementVO">
+		update announcement set
+			announcementTitle = #{announcementTitle},
+			announcementCategory = #{announcementCategory},
+			announcementContent = #{announcementContent}
+		where 
+			announcementNo = #{announcementNo}
+	</update>
+	
+	<delete id="announcementDelete" parameterType="com.study.demo.vo.AnnouncementVO">
+		delete from announcement
+		where announcementNo = #{announcementNo}
+	</delete>
+	
+	<select id="announcementAll" parameterType="hashMap" resultType="com.study.demo.vo.AnnouncementVO">
+		select
+			*
+		from
+			announcement
+        order by announcementNo desc
+		limit #{sqlPostNum}, #{postNum}	
+	</select>
+	
+	<select id="announcementNotifyTotalcount" resultType="java.lang.Integer" >
+		select count(announcementCategory)from announcement
+		where
+		announcementCategory = "공지사항"
+	</select>
+	
+	<select id="announcementNotify" parameterType="hashMap" resultType="com.study.demo.vo.AnnouncementVO">
+		select
+			*
+		from
+			announcement
+		where
+			announcementCategory = "공지사항"
+        order by announcementNo desc
+		limit #{sqlPostNum}, #{postNum}	
+	</select>
+	
+	<select id="announcementEventTotalcount" resultType="java.lang.Integer" >
+		select count(announcementCategory)from announcement
+		where
+		announcementCategory = "이벤트"
+	</select>
+	
+	<select id="announcementEvent" parameterType="hashMap" resultType="com.study.demo.vo.AnnouncementVO">
+		select
+			*
+		from
+			announcement
+		where
+			announcementCategory = "이벤트"
+        order by announcementNo desc
+		limit #{sqlPostNum}, #{postNum}	
+	</select>
+	
+	
+	<sql id="categoryWhere" >
+		where
+			1=1
+				
+		<if test="categoryType != null and categoryType != ''">
+		<![CDATA[ 
+	 		AND 
+			( 
+	    		announcementCategory like concat('%',#{categoryType},'%')
+		 	)  
+	 	]]> 
+		</if>
+	</sql>
+	
+	<select id="detailListTotalcount" resultType="java.lang.Integer" >
+		<![CDATA[ 
+		select count(*)from announcement
+		]]> 
+		<include refid="categoryWhere"/>
+	</select>
+	
+	
+	<select id="announcementDetailList" parameterType="hashMap" resultType="com.study.demo.vo.AnnouncementVO">
+		<![CDATA[ 
+		select
+			*
+		from
+			announcement
+		]]> 
+		<include refid="categoryWhere"/>
+		
+        order by announcementNo desc
+		limit #{sqlPostNum}, #{postNum}	
+	</select>
+</mapper>

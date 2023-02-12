@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="app">
 	<insert id="submitPost">
-		insert into memberapp (employeeId, emploNo, employeeName, departmentId, positionId, applselect, startDate, regDate, endDate, emergencyTell, reason, status)
-		values(#{employeeId}, #{emploNo}, #{employeeName}, #{departmentId}, #{positionId}, #{applselect}, #{startDate}, #{startDate}, sysdate(), #{emergencyTell}, #{reason}, "승인대기")
+		insert into memberapp (employeeId, emploNo, employeeName, departmentId, positionId, applselect, startDate, endDate, regDate, emergencyTell, reason, status)
+		values(#{employeeId}, #{emploNo}, #{employeeName}, #{departmentId}, #{positionId}, #{applselect}, #{startDate}, #{endDate}, sysdate(), #{emergencyTell}, #{reason}, "승인대기")
 	</insert>	
 	
 	<select id="submitlist" parameterType="hashMap" resultType="com.study.demo.vo.ApplicationVO">
@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="submitTotalcount" parameterType="hashMap" resultType="java.lang.Integer">
-		select count(employeeId) from memberapp where employeeId =  #{employeeId} and status = "승인대기" or status = "승인완료"
+		select count(employeeId) from memberapp where employeeId =  #{employeeId} and status = "승인대기" or status = "승인완료" or status = "거부"
 	</select>
 	
 	<select id="submitUpdateGet"  resultType="com.study.demo.vo.ApplicationVO">

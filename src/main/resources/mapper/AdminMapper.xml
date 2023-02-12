@@ -67,6 +67,13 @@
 		where employeeId = #{employeeId}
 	</delete>
 	
+	<update id="refusalSelectCancel" parameterType="com.study.demo.vo.employeeVO">
+		update employee set 
+			login_appr = "0"
+		where
+			employeeId = #{employeeId}
+	</update>
+	
 
 	<!-- 
 		<if test='orderTpye == "" or orderType == "desc"'>
@@ -182,7 +189,28 @@
 			comregdate = #{comregdate},
 			fileName = #{fileName},
 			uploadPath = #{uploadPath},
-			uuid = #{uuid}	
+			uuid = #{uuid},
+			<if test='statusId == "퇴사"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "퇴직"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "해고"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "계약완료"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "미정"'>
+			login_appr = "1"
+			</if>
+			<if test='statusId == "정규"'>
+			login_appr = "1"
+			</if>
+			<if test='statusId == "계약"'>
+			login_appr = "1"
+			</if>
 		where 
 			emploNo = #{emploNo}
 	</update>
@@ -193,9 +221,31 @@
 			departmentId = #{departmentId},
 			positionId = #{positionId},
 			statusId = #{statusId},
-			comregdate = #{comregdate}
+			comregdate = #{comregdate},
+			<if test='statusId == "퇴사"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "퇴직"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "해고"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "계약완료"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "미정"'>
+			login_appr = "1"
+			</if>
+			<if test='statusId == "정규"'>
+			login_appr = "1"
+			</if>
+			<if test='statusId == "계약"'>
+			login_appr = "1"
+			</if>
 		where 
 			emploNo = #{emploNo}
+		
 	</update>
 	
 	<sql id="employeetWhere" >
@@ -281,7 +331,7 @@
 		where
 			1=1 
 		and	 
-			login_appr = "1"
+			login_appr = "3"
 		and
 			statusId in ('해고', '퇴사', '퇴직', '계약완료')
 
@@ -379,7 +429,28 @@
 			employeeAddr2 = #{employeeAddr2},
 			employeeAddr3 = #{employeeAddr3},
 			resignationdate = #{resignationdate},
-			reason = #{reason}
+			reason = #{reason},
+			<if test='statusId == "퇴사"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "퇴직"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "해고"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "계약완료"'>
+			login_appr = "3"
+			</if>
+			<if test='statusId == "미정"'>
+			login_appr = "1"
+			</if>
+			<if test='statusId == "정규"'>
+			login_appr = "1"
+			</if>
+			<if test='statusId == "계약"'>
+			login_appr = "1"
+			</if>
 		where 
 			emploNo = #{emploNo}
 	</update>
@@ -394,7 +465,10 @@
 		where emploNo = #{emploNo}
 	</delete>
 	
-
+	<delete id="applicationSelectDelete" >
+		delete from memberapp
+		where applNo = #{applNo}
+	</delete>
 
 	<!--  <update id="employeeImageUpdate">
 		update employee set

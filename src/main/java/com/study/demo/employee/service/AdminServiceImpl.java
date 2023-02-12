@@ -117,6 +117,15 @@ public class AdminServiceImpl implements AdminService{
 			employeeDao.selectDelete(employeeIdArray.get(i));
 		}
 	}
+	
+
+	@Override
+	public void refusalSelectCancel(List<String> employeeIdArray) {
+		for(int i=0; i<employeeIdArray.size(); i++) {
+			employeeDao.refusalSelectCancel(employeeIdArray.get(i));
+		}
+		
+	}
 
 	@Override
 	public List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword, String statusIdSelect) {
@@ -165,6 +174,15 @@ public class AdminServiceImpl implements AdminService{
 	public List<employeeVO> statusSelect(String statusType) {
 		return employeeDao.statusSelect(statusType);
 	}
+
+	@Override
+	public void applicationSelectDelete(List<String> applNoArray) {
+		for(int i=0; i<applNoArray.size(); i++) {
+			employeeDao.applicationSelectDelete(applNoArray.get(i));
+		}
+		
+	}
+
 
 
 	

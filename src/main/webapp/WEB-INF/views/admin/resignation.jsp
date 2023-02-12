@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 페이지</title>
+    <title>퇴사자목록</title>
     <link rel="stylesheet" href="/resources/css/reset.css">
     <link rel="stylesheet" href="/resources/css/resignation.css">
 </head>
@@ -16,7 +16,14 @@
         <header>
             <div class="inner_size">
                 <div class="header_m">
-                    <h1>사원관리</h1>
+                   <h1>
+                    	<a href="/main" class="link">
+                        	<div class="img">
+                                <img src="/resources/img/logo_black.png" alt="로고"/>
+                            </div>
+                       	</a>
+                        	관리자페이지
+                    </h1>
                      <c:if test="${member == null}">
                     	<div class="loginAndjoin">
                         	<a href="/account/login" class="login">로그인</a>
@@ -56,15 +63,15 @@
                                 <input type="text" class="search_input" name="searchKeyword" placeholder="검색어를 입력해주세요.">
                                 <a href="#" class="searchbtn">검색</a>
                             </div>
-							<div class="check_box">
-                				<div class="c1"><input type="checkbox" id="allCheck"><labal>전체선택</labal></div>
-                				<button type="button" class="selectDelete">선택삭제</button>
-                			</div>
+
                             <div class="table_box">
+                            	<div class="check_box">
+                					<button type="button" class="selectDelete">선택삭제</button>
+                				</div>
                                 <table>
                                     <thead>
                                         <tr>
-                                        	<th></th>
+                                        	<th><div class="c1"><input type="checkbox" id="allCheck"></div></th>
                                             <th class="t1">사원번호<a href="javascript:resignationList('asc');" title="오름차순">▲</a><a  href="javascript:resignationList('desc');" title="내림차순">▼</a>
                                             </th>
                                             <th>이름</th>
@@ -126,28 +133,32 @@
 			
 			if(employNoArray == "" || employNoArray == null){
 				alert("삭제할 항목을 선택해주세요.");
-			}
-			
-			var confirmAlert = confirm("정말로 삭제하시겠습니까?");
-			
-			if(confirmAlert == true){
-				
-				$.ajax({
+				return false;
+			} else {
+				var confirmAlert = confirm("정말로 삭제하시겠습니까?");
+				if(confirmAlert == true){
 					
-					type : 'POST',
-					url : '/admin/resignationSelectDelete.do',
-					dataType : 'json',
-					data : JSON.stringify(employNoArray),
-					contentType : 'application/json',
-					success : function(result){
-						location.reload();
-						alert("선택하신 항목이 정상적으로 삭제되었습니다.");
-					},
-					error : function(){
+					$.ajax({
 						
-					}
-				});//선택삭제 ajax
+						type : 'POST',
+						url : '/admin/resignationSelectDelete.do',
+						dataType : 'json',
+						data : JSON.stringify(employNoArray),
+						contentType : 'application/json',
+						success : function(result){
+							location.reload();
+							alert("선택하신 항목이 정상적으로 삭제되었습니다.");
+						},
+						error : function(){
+							alert("연결에 실패하였습니다.");
+						}
+					});//선택삭제 ajax
+				}
 			}
+			
+			
+			
+
 		});//선택삭제 버튼
 	});
 	

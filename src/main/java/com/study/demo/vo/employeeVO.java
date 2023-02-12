@@ -263,6 +263,7 @@ public class employeeVO extends Page{
 			this.statusId = "미정";
 		} else if(statusId.equals("01")) {
 			this.statusId = "정규";
+			
 		} else if(statusId.equals("02")) {
 			this.statusId = "계약";
 		} else if(statusId.equals("03")) {
@@ -308,9 +309,9 @@ public class employeeVO extends Page{
 	}
 	public void setResignationdate(String resignationdate) {
 		this.resignationdate = resignationdate;
-		if(resignationdate == null || resignationdate.equals("null")) {
-			this.statusId = "날짜를 입력해주세요.";
-		} 
+		if(resignationdate.equals("")) {
+			this.resignationdate = null;
+		}
 	}
 	public String getReason() {
 		return reason;

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사원관리</title>
+    <title>회원가입</title>
     <link rel="stylesheet" href="/resources/css/reset.css">
     <link rel="stylesheet" href="/resources/css/join.css">
 </head>
@@ -117,7 +117,7 @@
                         <span class="errorMsg7"></span>
                     </div>
                     <div class="phone_input_box">
-                        <input class="phone_input" placeholder="전화번호 입력" name="employeePhone">
+                        <input class="phone_input" name="employeePhone" oninput="phoneForm(this)" placeholder="전화번호 입력"/>
                     </div>
                 </div>
                 <!-- .user_phone -->
@@ -466,6 +466,12 @@
 		
 	});
 	
+	/*전화번호 형식*/
+	const phoneForm = (target) => {
+		 target.value = target.value
+		 	.replace(/[^0-9]/g, '')
+		 	.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+	}
 	/*전화번호*/
 	$(".phone_input").on("propertychange change keyup paste input", function(){
 		var phone = $('.phone_input').val();
@@ -476,6 +482,8 @@
 		} else {
 			$('.errorMsg7').text("");
 		}
+		
+
 		
 	});
 	
@@ -528,6 +536,7 @@
 		
 		return form.test(email);  //.test 형식에 부합하면 true
 	}
+	
 	
 	/*인증번호비교*/
 	$(".mailCk_input").blur(function(){
