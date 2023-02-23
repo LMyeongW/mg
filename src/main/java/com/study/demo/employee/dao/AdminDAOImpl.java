@@ -87,7 +87,6 @@ public class AdminDAOImpl implements AdminDAO{
 	@Override
 	public void joindelete(String employeeId) {
 		sql.delete(namespace+".joindelete", employeeId);
-		
 	}
 	
 	//회원가입 승인 팝업 거절
@@ -110,14 +109,12 @@ public class AdminDAOImpl implements AdminDAO{
 	@Override
 	public void refusalUpdate(employeeVO employeevo) {
 		sql.update(namespace+".refusalUpdate",employeevo);
-		
 	}
 	
 	//회원가입 거절 취소
 	@Override
 	public void cencelRefusal(employeeVO employeevo) {
 		sql.update(namespace+".cencelRefusal", employeevo);
-		
 	}
 	
 	//체크박스 삭제
@@ -130,7 +127,6 @@ public class AdminDAOImpl implements AdminDAO{
 	@Override
 	public void refusalSelectCancel(String employeeIdArray) {
 		sql.update(namespace+".refusalSelectCancel", employeeIdArray);
-		
 	}
 	
 	//직원관리 리스트
