@@ -80,7 +80,6 @@ public class ApplicationDAOImpl implements ApplicationDAO{
 	@Override
 	public Object applApprovalPage(int applNo) {
 		return sql.selectOne(namespace+".applApprovalPage", applNo);
-		
 	}
 	
 	//권한페이지 신청서 수정
