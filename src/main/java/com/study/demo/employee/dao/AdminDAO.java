@@ -74,17 +74,14 @@ public interface AdminDAO {
 	
 	//퇴사자 선택삭제
 	void resignationSelectDelete(String employNoArray);
-
+	
+	//직원구분 셀렉트박스 검색
 	List<employeeVO> statusSelect(String statusType);
-
+	
+	//신청서선택삭제
 	void applicationSelectDelete(String applNoArray);
 
 
-
-	
-
-	//오름차순
-	//void employeeSort(String asc);
 
 	
 

@@ -23,8 +23,9 @@
                         	<div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고"/>
                             </div>
+                            LmwCompany
                        	</a>
-                        	LmwCompany
+                        	
                     </h1>
                     <!-- .loginAndjoin -->
                     
@@ -133,6 +134,7 @@
     </div>
     <!-- #wrap -->
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 	$(document).ready(function(){
 		
@@ -142,43 +144,71 @@
 			var content = $('textarea[name= boardContent]').val();
 			
 			if(title == ""){
-				alert("제목을 입력해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '경고!',
+					text: '제목을 입력해주세요.',
+				});
 				return false;
 			}
 			if(category == "" || category == "선택"){
-				alert("카테고리를 선택해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '경고!',
+					text: '카테고리를 선택해주세요.',
+				});
 				return false;
 			}
 			if(content == ""){
-				alert("내용을 입력주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '경고!',
+					text: '내용을 입력주세요.',
+				});
 				return false;
 			}
 			
-			var con = confirm("공지사항을 수정하시겠습니까?");
-			
-			if(con){
-				var data = $('form[name=a_form]').serialize();
-				console.log(data);
-				
-				$.ajax({
-					
-					url : '/admin/announcementUpdate',
-					type : 'post',
-					data : data,
-					success : function(){
-						alert("수정에 성공하였습니다.");
-						var announcementNo = $('input[name=announcementNo]').val();
-						location.href="/announcement/detail?announcementNo="+announcementNo;
-					},
-					error : function(){
-						alert("연결에 실패하였습니다.");
-					}
-					
-				});
-			} else {
-				alert("수정을 취소하였습니다.");
-			}
+			Swal.fire({
+				title: 'Are you sure?',
+				text: "You won't be able to revert this!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, update it!'
+			}).then((result) => {
+				  if (result.isConfirmed) {
 
+					var data = $('form[name=a_form]').serialize();
+					
+					$.ajax({
+						
+						url : '/admin/announcementUpdate',
+						type : 'post',
+						data : data,
+						success : function(){
+							Swal.fire(
+								'성공!',
+								'수정에 성공하였습니다.',
+								'success'
+							)
+							var announcementNo = $('input[name=announcementNo]').val();
+							$('.swal2-confirm').click(function(){
+								location.href="/announcement/detail?announcementNo="+announcementNo;
+							});
+							$('.swal2-backdrop-show').click(function(){
+								location.href="/announcement/detail?announcementNo="+announcementNo;
+							});
+
+							
+						},
+						error : function(){
+							alert("연결에 실패하였습니다.");
+						}
+						
+					});
+				}
+			});
 		});
 		
 		$('.cancel_btn').on("click", function(){

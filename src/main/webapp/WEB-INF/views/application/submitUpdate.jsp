@@ -14,6 +14,7 @@
 <body>
     <div id="wrap">
     <form id="appl_form" method="post" name="applForm">
+    	<input type="hidden" name="applNo" value ="${data.applNo}">
         <header>
             <div class="inner_size">
                 <div class="header_m">
@@ -22,8 +23,9 @@
                         	<div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고"/>
                             </div>
+                            LmwCompany
                        	</a>
-                       	LmwCompany
+                       	
                         	
                     </h1>
                     <c:if test="${member == null}">
@@ -114,8 +116,8 @@
                         </div>
 
                         <div class="btn_box">
-                            <button class="application_btn">등록</button>
-                            <div class="applicationCen_btn"><a href="/main">취소</a></div>
+                            <div class="application_btn">등록</div>
+                            <div class="applicationCen_btn"><a href="javascript:void(0)">취소</a></div>
                         </div>
                     </div>
                     <!-- .input_wrap -->
@@ -139,6 +141,7 @@
     <!-- #wrap -->
     
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 	/*전화번호 형식*/
 	const phoneForm = (target) => {
@@ -147,57 +150,12 @@
  			.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
 	}
 	
-	/*$(document).ready(function(){
-		
-		$('.application_btn').click(function(){
-			var applS = $('.applSelect_input option:selected').val();
-			var startD = $('.startDate_input').val();
-			var endD = $('.endDate_input').val();
-			var emergencyT = $('.emergencyTell_input').val();
-			var reaSon = $('.reason_input').val();
-			
-			if(applS == ""|| applS == "선택"){
-				alert("종류를 선택해주세요.");
-				return false;
-			} 
-			if(startD == ""){
-				alert("시작일을 입력해주세요.");
-				return false;
-			} 
-			if(endD == ""){
-				alert("종료일 입력해주세요.");
-				return false;
-			}
-			console.log(startD);
-			console.log(endD);
-			if(endD < startD){
-				alert("시작일은 종료일보다 클 수 없습니다.");
-				return false;
-			}
-			
-			if(emergencyT == ""){
-				alert("비상연락처를 입력해주세요.");
-				return false;
-			} 
-			if(reaSon == ""){
-				alert("사유를 입력해주세요.");
-				return false;
-			} 
-			if(confirm("수정하시겠습니까?")){
-				$('.application_btn').attr("type","submit");
-
-			}
-				
-		});
-		
-	});*/
 	$(document).ready(function(){
 		
 		var employeeId =  $("input[name=employeeId]").val();
 		var uploadResult = $(".resultImg");
 		
 		$.getJSON("/account/profileImage", {employeeId : employeeId}, function(arr){
-			console.log("이미지 반환" + arr);
 			
 			var str ="";
 			var obj = arr[0];
@@ -219,7 +177,6 @@
 		
 		//날짜포맷 yyyy-mm-dd
 		var date = new Date();
-		console.log(date);
 
 		var year = date.getFullYear();
 
@@ -235,7 +192,6 @@
 		}
 
 		var today = year + '-' + month + '-' + day;
-		console.log(today);
 
 		$('.application_btn').on("click", function(e){
 			var applS = $('.applSelect_input option:selected').val();
@@ -245,64 +201,93 @@
 			var reaSon = $('.reason_input').val();
 			
 			if(applS == ""|| applS == "선택"){
-				alert("종류를 선택해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '종류를 선택해주세요!',
+				});
 				return false;
 			} 
 			if(startD == ""){
-				alert("시작일을 입력해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '시작일을 입력해주세요!',
+				});
 				return false;
 			} 
 			if(endD == ""){
-				alert("종료일 입력해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '종료일 입력해주세요!',
+				});
 				return false;
 			}
-			console.log(startD);
-			console.log(endD);
-			console.log(today);
+
 			if(today > startD){
-				alert("현재날짜를 지났습니다.");
+				Swal.fire({
+					icon: 'error',
+					title: '현재날짜를 지났습니다!',
+				});
 				return false;
 			}
 			
 			if(today > endD){
-				alert("현재날짜를 지났습니다.");
+				Swal.fire({
+					icon: 'error',
+					title: '현재날짜를 지났습니다!',
+				});
 				return false;
 			}
 			
 			if(endD < startD){
-				alert("시작일은 종료일보다 클 수 없습니다.");
-				return false;
-			}
-			
-			if(emergencyT == ""){
-				alert("비상연락처를 입력해주세요.");
-				return false;
-			} 
-			if(reaSon == ""){
-				alert("사유를 입력해주세요.");
-				return false;
-			} 
-			
-			if(confirm("수정하시겠습니까?")){
-				var data = $('form[name=applForm]').serialize();
-				console.log(data);
-				$.ajax({
-						
-					type : 'post',
-					url : '/application/submitUpdate',
-					data : data,
-					success : function(result){
-						console.log(result);
-						location.href="/main";
-						alert("수정에 성공하였습니다.");
-					}
-					
+				Swal.fire({
+					icon: 'error',
+					title: '시작일은 종료일보다 클 수 없습니다!',
 				});
-			}else {
-				alert("수정을 취소하였습니다.");
 				return false;
 			}
 
+			if(emergencyT == ""){
+				Swal.fire({
+					icon: 'error',
+					title: '비상연락처를 입력해주세요!',
+				});
+				return false;
+			} 
+			
+			Swal.fire({
+				title: '신청서를 수정하시겠습니까?',
+				icon: 'info',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						var data = $('form[name=applForm]').serialize();
+						
+						$.ajax({
+								
+							type : 'post',
+							url : '/application/submitUpdate',
+							dataType : 'json',
+							data : data,
+							success : function(result){
+								Swal.fire(
+									'수정에 성공하였습니다!',
+									'You clicked the button!',
+									'success'
+								)
+								$('.swal2-confirm').click(function(){
+									location.href="/main";
+								});
+								$('.swal2-backdrop-show').click(function(){
+									location.href="/main";
+								});
+							}
+							
+						});
+				 	}
+			});
 		});
 		
 		var cencal = $('.applicationCen_btn');

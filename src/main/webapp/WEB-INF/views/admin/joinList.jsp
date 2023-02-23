@@ -22,8 +22,9 @@
                         	<div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고"/>
                             </div>
+							관리자페이지
                        	</a>
-                        	관리자페이지
+                        	
                     </h1>
                     <c:if test="${member == null}">
                     	<div class="loginAndjoin">
@@ -119,7 +120,7 @@
                                             			</a> 
                                    					</div> 		
                                             	</td>
-                                            	<td width =7%">
+                                            	<td width ="7%">
                                             		<a class="btn2" href="javascript:void(0);" title="${data.employeeId}">거부</a>
                                             	</td>
                                         	</tr>
@@ -200,14 +201,21 @@
     
 	$('.searchbtn').on("click", function(e){
 		var searchKeyword = $("input[name = searchKeyword]").val();
-		console.log(searchKeyword);
 		
 		location.href = "/admin/joinlist?num=1" + "&searchKeyword=" + searchKeyword ;
 		var noData = $('input[name=employeeId]').val();
-		
-		console.log(data);
-		
+
 	});
+	
+    $(".search_input").on("keyup",function(key){
+        if(key.keyCode==13) {
+			var searchKeyword = $("input[name = searchKeyword]").val();
+
+			location.href = "/admin/joinlist?num=1" + "&searchKeyword=" + searchKeyword ;
+			var noData = $('input[name=employeeId]').val();
+			employeeList();
+        }
+    });
 	
 	$(document).ready(function(){
         $('.btn2').click(function () {

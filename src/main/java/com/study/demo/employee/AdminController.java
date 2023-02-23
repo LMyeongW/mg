@@ -585,7 +585,7 @@ public class AdminController {
 	//신청서 목록 출력
 	@RequestMapping(value ="/applicationList.do", method = RequestMethod.GET)
 	public ModelAndView applicationList(@ModelAttribute("applicationvo")ApplicationVO applicationvo,
-			@ModelAttribute("searchKeyword")String searchKeyword,
+			String searchKeyword,
 			@RequestParam(value="num", defaultValue = "1")int num) {
 		
 		System.out.println(searchKeyword);
@@ -681,10 +681,14 @@ public class AdminController {
 	
 	//공지사항 수정페이지
 	@RequestMapping(value ="announcementUpdate", method = RequestMethod.GET)
-	public ModelAndView announcementUpdateGET(@RequestParam("announcementNo")int announcementNo) {
+	public ModelAndView announcementUpdateGET(@RequestParam("announcementNo")int announcementNo, @ModelAttribute("announcementvo")AnnouncementVO announcementvo) {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("data", announcementService.announcementUpdateGET(announcementNo));
+		AnnouncementVO  rtnVo = (AnnouncementVO) announcementService.announcementUpdateGET(announcementNo);
+		rtnVo.setAnnouncementContent(rtnVo.getAnnouncementContent().replace("<br>", "\r\n"));
+		
+		
+		mav.addObject("data", rtnVo);
 		
 		mav.setViewName("/announcement/announcementUpdate");
 		return mav;

@@ -126,12 +126,14 @@ public class AdminDAOImpl implements AdminDAO{
 		sql.delete(namespace+".selectDelete", employeeIdArray);
 	}
 	
+	//거절목록 선택 취소
 	@Override
 	public void refusalSelectCancel(String employeeIdArray) {
 		sql.update(namespace+".refusalSelectCancel", employeeIdArray);
 		
 	}
 	
+	//직원관리 리스트
 	@Override
 	public List<employeeVO> emploListSort(String orderType, int sqlPostNum, int postNum, String searchKeyword, String statusIdSelect) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
@@ -178,19 +180,21 @@ public class AdminDAOImpl implements AdminDAO{
 	@Override
 	public void resignationDelete(employeeVO employeevo) {
 		sql.delete(namespace+".resignationDelete", employeevo);
-		
 	}
-
+	
+	//퇴사자 선택삭제
 	@Override
 	public void resignationSelectDelete(String employNoArray) {
 		sql.delete(namespace+".resignationSelectDelete", employNoArray);
 	}
-
+	
+	//직원구분 셀렉트박스 검색
 	@Override
 	public List<employeeVO> statusSelect(String statusType) {
 		return sql.selectList(namespace+".statusSelect", statusType);
 	}
-
+	
+	//신청서 선택 삭제
 	@Override
 	public void applicationSelectDelete(String applNoArray) {
 		sql.delete(namespace+".applicationSelectDelete", applNoArray);

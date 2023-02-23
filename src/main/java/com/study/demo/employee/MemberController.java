@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -169,6 +170,9 @@ public class MemberController {
 		if(emplovo != null) {
 			rawPw = employeevo.getEmployeePw();       
 			encodePw = emplovo.getEmployeePw();  
+			
+			
+			
 			if(true == pwEncoder.matches(rawPw, encodePw) ) {   
 				
 				emplovo.setEmployeePw("");                
@@ -218,7 +222,7 @@ public class MemberController {
         
         session.invalidate();
         
-        return "redirect:/account/login";        
+        return "redirect:/main";        
         
     }
     
@@ -401,6 +405,7 @@ public class MemberController {
 		
 	}
     
+    //이미지 삭제
 	@RequestMapping(value = "/imgDatadelete", method = RequestMethod.GET)
 	@ResponseBody
 	public void imgDatedelete(@ModelAttribute("employeevo")employeeVO employeevo) {
@@ -424,5 +429,167 @@ public class MemberController {
     	return mav;
     }
     
+    //아이디찾기페이지
+    @RequestMapping(value="/searchId", method = RequestMethod.GET)
+    public ModelAndView searchId() {
+    	ModelAndView mav = new ModelAndView();
+    	
+    	mav.setViewName("/account/search_id");
+    	return mav;
+    }
+    
+    //아이디찾기
+    @RequestMapping(value="/searchId.do", method = RequestMethod.GET)
+    public ModelAndView search_result_Id(@ModelAttribute("employeevo")employeeVO employeevo
+    		) {
+    	ModelAndView mav = new ModelAndView();
 
+    	employeeVO searchInfo = memberService.searchId(employeevo);
+    	
+    	mav.addObject("data", searchInfo);
+    	System.out.println(searchInfo);
+    	mav.setViewName("jsonView");
+    	return mav;
+    }
+    
+    //이메일 체크
+	@RequestMapping(value="/idEmailCheck", method = RequestMethod.GET)
+	@ResponseBody
+	public String idEmailCheck(String email) throws Exception {
+		
+		//뷰로부터 넘어오는 데이터
+		logger.info("뷰로부터 넘어오는 email : "+ email);
+		
+		Random random = new Random();
+		int checkNum = random.nextInt(888888)+111111;
+		logger.info("인증번호 : "+ checkNum);
+		
+		String setFrom = "emali";
+		String toMail = email;
+		String title = "회원가입 인증 이메일입니다.";
+		String content =
+                "홈페이지를 방문해주셔서 감사합니다." +
+                "<br><br>" + 
+                "인증 번호는 " + checkNum + "입니다." + 
+                "<br>" + 
+                "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+		/*try {
+            
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom);
+            helper.setTo(toMail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }*/
+        
+		String num = Integer.toString(checkNum);
+		
+		return num;
+	}
+	
+    //비번찾기 페이지
+    @RequestMapping(value="/searchPw", method = RequestMethod.GET)
+    public ModelAndView searchPw() {
+    	ModelAndView mav = new ModelAndView();
+    	
+    	mav.setViewName("/account/search_pw");
+    	
+    	return mav;
+    }
+    
+    //비번찾기
+    @RequestMapping(value="/searchPw.do", method = RequestMethod.GET)
+    public ModelAndView search_pw(@ModelAttribute("employeevo")employeeVO employeevo) {
+    	ModelAndView mav = new ModelAndView();
+
+    	employeeVO searchInfo = memberService.searchPw(employeevo);
+    	
+    	mav.addObject("data", searchInfo);
+    	System.out.println(searchInfo);
+    	mav.setViewName("jsonView");
+    	return mav;
+    }
+    
+    //비번찾기
+    @RequestMapping(value="/searchPwUpdate.do", method = RequestMethod.POST)
+    public ModelAndView searchPwUpdate(@ModelAttribute("employeevo")employeeVO employeevo) {
+    	ModelAndView mav = new ModelAndView();
+    	
+    	System.out.println(employeevo);
+    	
+		String rawPw = "";
+		String encodePw = "";
+		
+		rawPw = employeevo.getEmployeePw();
+		encodePw = pwEncoder.encode(rawPw);
+		employeevo.setEmployeePw(encodePw);
+    	
+    	memberService.searchPwUpdate(employeevo);
+    	
+    	mav.setViewName("jsonView");
+    	return mav;
+    }
+    
+    //마이페이지
+    @RequestMapping(value="/mypage", method = RequestMethod.GET)
+    public ModelAndView mypageGET() {
+    	ModelAndView mav = new ModelAndView();
+    	
+    	mav.setViewName("/account/mypage");
+    	
+    	return mav;
+    }
+    
+    //마이비번 확인
+    @RequestMapping(value="/mypwck", method = RequestMethod.GET)
+    public ModelAndView mypwck(@ModelAttribute("employeevo")employeeVO employeevo) {
+    	ModelAndView mav = new ModelAndView();
+    	
+    	employeeVO emplovo = memberService.mypwck(employeevo);
+
+		String rawPw ="";
+		String encodePw ="";
+		
+		
+		
+		rawPw = employeevo.getEmployeePw();       
+		encodePw = emplovo.getEmployeePw();  
+		System.out.println(encodePw);
+		
+		boolean endata = pwEncoder.matches(rawPw, encodePw);
+		
+		mav.addObject("data", endata);
+    	System.out.println("전달된데이터" + employeevo);
+    	System.out.println("담긴데이터" + emplovo);
+
+    	
+    	mav.setViewName("jsonView");
+    	return mav;
+    }
+    
+    //마이 비번변경
+    @RequestMapping(value="/mypwch", method = RequestMethod.POST)
+    public ModelAndView mypwch(@ModelAttribute("employeevo")employeeVO employeevo){
+    	ModelAndView mav = new ModelAndView();
+    	
+    	System.out.println(employeevo);
+    	
+		String rawPw = "";
+		String encodePw = "";
+		
+		rawPw = employeevo.getEmployeePw();
+		encodePw = pwEncoder.encode(rawPw);
+		employeevo.setEmployeePw(encodePw);
+    	
+    	memberService.mypwch(employeevo);
+    	
+    	mav.setViewName("jsonView");
+    	
+    	return mav;
+    }
 }

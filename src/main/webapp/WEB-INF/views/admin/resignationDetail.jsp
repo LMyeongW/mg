@@ -154,7 +154,6 @@
 			str += "</div>";
 			
 			uploadReslut.html(str);	
-			console.log(str);
 			
 		});
 
@@ -163,12 +162,8 @@
 	$('.registration_btn').click(function(){
 		
 		var resignationdate = $('input[name=resignationdate]').val();
-		
-	
-		console.log(resignationdate);
 		var data = $('form[name=detailForm]').serialize();
 
-		console.log(data.resignationdate);
 		$.ajax({
 			
 			type : 'post',
@@ -184,7 +179,7 @@
 			},
 			error : function(data){
 				alert("연결에 실패하였습니다.");
-				console.log(data)
+
 			}
 			
 		});//resignationInfo ajax

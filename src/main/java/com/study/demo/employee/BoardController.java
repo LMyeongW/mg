@@ -18,11 +18,13 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
+	//게시물 작성페이지
 	@RequestMapping(value ="/write", method = RequestMethod.GET)
 	public ModelAndView boardWrite() {
 		return new ModelAndView("/board/boardWrite");
 	}
 	
+	//게시물 작성
 	@RequestMapping(value ="/write", method = RequestMethod.POST)
 	public ModelAndView boardWritePOST(@ModelAttribute("boardvo")BoardVO boardvo) {
 		ModelAndView mav = new ModelAndView();
@@ -33,6 +35,7 @@ public class BoardController {
 		return mav;
 	}
 	
+	//게시물 상세페이지
 	@RequestMapping(value="/detail", method = RequestMethod.GET)
 	public ModelAndView boardDetail(@RequestParam("boardNo")int boardNo) {
 		ModelAndView mav = new ModelAndView();
@@ -42,6 +45,7 @@ public class BoardController {
 		return mav;
 	}
 	
+	//게시물 수정
 	@RequestMapping(value="/update", method = RequestMethod.POST)
 	public ModelAndView boardUpdatePOST(@ModelAttribute("boardvo")BoardVO boardvo) {
 		ModelAndView mav = new ModelAndView();
@@ -53,6 +57,7 @@ public class BoardController {
 		return mav;
 	}
 	
+	//게시물 삭제
 	@RequestMapping(value="/delete", method = RequestMethod.GET)
 	public ModelAndView boardDelete(@ModelAttribute("boardvo")BoardVO boardvo) {
 		ModelAndView mav = new ModelAndView();

@@ -32,12 +32,14 @@ header .header_m h1 {
     display: flex;
 }
 header .header_m h1 .link {
-    padding-top: 13px;
+    display: flex;
     margin-right: 10px;
+    align-items: center;
     height: 50px;
 }
 header .header_m h1 .link .img {
-  
+    margin-top: 5px;
+    margin-right: 5px;
     width: 30px; height: 30px;
 }
 header .header_m h1 .link .img img {

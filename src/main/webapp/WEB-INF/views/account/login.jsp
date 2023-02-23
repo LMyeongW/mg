@@ -68,7 +68,7 @@
                         <div class="pw_box">
                             <div class="pw_input_box">
                                 PASSWORD
-                                <input id="pw_input" name="employeePw" >
+                                <input type="password" id="pw_input" name="employeePw" >
                             </div>
                             <!-- .pw_input_box -->
                         </div>
@@ -101,6 +101,7 @@
     </div>
     <!-- #wrap -->
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
 
@@ -140,7 +141,10 @@
 	$(document).ready(function(){
 		var msg = "${msg}";
 		if(msg != ""){
-			alert(msg);
+			Swal.fire({
+				  icon: 'error',
+				  text: msg,
+				})
 		}
 		
 	});

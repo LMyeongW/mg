@@ -20,8 +20,9 @@
                             <div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고" />
                             </div>
+                            LmwCompany
                         </a>
-                        LmwCompany
+                        
                     </h1>
                     <c:if test="${member == null}">
                     	<div class="loginAndjoin">
@@ -146,55 +147,66 @@
     </div>
     <!-- #wrap -->
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 	$(document).ready(function(){
 		
 		$('.update').click(function(){
 			var announcementNo = $('input[name="announcementNo"]').val();
-			console.log(announcementNo);
-			
+
 			$('.update').prop("href", "/admin/announcementUpdate?announcementNo="+announcementNo);
 			
 		});
 		
 		$('.delete').click(function(){
+			Swal.fire({
+				  title: '해당 공지사항을 삭제하시겠습니까??',
+				  text: "게시물 삭제시 되돌리 수 없습니다.",
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Yes, delete it!'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					  
+					var data = $('form[name=a_form]').serialize();
 
-			var con = confirm("해당 공지사항을 삭제하시겠습니까?");
-			if(con){
-				var data = $('form[name=a_form]').serialize();
-
-				$.ajax({
-					
-					tpye : 'get',
-					url : '/admin/announcementDelete',
-					data : data,
-					success : function(result){
-						alert("성공적으로 삭제되었습니다.");
-						location.href="/main";
-					},
-					error : function(){
-						alert("연결에 실패하였습니다..");
-						
-					}
-					
-					
+					$.ajax({
+							
+						tpye : 'get',
+						url : '/admin/announcementDelete',
+						data : data,
+						success : function(result){
+							Swal.fire(
+								'삭제가 완료되었습니다.!',
+								'success'
+							)
+							//location.href="/main";
+							$('.swal2-confirm').click(function(){
+								location.href="/announcement/listPage";
+							});
+							$('.swal2-backdrop-show').click(function(){
+								location.href="/announcement/listPage";
+							});
+						},
+						error : function(){
+							alert("연결에 실패하였습니다..");
+						}
 				});
-				return true;
-			} else {
-				alert("취소되었습니다.");
-				return false;
-			}
-			
-			
+					  
+
+				}
+			})
 		});
 		
 		detailList()
 	});
 	
 	function detailList(num, categoryType){
-		
 		var categoryType = $('input[name=announcementCategory]').val();
-		console.log(categoryType);
+		var detailNum = $('input[name=announcementNo]').val();
+		
 		$.ajax({
 			
 			type : 'get',
@@ -202,27 +214,28 @@
 			dataType : 'json',
 			data : {
 				"num" : num,
-				"categoryType" : categoryType
+				"categoryType" : categoryType,
+				"detailNum" : detailNum
 			},
 			success : function (result){
-				
+				var announceNo = $('input[name=announcementNo]').val();
 				
 				var data = result.data;
 				var html ="";
 				
-				console.log(data);
-				
 				for(i=0; i <data.list.length; i++){
+
 					html += "<tr class='click' id='" + data.list[i].announcementNo + "'>";
 	           		html += "<td width ='15%'><div class='acontent1'>["  + data.list[i].announcementCategory + "] " + data.list[i].announcementTitle + "</div></td>";
 	           		html += "<td width ='40%'><div class='acontent'>"+ data.list[i].announcementContent + "</div></td>";
 	           		html += "<td width ='15%' class='s2'>" + data.list[i].announcementRegdate + "</td>";
 	       		    html += "</tr>";
+
 				}
 				$('#tbodyList').html(html);
 				
 				$('.click').on("click", function(){
-					location.href="/announcement/detail?announcementNo=" + this.id + "&num=" + data.page.num;
+					location.href="/announcement/detail?announcementNo=" + this.id;
 				});
 			},
 			error : function(){

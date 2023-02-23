@@ -20,8 +20,9 @@
                             <div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고" />
                             </div>
+                            LmwCompany
                         </a>
-                        LmwCompany
+                        
                     </h1>
                     <c:if test="${member == null}">
                     	<div class="loginAndjoin">
@@ -193,7 +194,6 @@
 					$('.click').on("click", function(){
 						var click = $('.click');
 						location.href="/announcement/detail?announcementNo=" + this.id;
-						console.log(this.id);
 					});
 					
 					var page ="";
@@ -267,7 +267,6 @@
 				$('.click').on("click", function(){
 					var click = $('.click');
 					location.href="/announcement/detail?announcementNo=" + this.id;
-					console.log(this.id);
 				});
 				
 				var page ="";
@@ -343,7 +342,6 @@
 				$('.click').on("click", function(){
 					var click = $('.click');
 					location.href="/announcement/detail?announcementNo=" + this.id;
-					console.log(this.id);
 				});
 				
 				var page ="";

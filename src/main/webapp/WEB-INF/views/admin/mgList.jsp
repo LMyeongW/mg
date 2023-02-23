@@ -22,8 +22,9 @@
                         	<div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고"/>
                             </div>
+							관리자페이지
                        	</a>
-                        	관리자페이지
+                        	
                     </h1>
                     <c:if test="${member == null}">
                     	<div class="loginAndjoin">
@@ -119,7 +120,6 @@
 		
 		$(".searchbtn").click(function(){
 			var searchKeyword = $("input[name = searchKeyword]").val();
-			console.log(searchKeyword);
 			
 			$("input[name = searchKeyword]").val(searchKeyword);
 			employeeList();
@@ -127,27 +127,18 @@
 		
 		$('#status').on('change', function(){
 			var statusIdSelect = $("#status option:selected").val();
-			console.log(statusIdSelect);
 			employeeList();
 		});
 		
 		
-		
-		
-		
-		/*$('#status').on("change",function(){
-			var statusType = $("select[name=statusIdSelect] option:selected").val()
-			console.log(statusType);
-			
-			$.ajax({
-				type : 'get',
-				url : '/admin/statusSelect.do',
-				data : {"statusType" : statusType},
-				success : function(result){
-					console.log(result);
-				}
-			});
-		});	*/
+	    $(".search_input").on("keyup",function(key){
+	        if(key.keyCode==13) {
+				var searchKeyword = $("input[name = searchKeyword]").val();
+				
+				$("input[name = searchKeyword]").val(searchKeyword);
+				employeeList();
+	        }
+	    });
 	});
 	
 
@@ -231,7 +222,6 @@
 						page +=	'</span>';
 					}
 				}
-					console.log(num);
 				if(data.page.next){
 					var endPageNum = data.page.endPageNum + 1;
 					page += "<span class='next'>[ ";
@@ -245,20 +235,6 @@
 				} else {
 					$('.noData').removeClass('on');
 				}
-				
-				/*$('#status').on("change",function(){
-					var statusType = $("select[name=statusIdSelect] option:selected").val()
-					console.log(statusType);
-					
-					$.ajax({
-						type : 'get',
-						url : '/admin/statusSelect.do',
-						data : {"statusType" : statusType},
-						success : function(result){
-							console.log(result);
-						}
-					});
-				});	*/
 
 			},
 			error : function(){
@@ -269,32 +245,6 @@
 		
 		
 	}
-    	
-   /* $(document).ready(function(){
-    		
-        	$("#status[name=statusIdSelect]").change(function(){
-        		var selectStatus = $("#status[name=statusIdSelect] option:selected").val();
-        		console.log(selectStatus);
-        		
-        		$.ajax({
-        			type : '',
-        			url : '/admin/selectStatus',
-        			data : selectStatus,
-        			success : function(){
-        				alert("데이터 넘기기 성공");
-        			}
-        		});
-     });*/
-        	
-        	
-    			
-
-    			
- 
-		
-
-
-	
 
 
 </script>

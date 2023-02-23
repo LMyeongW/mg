@@ -23,8 +23,9 @@
                         	<div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고"/>
                             </div>
+                            LmwCompany
                        	</a>
-                       	LmwCompany
+                       	
                         	
                     </h1>
                     <!-- .loginAndjoin -->
@@ -57,7 +58,15 @@
                             	<a href="/account/login" class="loginA">로그인</a>
                         	</div>
                         	<div class="join">
+                        		<div class="search_box">
+                        			<div class="img">
+                        				<img src="/resources/img/password.png" alt="로고"/>
+                        			</div>
+                        			<a href="/account/searchId" class="joinA">아이디찾기</a>/
+                        			<a href="/account/searchPw" class="joinA">비밀번호찾기</a>
+                        		</div>
                             	<a href="/account/join" class="joinA">회원가입</a>
+                            	
                        		</div>
                     	</div>
                     </c:if>
@@ -89,7 +98,7 @@
                         	<input type="hidden" name="employeeId" value ="${member.employeeId}"/>
                         	<div class="name">${member.employeeName}님</div>
                         	<div class="email">${member.employeeMail}</div>  
-                        	<div class="logOut"><a href="/account/logout.do">로그아웃</a></div>
+                        	<div class="logOut">로그아웃</div>
                         	
                     	</div>
                     </c:if>
@@ -116,12 +125,12 @@
                     			</a>
                     		</div>
                     		<div class ="icon_Area">
-                    		   <a href="#">
+                    		   <a href="/account/mypage" class="mypage">
                     				<div class="icon_btn">
                     					<img src="/resources/img/setup.png" alt="게시판">
                     				</div>
                     				<div class ="icon_title">
-                    					설정
+                    					MY
                     				</div>
                     			</a>
                     		</div>
@@ -285,6 +294,7 @@
     </div>
     <!-- #wrap -->
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 	$(document).ready(function(){
 		
@@ -293,11 +303,15 @@
 		announcementList();
 		
 		var employeeId =  $("input[name=employeeId]").val();
-		console.log(employeeId);
 		
 		$('.appl_submit').click(function(){
 			if(employeeId == null){
-				alert("로그인후 이용가능합니다.");
+				Swal.fire({
+					  title: '경고!',
+					  text: '로그인 후 사용해주세요!',
+					  icon: 'error',
+					  confirmButtonText: '확인'
+					})
 				return false
 			}
 			
@@ -305,7 +319,25 @@
 		
 		$('.board_submit').click(function(){
 			if(employeeId == null){
-				alert("로그인후 이용가능합니다.");
+				Swal.fire({
+					  title: '경고!',
+					  text: '로그인 후 사용해주세요!',
+					  icon: 'error',
+					  confirmButtonText: '확인'
+					})
+				return false
+			}
+			
+		});
+		
+		$('.mypage').click(function(){
+			if(employeeId == null){
+				Swal.fire({
+					  title: '경고!',
+					  text: '로그인 후 사용해주세요!',
+					  icon: 'error',
+					  confirmButtonText: '확인'
+					})
 				return false
 			}
 			
@@ -313,7 +345,53 @@
 		
 	});
 	
-	
+	$('.logOut').click(function(){
+
+		
+
+		
+		const swalWithBootstrapButtons = Swal.mixin({
+			  customClass: {
+			    confirmButton: 'btn btn-success',
+			    cancelButton: 'btn btn-danger'
+		},
+			buttonsStyling: false
+		})
+
+		Swal.fire({
+			title: '정말 로그아웃 하시겠습니까?',
+			  
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: '로그아웃',
+			cancelButtonText: '취소',
+			reverseButtons: false
+		}).then((result) => {
+		if (result.isConfirmed) {
+				
+			Swal.fire(
+				'성공적으로 로그아웃 하셨습니다.',
+			    'success'
+			)
+			    	
+			setTimeout(function() {
+			    location.href="/account/logout.do";	
+			}, 500);
+
+		} else if (
+			/* Read more about handling dismissals below */
+			result.dismiss === Swal.DismissReason.cancel
+		) {
+			Swal.fire(
+				'로그아웃이 취소되었습니다. :)',
+			    'cancel'
+			)
+		}
+		});
+		
+	});
 	
 	$('.select2').click(function(){
 		$('.select2').addClass('on');
@@ -337,19 +415,18 @@
 			},
 			success : function(result){
 				var data = result.data;
-				console.log(data);
 				
 				var html = "";
 				
 				for(var i = 0; i < data.list.length; i++){
-					html += "<tr>"
-					html += "<td>" + data.list[i].boardNo +" </td>"
-					html += "<td>" + data.list[i].boardTitle +" </td>"
-					html += "<td>" + data.list[i].boardCategory +" </td>"
-					html += "<td>" + data.list[i].employeeId + " </td>"
-					html += "<td>" + data.list[i].boardRegdate +" </td>"
-					html += "<td><a href='/board/detail?boardNo=" + data.list[i].boardNo +  "'>보기</a></td>"
-					html += "</tr>"
+					html += "<tr>";
+					html += "<td>" + data.list[i].boardNo +" </td>";
+					html += "<td>" + data.list[i].boardTitle +" </td>";
+					html += "<td>" + data.list[i].boardCategory +" </td>";
+					html += "<td>" + data.list[i].employeeId + " </td>";
+					html += "<td>" + data.list[i].boardRegdate +" </td>";
+					html += "<td><a href='/board/detail?boardNo=" + data.list[i].boardNo +  "'>보기</a></td>";
+					html += "</tr>";
 				}
 				$('#tbodyList1').html(html);
 				if(html == null || html == "") {
@@ -381,7 +458,6 @@
 						page +=	'</span>';
 					}
 				}
-				console.log(num);
 				
 				if(data.page.next){
 					var endPageNum = data.page.endPageNum + 1;
@@ -400,7 +476,6 @@
 	
 	function submitList(employeeId, num){
 		var employeeId =  $("input[name=employeeId]").val();
-		console.log(employeeId);
 		
 		$.ajax({
 			type : 'get',
@@ -415,8 +490,6 @@
 				
 				var data = result.data;
 				
-				console.log(data);
-				
 				var html = "";
 				
 				for(var i= 0; i <data.list.length; i++){
@@ -427,7 +500,7 @@
 	           		html += "<td width ='10%'>" + data.list[i].applselect + "</td>";
 	           		html += "<td width ='10%' class='s1'>" + data.list[i].status + "</td>";
 	           		html += "<td width ='9%'><a href ='application/submitUpdate?applNo="+ data.list[i].applNo +"' title='' class='update'>수정 </a></td>";
-	           		html += "<td width ='9%'><a href ='application/submitCencel?applNo="+ data.list[i].applNo +"' title='' class='cancel'>신청취소</a></td>";
+	           		html += "<td width ='9%'><a href ='javascript:void(0)' id='"+ data.list[i].applNo +"' class='cancel'>신청취소</a></td>";
 	       		    html += "</tr>";
 				}
 				
@@ -440,13 +513,29 @@
 				}
 				
 				$('.cancel').on("click", function(){
-					var con = confirm("취소신청을 하시겠습니까?");
-					if(con == true){
-						alert("신청이 완료되었습니다.");
-					}else {
-						alert("작업을 중지하였습니다.");
-						return false;
-					}
+					var no = this.id;
+					Swal.fire({
+						  title: '신청서를 취소하시겠습니까?',
+						  icon: 'warning',
+						  showCancelButton: true,
+						  confirmButtonColor: '#3085d6',
+						  cancelButtonColor: '#d33',
+						  confirmButtonText: 'Yes, cancel it!'
+					}).then((result) => {
+						if (result.isConfirmed) {
+							Swal.fire(
+								'취소가 완료되었습니다.!',
+								'success'
+							);
+							$('.swal2-confirm').click(function(){
+								location.href="/application/submitCencel?applNo="+ no;
+							});
+							$('.swal2-backdrop-show').click(function(){
+								location.href="/application/submitCencel?applNo="+ no;
+							});
+						}
+					});
+					//application/submitCencel?applNo=
 				});
 				
 				/*페이징*/
@@ -472,14 +561,12 @@
 						page +=	'</span>';
 					}
 				}
-				console.log(num);
 				
 				if(data.page.next){
 					var endPageNum = data.page.endPageNum + 1;
 					page += '<span class="next">[';
 					page +=	'<a href="javascript:submitList(\''+ employeeId +'\',' + endPageNum +')">다음</a>';
 					page += ']</span>';
-					console.log(data.employeeId);
 				}
 				$('.paging_box').html(page);
 				
@@ -499,7 +586,6 @@
 			success : function (result){
 				
 				var data = result.data;
-				console.log(data);
 				
 				var html ="";
 				for(var i= 0; i <data.list.length; i++){
@@ -515,7 +601,6 @@
 				$('.click').on("click", function(){
 					var click = $('.click');
 					location.href="/announcement/detail?announcementNo=" + this.id;
-					console.log(this.id);
 				});
 				
 				
@@ -536,10 +621,6 @@
     		var fileList = fileInput[0].files;
     		var fileObj = fileList[0];
     		
-    		console.log("fileList" + fileList);
-    		console.log("fileObj" + fileObj.name);
-    		console.log("fileObj" + fileObj.size);
-    		console.log("fileObj" + fileObj.type);
     		
     		if(!fileCheck(fileObj.name, fileObj.size)){
     			return false;
@@ -555,7 +636,6 @@
     			data : formData,
     			dataType : 'json',
     			success : function(result){
-    				console.log(result);
     				showUploadImage(result);
     			},
     			error : function(result){
@@ -620,7 +700,6 @@
 		var uploadResult = $(".resultImg");
 		
 		$.getJSON("/account/profileImage", {employeeId : employeeId}, function(arr){
-			console.log("이미지 반환" + arr);
 			
 			var str ="";
 			var obj = arr[0];
@@ -643,15 +722,46 @@
     
     //이미지 삭제버튼
     $('.resultImg').on("click",".imgDelete", function(){
-    	var con = confirm("프로필 사진을 삭제하시겠습니까?")
-    	if(con == true){
-    		deleteFile();
-    		alert("사진이 삭제되었습니다.");
-    	}else {
-    		alert("취소되었습니다.");
-    	}
-    	
-    	console.log(deleteFile);
+		const swalWithBootstrapButtons = Swal.mixin({
+			  customClass: {
+			    confirmButton: 'btn btn-success',
+			    cancelButton: 'btn btn-danger'
+			  },
+			  buttonsStyling: false
+			})
+
+			Swal.fire({
+			  title: '정말 포르필사진을 삭제하시겠습니까?',
+			  
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '삭제',
+			  cancelButtonText: '취소',
+			  reverseButtons: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+            	Swal.fire(
+                    '정상적으로 삭제되었습니다.',
+                    'success'
+                )
+                
+			  	setTimeout(function() {
+			  		deleteFile();
+				}, 500);
+                
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+            	Swal.fire(
+                    '삭제가 취소되었습니다. :)',
+                    'cancel'
+                )
+            }
+        })
     });
     
     //이미지삭제
@@ -667,7 +777,7 @@
     		dataType : 'text',
     		type : 'post',
     		success : function(result){
-    			console.log(result);
+    			
     			location.reload();
     			targetDiv.remove();
   
@@ -679,9 +789,6 @@
 					url : '/account/imgDatadelete',
 					data : data,
 					success : function(data){
-	
-							console.log("이미지 삭제 : "+ data);
-					
 	 				},
 	 				error : function(){
 	 					alert("연결에 실패하였습니다.");
@@ -689,13 +796,11 @@
 				});
     		},
     		error : function(result){
-    			console.log(result);
     			
     			alert("파일을 삭제하지 못하였습니다.")
     		}
     		
     	});
-    	console.log(targetFile);
     	
     }
 
@@ -703,29 +808,40 @@
     $('.resultImg').on("click", ".save_btn", function(){
     	var data = $("form[name=profileForm]").serialize();
     	var saveBox = $('.save_btn');
-    	console.log(data);
-    	
-    	var con = confirm("저장하시겠습니까?")
-    	if(con == true){
-        	$.ajax({
-        		
-        		type : 'post',
-        		url : '/account/profilePost',
-        		
-        		data : data,
-        		success : function(result){
-        			saveBox.remove();
-        			alert("저장되었습니다.");
-        		},
-        		error : function(){
-        			alert("연결에 실패하였습니다.");
-        		}
-        	});
-    	}else {
-    		alert("취소되었습니다.");
-    	}
+   
+    	Swal.fire({
+    		  title: '정말 저장하시겠습니까?',
+    		  text: "저장버튼을 클릭해주세요!",
+    		  icon: 'warning',
+    		  showCancelButton: true,
+    		  confirmButtonColor: '#3085d6',
+    		  cancelButtonColor: '#d33',
+    		  confirmButtonText: 'Yes, save it!'
+    		}).then((result) => {
+    		if (result.isConfirmed) {
+    			
+    	       	$.ajax({
+            		
+            		type : 'post',
+            		url : '/account/profilePost',
+            		
+            		data : data,
+            		success : function(result){
+            			saveBox.remove();
+               		    Swal.fire(
+                  			'성공!',
+                  		    '프로필 사진을 저장하였습니다.',
+                  		    'success'
+                  		)
+            		},
+            		error : function(){
+            			alert("연결에 실패하였습니다.");
+            		}
+            	});
+ 
+    		}
+    	})
 
-    	
     });
     
 

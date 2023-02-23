@@ -27,11 +27,14 @@ header .header_m h1 {
     display: flex;
 }
 header .header_m h1 .mainlink {
-    padding-top: 13px;
+    display: flex;
     margin-right: 10px;
+    align-items: center;
     height: 50px;
 }
 header .header_m h1 .mainlink .img {
+    margin-top: 5px;
+    margin-right: 5px;
     width: 30px; height: 30px;
 }
 header .header_m h1 .mainlink .img img {
@@ -182,6 +185,9 @@ main .content .con_bottom table tr{
     border-bottom: 1px solid #f1f1f1;
     cursor: pointer;
     width: 100%; height: 80px;
+}
+main .content .con_bottom table .on {
+	display: none;
 }
 main .content .con_bottom table tr:hover {
     background-color: rgb(218, 233, 255)

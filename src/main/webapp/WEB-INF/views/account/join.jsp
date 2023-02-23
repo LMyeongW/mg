@@ -38,7 +38,7 @@
                         <span class="errorMsg2"></span>
                     </div>
                     <div class="pw_input_box">
-                        <input class="pw_input" placeholder="비밀번호 입력" name="employeePw">
+                        <input type="password" class="pw_input" placeholder="비밀번호 입력" name="employeePw">
                     </div>
                 </div>
                 <!-- .pw_wrap -->
@@ -51,7 +51,7 @@
                         <span class="errorMsg3"></span>
                     </div>
                     <div class="pwck_input_box">
-                        <input class="pwck_input" >
+                        <input type="password" class="pwck_input" >
                     </div>
                 </div>
                 <!-- .pwck_wrap -->
@@ -334,7 +334,6 @@
 		var employeeId = $('.id_input').val();
 		var data = {employeeId : employeeId}
 	
-		console.log("테스트")
 		$.ajax({
 			type : "get",
 			url : "/account/employeeIdCk",
@@ -522,7 +521,7 @@
 			url : "emailCheck?email=" + email,
 			success:function(data){
 				
-				console.log("data" + data);
+				alert("인증번호:" + data);
 				Ckable.attr("disabled", false);
 				code = data;
 			},
@@ -562,7 +561,6 @@
 			checkResult.attr("id", "mailCk_wran");
 
 		}
-		console.log(inputCode == code);
 		
 
 	});

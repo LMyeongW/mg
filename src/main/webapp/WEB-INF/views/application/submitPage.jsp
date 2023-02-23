@@ -24,8 +24,9 @@
                         	<div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고"/>
                             </div>
+                             LmwCompany	
                        	</a>
-                        LmwCompany	
+                       
                     </h1>
                     <c:if test="${member == null}">
                     	<div class="loginAndjoin">
@@ -92,7 +93,7 @@
                         </div>
                         <div class="applicationDate">
                             <div class="a1">
-                                <span class="t1">신청일 : </span>
+                                <span class="t1">시작일 : </span>
                                 <input type="date" name ="startDate" class="startDate_input">
                             </div>
                             <div class="a2">
@@ -130,6 +131,7 @@
     <!-- #wrap -->
     
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 	
 	/*전화번호 형식*/
@@ -148,13 +150,20 @@
 		
 		var cencal = $('.applicationCen_btn');
 		cencal.click(function(){
-			
-			if(confirm("신청서 작성페이지에서 나가시겠습니까?")){
-				location.href="/main"
-				
-			} else {
-				return false;
-			}
+			Swal.fire({
+				title: '신청서 작성페이지에서 나가시겠습니까??',
+				text: '지금까지 작성하신 내용이 삭제됩니다.',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					  location.href="/main"
+				  }
+			})
+
 		});
 	
 
@@ -163,7 +172,6 @@
 		var uploadResult = $(".resultImg");
 		
 		$.getJSON("/account/profileImage", {employeeId : employeeId}, function(arr){
-			console.log("이미지 반환" + arr);
 			
 			var str ="";
 			var obj = arr[0];
@@ -184,7 +192,6 @@
 		
 		//날짜포맷 yyyy-mm-dd
 		var date = new Date();
-		console.log(date);
 
 		var year = date.getFullYear();
 
@@ -200,10 +207,7 @@
 		}
 
 		var today = year + '-' + month + '-' + day;
-		console.log(today);
 		
-
-
 		$('.application_btn').on("click", function(e){
 			
 			var applS = $('.applSelect_input option:selected').val();
@@ -213,68 +217,91 @@
 			var reaSon = $('.reason_input').val();
 			
 			if(applS == ""|| applS == "선택"){
-				alert("종류를 선택해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '종류를 선택해주세요!',
+				});
 				return false;
 			} 
 			if(startD == ""){
-				alert("시작일을 입력해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '시작일을 입력해주세요!',
+				});
 				return false;
 			} 
 			if(endD == ""){
-				alert("종료일 입력해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '종료일 입력해주세요!',
+				});
 				return false;
 			}
 
 			if(today > startD){
-				alert("현재날짜를 지났습니다.");
+				Swal.fire({
+					icon: 'error',
+					title: '현재날짜를 지났습니다!',
+				});
 				return false;
 			}
 			
 			if(today > endD){
-				alert("현재날짜를 지났습니다.");
+				Swal.fire({
+					icon: 'error',
+					title: '현재날짜를 지났습니다!',
+				});
 				return false;
 			}
 			
 			if(endD < startD){
-				alert("시작일은 종료일보다 클 수 없습니다.");
+				Swal.fire({
+					icon: 'error',
+					title: '시작일은 종료일보다 클 수 없습니다!',
+				});
 				return false;
 			}
 
 			if(emergencyT == ""){
-				alert("비상연락처를 입력해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '비상연락처를 입력해주세요!',
+				});
 				return false;
 			} 
-			if(reaSon == ""){
-				alert("사유를 입력해주세요.");
-				return false;
-			} 
-			
-			var data = $('form[name=applForm]').serialize();
-			console.log(data);
-			$.ajax({
-					
-				type : 'post',
-				url : '/application/submit',
-				data : data,
-				success : function(result){
-					applAlert(result);
-				}
-				
-				
+
+			Swal.fire({
+				title: '신청서를 제출하시겠습니까?',
+				icon: 'info',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						var data = $('form[name=applForm]').serialize();
+						$.ajax({
+							
+							type : 'post',
+							url : '/application/submit',
+							data : data,
+							success : function(result){
+								applAlert(result);
+								if(result == '1'){
+									location.href="/main";
+								}
+							}
+						});
+				 	}
 			});
+
 				
 			function applAlert(result){
 				if(result == '5'){
 					alert("로그인을 하세요.")
 					$(location).attr("href", "/account/login")
-				} else if(result == '1') {
-					alert("신청에 성공하셨습니다.")
-					$('#appl_form').submit();
-					$(location).attr("href", "/main")
 				}
 			}
-					
-				//$('#appform').attr("action", "/member/submit");
 			
 		});
 

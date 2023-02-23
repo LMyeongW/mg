@@ -24,8 +24,9 @@
                         	<div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고"/>                 
                             </div>
+                            LmwCompany
                        	</a>
-                        LmwCompany	
+                        	
                     </h1>
                     <c:if test="${member == null}">
                     	<div class="loginAndjoin">
@@ -111,13 +112,13 @@
     <!-- #wrap -->
     
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 	$(document).ready(function(){
 		var employeeId =  $("input[name=employeeId]").val();
 		var uploadResult = $(".resultImg");
 		
 		$.getJSON("/account/profileImage", {employeeId : employeeId}, function(arr){
-			console.log("이미지 반환" + arr);
 			
 			var str ="";
 			var obj = arr[0];
@@ -143,42 +144,66 @@
 			var content = $('input[name= boardContent]').val();
 			
 			if(title == ""){
-				alert("제목을 입력해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '제목을 입력해주세요!',
+				});
 				return false;
 			}
 			
 			if(category == ""||category == "선택"){
-				alert("카테고리를 선택해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '카테고리를 선택해주세요!',
+				});
 				return false;
 			}
 			if(content == ""){
-				alert("내용을 입력해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '내용을 입력해주세요!',
+				});
 				return false;
 			}
 			
-			
-			if(confirm("게시물을 작성하시겠습니까?")){
-				var data = $('form[name=writeForm]').serialize();
-				console.log(data);
-				
-				$.ajax({
+			Swal.fire({
+				title: '게시물을 작성하시겠습니까?',
+				icon: 'info',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, create it!'
+			}).then((result) => {
+				if (result.isConfirmed) {
 					
-					type : 'POST',
-					url : '/board/write',
-					data : data,
-					success : function(result){
-						alert("게시물을 성공적으로 작성하였습니다.");
-						location.href="/main";
-					},
-					error : function(){
-						alert("연결에 실패하였습니다.");
-					}
+					var data = $('form[name=writeForm]').serialize();
+						
+					$.ajax({
+							
+						type : 'POST',
+						url : '/board/write',
+						data : data,
+						success : function(result){
+							Swal.fire(
+								'등록에 성공하였습니다!',
+								'You clicked the button!',
+								'success'
+							)
+							$('.swal2-confirm').click(function(){
+								location.href="/main";
+							});
+							$('.swal2-backdrop-show').click(function(){
+								location.href="/main";
+							});
+						},
+						error : function(){
+							alert("연결에 실패하였습니다.");
+						}
 
-				});//ajax
-			} else{
-				alert("게시물 작성을 취소하였습니다.");
-				return false;
-			}
+					});//ajax
+				}
+			})
+
 		});//write_btn
 		
 		var cencal = $('.writeCen_btn');

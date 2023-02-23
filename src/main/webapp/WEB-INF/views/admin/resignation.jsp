@@ -21,8 +21,8 @@
                         	<div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고"/>
                             </div>
+							관리자페이지
                        	</a>
-                        	관리자페이지
                     </h1>
                      <c:if test="${member == null}">
                     	<div class="loginAndjoin">
@@ -48,8 +48,7 @@
         <main>
             <div class="resignation_wrap">
                 <div class="inner_size">
-                    <form>
-                        <div class="title">톼사자 목록</div>
+                        <div class="title">퇴사자 목록</div>
                         <nav class="menu">
                             <ul>
                                	<li><a href="/admin/employeelist">직원관리</a><span class="line1"></span></li>
@@ -61,7 +60,7 @@
                         <div class="resignation_mg">
                             <div class="resignation_search">
                                 <input type="text" class="search_input" name="searchKeyword" placeholder="검색어를 입력해주세요.">
-                                <a href="#" class="searchbtn">검색</a>
+                                <a href="#" onclick="resignationList();" class="searchbtn">검색</a>
                             </div>
 
                             <div class="table_box">
@@ -96,7 +95,6 @@
                             <div class ="paging_box"></div>
 							<div class="noData">등록된 정보가 없습니다.</div>
                         </div>
-                    </form>
                     <!-- .resignation_mg -->
                 </div>
             </div>
@@ -110,16 +108,27 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script>
+
 	$(document).ready(function(){
 		resignationList();
+		
 		$('.searchbtn').click(function(){
 			var searchKeyword = $("input[name=searchKeyword]").val();
 			
 			$("input[name=searchKeyword]").val(searchKeyword);
 			resignationList();
 		});
-		
-		
+
+		$(".search_input").on("keyup",function(key){
+		    if(key.keyCode==13) {
+				var searchKeyword = $("input[name = searchKeyword]").val();
+				
+				$("input[name = searchKeyword]").val(searchKeyword);
+				resignationList();
+		    }
+		});
+
+	    
 		$('.selectDelete').on('click', function(){
 			
 			var employNoArray =[];
@@ -129,7 +138,6 @@
 				employNoArray.push($(this).val());
 				
 			});
-			console.log(employNoArray);
 			
 			if(employNoArray == "" || employNoArray == null){
 				alert("삭제할 항목을 선택해주세요.");
@@ -163,25 +171,19 @@
 	});
 	
 	function resignationList(order, num, searchKeyword){
-		var searchKeyword = $("input[name=searchKeyword]").val();
-		
-		console.log(order);
-		$.ajax({
+		var searchKeyword = $("input[name= searchKeyword]").val();
+
+		$.ajax({			
 			type : 'get',
 			url : '/admin/resignationList',
 			data : {
 				"num" : num,
+				"searchKeyword" : searchKeyword,
 				"orderType" : order,
-				"searchKeyword" : searchKeyword
 			},
-			dataType : 'json',
 			success : function(result){
-				
-				console.log(result);
-				
+			
 				var data = result.data;
-				
-				console.log(data.list);
 				
 				var html = "";
 
@@ -292,43 +294,6 @@
 					$('#allCheck').prop("checked", false);
 				})
 				
-				/* $('.selectDelete').on('click', function(){
-					
-					var employNoArray =[];
-					
-					$("input:checkbox[name=chck]:checked").each(function(){
-						
-						employNoArray.push($(this).val());
-						
-					});
-					console.log(employNoArray);
-					
-					if(employNoArray == "" || employNoArray == null){
-						alert("삭제할 항목을 선택해주세요.");
-					}
-					
-					var confirmAlert = confirm("정말로 삭제하시겠습니까?");
-					
-					if(confirmAlert == true){
-						
-						$.ajax({
-							
-							type : 'POST',
-							url : '/admin/resignationSelectDelete.do',
-							dataType : 'json',
-							data : JSON.stringify(employNoArray),
-							contentType : 'application/json',
-							success : function(result){
-								location.reload();
-								alert("선택하신 항목이 정상적으로 삭제되었습니다.");
-							},
-							error : function(){
-								
-							}
-						});//선택삭제 ajax
-					}
-				});//선택삭제 버튼 */
-	
 				
 			},
 			error : function(){

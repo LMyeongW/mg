@@ -25,12 +25,13 @@ public class ApplicationController {
 	@Autowired
 	private ApplicationService applicationService;
 	
-	
+	//신청서페이지
 	@RequestMapping("/submit")
 	public ModelAndView submitGet() {
 		return new ModelAndView("/application/submitPage");
 	}
 	
+	//신청서작성
 	@PostMapping("/submit")
 	@ResponseBody
 	public String submitPost(@ModelAttribute("appvo")ApplicationVO appvo,
@@ -48,6 +49,7 @@ public class ApplicationController {
 		return result+"";
 	}
 	
+	//신청서 수정페이지
 	@RequestMapping(value = "/submitUpdate", method = RequestMethod.GET)
 	public ModelAndView submitUpdateGet(@ModelAttribute("applicationvo")ApplicationVO applicationvo,
 			@RequestParam("applNo")int applNo,
@@ -64,16 +66,21 @@ public class ApplicationController {
 		return mav;
 	}
 	
+	//신청서 수정
 	@RequestMapping(value = "/submitUpdate", method = RequestMethod.POST)
-	@ResponseBody
+	
 	public ModelAndView submitUpdatePost(@ModelAttribute("applicationvo")ApplicationVO applicationvo) {
 		ModelAndView mav = new ModelAndView();
 		
+		System.out.println(applicationvo);
+		
 		applicationService.submitUpdatePost(applicationvo);
 		
+		mav.setViewName("jsonView");
 		return mav;
 	}
 	
+	//신청서 취소
 	@RequestMapping(value = "/submitCencel",  method = RequestMethod.GET)
 	public ModelAndView submitCencel(@ModelAttribute("applicationvo")ApplicationVO applicationvo) {
 		ModelAndView mav = new ModelAndView();

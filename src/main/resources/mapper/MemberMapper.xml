@@ -97,11 +97,74 @@
 	</select>
 	
 	<update id="imgDatadelete" parameterType="com.study.demo.vo.employeeVO">
-			update employee set
+		update employee set
 			profileName = null ,
 			profileLoadPath = null,
 			profileUuid = null
 		where 
 			employeeId = #{employeeId}
+	</update>
+	
+	<select id="searchId" resultType="com.study.demo.vo.employeeVO">
+		select 
+			employeeId
+		from
+			employee
+		where
+			employeeName = #{employeeName}
+		and
+			employeePhone = #{employeePhone}
+		and 
+			employeeMail = #{employeeMail}
+	</select>
+	
+	<select id="searchPw" resultType="com.study.demo.vo.employeeVO">
+		select 
+			employeeId
+		from
+			employee
+		where
+			employeeId = #{employeeId}
+		and
+			employeeName = #{employeeName}
+		and
+			employeePhone = #{employeePhone}
+		and 
+			employeeMail = #{employeeMail}
+	</select>
+	
+	<update id="searchPwUpdate" parameterType="com.study.demo.vo.employeeVO">
+		update employee set
+			employeePw = #{employeePw}
+		where 
+			employeeId = #{employeeId}
+		and
+			employeeName = #{employeeName}
+		and
+			employeePhone = #{employeePhone}
+		and 
+			employeeMail = #{employeeMail}
+	</update>
+	
+	<select id="mypwck" resultType="com.study.demo.vo.employeeVO">
+		select
+			*
+		from
+			employee
+		where
+			employeeId = #{employeeId}
+	</select>
+	
+	<update id="mypwch" parameterType="com.study.demo.vo.employeeVO">
+		update employee set
+			employeePw = #{employeePw}
+		where 
+			employeeId = #{employeeId}
+		and
+			employeeName = #{employeeName}
+		and
+			employeePhone = #{employeePhone}
+		and 
+			employeeMail = #{employeeMail}
 	</update>
 </mapper>

@@ -159,6 +159,7 @@ main {
 .detail_wrap .detail_box .btn .appr {
 	position: relative;
     color: #fff;
+    cursor: pointer;
     background-color: rgb(73, 73, 73);
 }
 .detail_wrap .detail_box .btn .appr input{
@@ -167,6 +168,7 @@ main {
 	left:0;
 	border-radius: 10px;
 	background-color: rgb(73, 73, 73);
+	text-align: center;
 	width:100px; height:100%;
 }
 .detail_wrap .detail_box .btn .ref {

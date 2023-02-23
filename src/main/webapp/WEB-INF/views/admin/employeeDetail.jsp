@@ -127,7 +127,7 @@
 
                         </div>
                         <div class="birthday">· 생년월일 : <span>${data.employeeBirthday1}-${data.employeeBirthday2}-${data.employeeBirthday3}</span></div>
-                        <div class="phone">· 전화번호 : <span><input type="text" placeholder="전화번호를 입력해주세요." name="employeePhone" id="employeePhone" value ="${data.employeePhone}" ></span></div>
+                        <div class="phone">· 전화번호 : <span><input type="text" placeholder="전화번호를 입력해주세요."  oninput="oninputPhone(this)" name="employeePhone" id="employeePhone"  maxlength="14" value ="${data.employeePhone}" ></span></div>
                         <div class="email">· Email : <span><input type="text" placeholder="이메일을 입력해주세요." name="employeeMail" id="employeeMail" value ="${data.employeeMail}" ></span></div>
                     </div>
                     <!-- .content1 -->
@@ -153,7 +153,12 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
-
+	/*전화번호 형식*/
+	function oninputPhone(target) {
+		target.value = target.value
+		.replace(/[^0-9]/g, '')
+			.replace(/(^02.{0}|^01.{1}|[0-9]{3,4})([0-9]{3,4})([0-9]{4})/g, "$1-$2-$3");
+	}
 
 	$("input[type='file']").on("change", function(e){
 		
@@ -181,7 +186,6 @@
 			type : "POST", //서보 요청 타입(GET, POST)
 			dataType : 'json', //서버로부터 반환받을 데이터 타입
 			success : function(result){
-				console.log(result);
 				showUploadImage(result);
 			},
 			error : function(result){
@@ -283,7 +287,6 @@
 			str += "</div>";
 			
 			uploadReslut.html(str);	
-			console.log(str);
 			
 			if(obj.uuid != "" || obj.uuid != null){
 				$(".picture_btn").hide();
@@ -313,7 +316,6 @@
 			dataType : 'text', //문자 데이터이기 때문에 text
 			type : 'POST',
 			success : function(result){
-				console.log(result);
 				
 				targetDiv.remove();
 				$("input[type='file']").val("");
@@ -325,15 +327,12 @@
 					url : '/admin/imgDatadelete.do',
 					data : data,
 					success : function(data){
-	
-							console.log("이미지 삭제 : "+ data);
 					
 	 				}
 				});
 				
 			},
 			error : function(result){
-				console.log(result);
 				
 				alert("파일을 삭제하지 못하였습니다.")
 			}
@@ -426,7 +425,6 @@
 			if(departCk&&positionCk&&statusCk&&salaryCk&&addrCk&&phoneCk&&emailCk&&comreg) {
 				
 				var data = $('form[name=detailForm]').serialize();
-				console.log(decodeURI(data));
 				
 				var con = confirm("정말 등록하시겠습니까?");
 				

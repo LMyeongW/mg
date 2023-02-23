@@ -31,12 +31,14 @@ public class MainController {
 	@Autowired
 	private BoardService boardService;
 	
+	//메인페이지
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView submitlistGet() {
 
 		return new ModelAndView("/main");
 	}
 	
+	//신청서 리스트
 	@RequestMapping(value = "/main.do", method = RequestMethod.GET)
 	public ModelAndView submitlistPost(@ModelAttribute("applicationvo")ApplicationVO appvo,
 			@RequestParam(value="num", defaultValue = "1")int num,
@@ -68,6 +70,7 @@ public class MainController {
 		return mav;
 	}
 	
+	//게시판 리스트
 	@RequestMapping(value = "/main.board", method = RequestMethod.GET)
 	public ModelAndView boardList(@ModelAttribute("boardvo")BoardVO boardvo,
 			@RequestParam(value="num", defaultValue = "1")int num
@@ -97,6 +100,7 @@ public class MainController {
 		return mav;
 	}
 	
+	//공지사항 리스트
 	@RequestMapping(value = "/main.announcement", method = RequestMethod.GET)
 	public ModelAndView announcementList(@ModelAttribute("announcementvo")AnnouncementVO announcementvo,
 			@RequestParam(value="num", defaultValue = "1")int num) {

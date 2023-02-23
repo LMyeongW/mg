@@ -69,6 +69,7 @@ public class ApplicationDAOImpl implements ApplicationDAO{
 		return sql.selectList(namespace+".applicationList", data);
 	}
 	
+	//신청서 갯수
 	@Override
 	public int applTotalCount(String searchKeyword) {
 		return sql.selectOne(namespace+".applTotalCount", searchKeyword);

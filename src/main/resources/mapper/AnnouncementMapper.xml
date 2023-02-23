@@ -110,13 +110,14 @@
 	<sql id="categoryWhere" >
 		where
 			1=1
-				
+		and
+			announcementNo not in(#{detailNum})		
 		<if test="categoryType != null and categoryType != ''">
 		<![CDATA[ 
 	 		AND 
 			( 
 	    		announcementCategory like concat('%',#{categoryType},'%')
-		 	)  
+		 	)
 	 	]]> 
 		</if>
 	</sql>

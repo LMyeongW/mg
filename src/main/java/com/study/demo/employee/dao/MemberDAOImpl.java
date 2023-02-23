@@ -1,6 +1,7 @@
 package com.study.demo.employee.dao;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -47,9 +48,46 @@ public class MemberDAOImpl implements MemberDAO{
 	public List<MyprofileVO> profileImage(String employeeId) {
 		return sql.selectList(namespace+".profileImage", employeeId);
 	}
-
+	
+	//이미지삭제
 	@Override
 	public void imgDatadelete(employeeVO employeevo) {
 		sql.update(namespace+".imgDatadelete", employeevo);
 	}
+	
+	//아이디찾기
+	@Override
+	public employeeVO searchId(employeeVO employeevo) {
+		return sql.selectOne(namespace+".searchId", employeevo);
+	}
+	
+	//비번찾기
+	@Override
+	public employeeVO searchPw(employeeVO employeevo) {
+		return sql.selectOne(namespace+".searchPw", employeevo);
+	}
+	
+	//비번변경
+	@Override
+	public void searchPwUpdate(employeeVO employeevo) {
+		sql.update(namespace+".searchPwUpdate", employeevo);
+	}
+	
+	//마이비번확인
+	@Override
+	public employeeVO mypwck(employeeVO employeevo) {
+		return sql.selectOne(namespace+".mypwck", employeevo);
+	}
+	
+	//마이비번변경
+	@Override
+	public void mypwch(employeeVO employeevo) {
+		sql.update(namespace+".mypwch", employeevo);
+	}
+
+
+
+
+
+
 }

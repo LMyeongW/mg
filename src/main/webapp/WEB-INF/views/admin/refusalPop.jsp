@@ -178,7 +178,6 @@
     			employeeIdArray.push($(this).val());
     			
     		});	
-    		console.log(employeeIdArray);
     		
     		if(employeeIdArray == ""){
     			alert("삭제하실 항목을 선택해주세요.");
@@ -219,7 +218,6 @@
     			employeeIdArray.push($(this).val());
     			
     		});	
-    		console.log(employeeIdArray);
     		
     		if(employeeIdArray == ""){
     			alert("취소할 항목을 선택해주세요.");

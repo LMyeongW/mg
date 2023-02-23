@@ -25,8 +25,6 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
 		return super.preHandle(request, response, handler);
 	}
 
-	
-	
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {

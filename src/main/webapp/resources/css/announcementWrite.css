@@ -32,11 +32,14 @@ header .header_m h1 {
     display: flex;
 }
 header .header_m h1 .mainlink {
-    padding-top: 13px;
+    display: flex;
     margin-right: 10px;
+    align-items: center;
     height: 50px;
 }
 header .header_m h1 .mainlink .img {
+    margin-top: 5px;
+    margin-right: 5px;
     width: 30px; height: 30px;
 }
 header .header_m h1 .mainlink .img img {
@@ -65,7 +68,7 @@ main .inner_size{
     width: 1000px;
 }
 main .content_title {
-    background-color: #1fa4fd;
+    background-color: #555;
     color: #fff;
     line-height: 50px;
     font-size: 18px;
@@ -95,7 +98,7 @@ main .content .con {
 main .content .con .left{
     font-size: 14px;
     font-weight: 400;
-    background-color: #1fa4fd;
+    background-color: #555;
     color: #fff;
     width: 15%; height: 100%;
 }
@@ -184,7 +187,7 @@ main .content .btn_box > div {
     width: 100px; height: 50px;
 }
 main .content .btn_box .btn {
-    background-color: #1fa4fd;
+    background-color: #555;
 }
 main .content .btn_box .cancel_btn {
     background-color: #d1d1d1;

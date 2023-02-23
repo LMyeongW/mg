@@ -91,10 +91,10 @@
                     	<!-- .detail -->
                     	<div class="btn">
                     		<div class="appr">
-                    			<input type="submit" value="승인"/>
+                    			<input name="apprBtn" readonly="readonly" value="승인"/>
                     		</div>
                         	<!-- 승인 -->
-                        	<div class=" ref"><a href="/admin/joinlist?${employeevo.qustr}${page.searchKeyword}">취소</a></div>
+                        	<div class=" ref"><a href="/admin/joinlist">취소</a></div>
                         <!-- 거절 -->
                     	</div>
                 	</div>
@@ -110,5 +110,21 @@
         <!-- footer -->
     </div>
     <!-- #wrap -->
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script>
+	$(document).ready(function(){
+		$('.appr').click(function(){
+			var con = confirm("회원가입을 승인 하시겠습니까?")
+			if(con){
+				alert("승인이 완료되었습니다.");
+				$('input[name=apprBtn]').attr("type", "submit");
+				return true;
+			}else {
+				alert("승인요청을 취소하였습니다.");
+			}
+			
+		});
+	});
+</script>
 </body>
 </html>

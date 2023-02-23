@@ -22,8 +22,8 @@
                         	<div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고"/>
                             </div>
+							관리자페이지
                        	</a>
-                        	관리자페이지
                     </h1>
                     <c:if test="${member == null}">
                     	<div class="loginAndjoin">
@@ -49,7 +49,6 @@
         <main>
             <div class="application_wrap">
                 <div class="inner_size">
-                    <form>
                         <div class="title">신청 목록</div>
                         <nav class="menu">
                             <ul>
@@ -94,7 +93,6 @@
                             <div class ="paging_box"></div>
 							<div class="noData">등록된 정보가 없습니다.</div>
                         </div>
-                    </form>
                     <!-- .resignation_mg -->
                 </div>
             </div>
@@ -116,10 +114,19 @@
 			
 			$("input[name=searchKeyword]").val(searchKeyword);
 			applicationList();
-			console.log(searchKeyword);
-			
 			
 		});
+		
+	    $(".search_input").on("keyup",function(key){
+	        if(key.keyCode==13) {
+				var searchKeyword = $("input[name = searchKeyword]").val();
+				
+				$("input[name = searchKeyword]").val(searchKeyword);
+				applicationList();
+	        }
+	    });
+		
+
 		
 		
 		$('.selectDelete').on('click', function(){
@@ -131,7 +138,6 @@
 				applNoArray.push($(this).val());
 				
 			});
-			console.log(applNoArray);
 			
 			if(applNoArray == "" || applNoArray == null){
 				alert("삭제할 항목을 선택해주세요.");
@@ -169,18 +175,14 @@
 		$.ajax({
 			type : 'get',
 			url : '/admin/applicationList.do',
-			dataType : 'json',
 			data : {
 				"num" : num,
 				"searchKeyword" : searchKeyword
 			},
 			success : function(result){
 				
-				console.log(result);
-				
 				var data = result.data;
 				
-				console.log(data);
 				var html = "";
 			
 				
@@ -213,13 +215,13 @@
 				for(var num = data.page.startPageNum; num <= data.page.endPageNum; num++ ){
 					if(data.select == num){
 						page += '<span class="numPadding">';
-						page += '<span class="point"><a href="javascript:employeeList(\''+ data.orderType +'\',' + num + ')">' + num + '</a></span>';
+						page += '<span class="point"><a href="javascript:applicationList(' + num + ')">' + num + '</a></span>';
 						page +=	'</span>';
 					}
 					
 					if(data.select != num){
 						page += '<span class="numPadding">';
-						page += '<span class="noPoint"><a href="javascript:employeeList(\''+ data.orderType +'\',' + num + ')">' + num + '</a></span>';
+						page += '<span class="noPoint"><a href="javascript:applicationList(' + num + ')">' + num + '</a></span>';
 						page +=	'</span>';
 					}
 				}

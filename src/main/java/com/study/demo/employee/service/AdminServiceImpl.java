@@ -169,12 +169,14 @@ public class AdminServiceImpl implements AdminService{
 			employeeDao.resignationSelectDelete(employNoArray.get(i));
 		}
 	}
-
+	
+	//직원구분 셀렉트박스 검색
 	@Override
 	public List<employeeVO> statusSelect(String statusType) {
 		return employeeDao.statusSelect(statusType);
 	}
-
+	
+	//신청서 선택 삭제
 	@Override
 	public void applicationSelectDelete(List<String> applNoArray) {
 		for(int i=0; i<applNoArray.size(); i++) {
@@ -182,28 +184,5 @@ public class AdminServiceImpl implements AdminService{
 		}
 		
 	}
-
-
-
-	
-	
-
-	
-	//오름차순
-	/*@Override
-	public void employeeSort(String asc) {
-		employeeDao.employeeSort(asc);
-		
-	}*/
-
-
-
-
-
-
-
-
-	
-
 
 }

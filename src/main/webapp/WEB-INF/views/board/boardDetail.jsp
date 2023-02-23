@@ -24,8 +24,9 @@
                         	<div class="img">
                                 <img src="/resources/img/logo_black.png" alt="로고"/>
                             </div>
+                            LmwCompany
                        	</a>
-                        LmwCompany
+                        
                     </h1>
                     <c:if test="${member == null}">
                     	<div class="loginAndjoin">
@@ -68,7 +69,7 @@
                     </div>
                     <div class="right_border"></div>
                     <!-- .title -->
-					<c:if test="${member.employeeId == data.employeeId}">
+                    <c:if test="${member.employeeId == data.employeeId}">
                     <div class="input_wrap">
                         <!-- <div class="writer">
                             <div class="t1">작성자</div>
@@ -97,8 +98,7 @@
                         </div>
 
                         <div class="btn_box">
-                        	
-                        	<c:if test="${member.employeeId == data.employeeId}">
+                        	<c:if test="${member.employeeId == data.employeeId }">
                             	<div class="update_btn">수정</div>
                             	<div class="delete_btn">게시물 삭제</div>
                             	<div class="writeCen_btn">취소</div>
@@ -132,9 +132,10 @@
                         </div>
 
                         <div class="btn_box1">
+                        	<c:if test="${member.adminCk == 1}"> <div class="delete_btn1">게시물 삭제</div> </c:if>
                             <c:if test="${member.employeeId != data.employeeId}">
                             	<p class="update_btn1"></p>
-                            	<div class="writeCen_btn"><a href="/main">취소</a></div>
+                            	<div class="writeCen_btn"><a href="javascript:void(0)">취소</a></div>
                             </c:if>
                         </div>
                     </div>
@@ -152,15 +153,14 @@
     <!-- #wrap -->
     
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 	$(document).ready(function(){
 		var employeeId =  $("input[id = mynameInput]").val();
 		var employeeId1 =  $("input[id = idInput]").val();
 		var uploadResult = $(".resultImg");
-		console.log(employeeId);
-		console.log(employeeId1);
+
 		$.getJSON("/account/profileImage", {employeeId : employeeId}, function(arr){
-			console.log(arr);
 			
 			var str ="";
 			var obj = arr[0];
@@ -187,64 +187,122 @@
 			var content = $('input[name= boardContent]').val();
 			
 			if(title == ""){
-				alert("제목을 입력해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '제목을 입력해주세요!',
+				});
 				return false;
 			}
 			
 			if(category == ""||category == "선택"){
-				alert("카테고리를 선택해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '카테고리를 선택해주세요!',
+				});
 				return false;
 			}
 			if(content == ""){
-				alert("내용을 입력해주세요.");
+				Swal.fire({
+					icon: 'error',
+					title: '내용을 입력해주세요!',
+				});
 				return false;
 			}
-			if(confirm("게시물을 수정하시겠습니까?")){
-				var data = $('form[name=boardDetail]').serialize();
-				console.log(data);
-				
-				$.ajax({
+			
+			Swal.fire({
+				title: '게시물을 수정하시겠습니까?',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, update it!'
+			}).then((result) => {
+				if (result.isConfirmed) {
 					
-					type : 'POST',
-					url : '/board/update',
-					data : data,
-					dataType: 'json',
-					success : function(result){
-						alert("게시물을 성공적으로 수정하였습니다.");
-						location.href="/main";
+					var data = $('form[name=boardDetail]').serialize();
+					$.ajax({
 						
-					},
-					error : function(){
-						alert("연결에 실패하였습니다.");
-					}
+						type : 'POST',
+						url : '/board/update',
+						data : data,
+						dataType: 'json',
+						success : function(result){
+							Swal.fire(
+								'수정에 성공하였습니다!',
+								'You clicked the button!',
+								'success'
+							)
+							$('.swal2-confirm').click(function(){
+								location.href="/main";
+							});
+							$('.swal2-backdrop-show').click(function(){
+								location.href="/main";
+							});
+							
+						},
+						error : function(){
+							alert("연결에 실패하였습니다.");
+						}
 
-				});//ajax
-			}else {
-				alert("게시물 수정을 취소하였습니다.");
-				return false;
-			}
-		});//write_btn
+					});//ajax
+				}
+			})
+		});//수정버튼클릭
 		
 		var cencal = $('.writeCen_btn');
 		cencal.click(function(){
 			
-			if(confirm("현재페이지에서 나가시겠습니까?")){
-				location.href="/main"
-				
-			} else {
-				return false;
-			}
+			Swal.fire({
+				title: '현재페이지에서 나가시겠습니까??',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					  location.href="/main"
+				  }
+			})
+			
 		});
 		
 		var boardDelete = $('.delete_btn');
 		boardDelete.click(function(){
-			var boardNo = $('input[name=boardNo]').val();
-			if(confirm("게시물을 삭제하시겠습니까?")){
-				location.href="/board/delete?boardNo=" + boardNo
-				
-			} else {
-				return false;
-			}
+			
+			Swal.fire({
+				title: '게시물을 삭제하시겠습니까?',
+				text: '삭제된 게시물은 복구 할 수 없습니다.',	
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					  var boardNo = $('input[name=boardNo]').val();
+					  location.href="/board/delete?boardNo=" + boardNo
+				  }
+			})
+			
+		});
+		
+		var boardDelete = $('.delete_btn1');
+		boardDelete.click(function(){
+			Swal.fire({
+				title: '게시물을 삭제하시겠습니까?',
+				text: '삭제된 게시물은 복구 할 수 없습니다.',	
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+					  var boardNo = $('input[name=boardNo]').val();
+					  location.href="/board/delete?boardNo=" + boardNo
+				  }
+			})
 		});
 	});//document
 	

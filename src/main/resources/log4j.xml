@@ -29,14 +29,14 @@
      <logger name="jdbc.sqlonly" additivity="false"> 
        <level value="info"/>
        <appender-ref ref="console-infolog"/>
-     </logger>
+    </logger>
          
-     <logger name="jdbc.resultsettable" additivity="false"> 
-       <level value="info"/>
-       <appender-ref ref="console"/>
-     </logger>
+    <logger name="jdbc.resultsettable" additivity="false"> 
+      <level value="info"/>
+      <appender-ref ref="console"/>
+    </logger>
      
-             <!-- SQL Logger -->
+    <!-- SQL Logger -->
     <logger name="jdbc.connection" additivity="false">
         <level value="warn" />
         <appender-ref ref="console"/> 
