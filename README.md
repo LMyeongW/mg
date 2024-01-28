@@ -14,6 +14,8 @@
 * Eclipse
 * Spring
 * Java8
+* Tomcat9
+* MySQL8.0.31.0
 
 
 **템플릿엔진**
